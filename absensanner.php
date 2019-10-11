@@ -79,7 +79,6 @@
          <li><a href="absen.php"><i class="glyphicon glyphicon-briefcase"></i> <span>Absen</span></a></li>
       </li>
       <li class="treeview">
-      <li class="treeview">
          <li><a href="absensanner.php"><i class="glyphicon glyphicon-briefcase"></i> <span>Absen Scanner</span></a></li>
       </li>
       <li class="treeview">

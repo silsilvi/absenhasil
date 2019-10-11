@@ -79,6 +79,9 @@
          <li><a href="absen.php"><i class="glyphicon glyphicon-briefcase"></i> <span>Absen</span></a></li>
       </li>
       <li class="treeview">
+         <li><a href="absensanner.php"><i class="glyphicon glyphicon-briefcase"></i> <span>Absen Scanner</span></a></li>
+      </li>
+      <li class="treeview">
          <li><a href="perbandingan.php"><i class="glyphicon glyphicon-file"></i> <span>Perbandingan</span></a></li>
       </li>
       <li class="treeview">
@@ -112,17 +115,15 @@
         <div class="col-xs-12">
           <div class="box box-primary">
             <div class="box-header">
-              
-            </div>
-			<div class="card-body">
+            <div class="card-body">
          <form action="exportbanding.php" method="POST">
           <div class="row">
-           <div class="col-md-5">Mulai
+           <div class="col-md-5"><b>Mulai</b>
            <div class="form-group">
              <input type="date" class="form-control" name="tglm">
            </div>
            </div>
-           <div class="col-md-5">Selesai
+           <div class="col-md-5"><b>Selesai</b>
             <div class="form-group">
              <input type="date" class="form-control" name="tgls">
            </div>
@@ -134,6 +135,8 @@
           </div>
           </form>
         </div>
+            </div>
+
           <div class="box-body table-responsive">
             <table id="pegawai" class="table table-bordered table-hover">
               <thead>
