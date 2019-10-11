@@ -112,8 +112,28 @@
         <div class="col-xs-12">
           <div class="box box-primary">
             <div class="box-header">
-              <button type="button" name="btntambahpegawai"<a data-toggle="modal" data-target="#tambahpegawai" class=" btn btn-primary  text-white";> Tambah <i class="glyphicon glyphicon-plus"></i></a></button>
+              
             </div>
+			<div class="card-body">
+         <form action="exportbanding.php" method="POST">
+          <div class="row">
+           <div class="col-md-5">Mulai
+           <div class="form-group">
+             <input type="date" class="form-control" name="tglm">
+           </div>
+           </div>
+           <div class="col-md-5">Selesai
+            <div class="form-group">
+             <input type="date" class="form-control" name="tgls">
+           </div>
+         </div>
+		 <br>
+          <div class="col-md-2">
+              <button type="submit" class="btn btn-primary" name="print"> FORMAT EXCEL</button>
+          </div> 
+          </div>
+          </form>
+        </div>
           <div class="box-body table-responsive">
             <table id="pegawai" class="table table-bordered table-hover">
               <thead>
