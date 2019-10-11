@@ -79,10 +79,6 @@
          <li><a href="absen.php"><i class="glyphicon glyphicon-briefcase"></i> <span>Absen</span></a></li>
       </li>
       <li class="treeview">
-      <li class="treeview">
-         <li><a href="absensanner.php"><i class="glyphicon glyphicon-briefcase"></i> <span>Absen Scanner</span></a></li>
-      </li>
-      <li class="treeview">
          <li><a href="perbandingan.php"><i class="glyphicon glyphicon-file"></i> <span>Perbandingan</span></a></li>
       </li>
       <li class="treeview">
@@ -116,6 +112,7 @@
         <div class="col-xs-12">
           <div class="box box-primary">
             <div class="box-header">
+              <button type="button" name="btntambahpegawai"<a data-toggle="modal" data-target="#tambahpegawai" class=" btn btn-primary  text-white";> Tambah <i class="glyphicon glyphicon-plus"></i></a></button>
             </div>
           <div class="box-body table-responsive">
             <table id="pegawai" class="table table-bordered table-hover">
@@ -129,20 +126,21 @@
                   <th><center>Jam Pulang</center></th>
                   <th><center>Jam Hadir (bulat)</center></th>
                   <th><center>Jam Pulang (bulat)</center></th>
-                  <th><center>jam Hadir (hasil)</center></th>
-                  <th><center>Jam Pulang (hasil)</center></th>
-                  <th><center>Keterangan</center></th>
-
+                  <th><center>Jam Hadir(Hasil)</center></th>
+                  <th><center>Jam Pulang (Hasil)</center></th>
+                  <th><center>Ketr</center></th>
+                  
                 </tr>
               </thead>
               <tbody>
 
-              <?php
+                <?php
                 include "conf/conn.php";
-                $query = mysqli_query($koneksi, "SELECT * FROM absensi inner join tabsen on absensi.kodep = tabsen.kodep");
+                $query = mysqli_query($koneksi, "SELECT * FROM absensi JOIN tabsen on absensi.kodep=tabsen.kodep WHERE absensi.tanggal=tabsen.tanggal");
 
                 while ($row = mysqli_fetch_array($query)) {
                 ?>
+
                 <tr>
                   <td><?php echo $row['kodeabsen'];?></td>
                   <td><?php echo $row['tanggal'];?></td>
@@ -154,8 +152,13 @@
                   <td><?php echo $row['jampulang_bulat'];?></td>
                   <td><?php echo $row['jamhadir'];?></td>
                   <td><?php echo $row['jampulang'];?></td>
-                  <td><?php echo $row['ketr'];?></td>
-
+                  <?php 
+                    if ($row['jamhadir_bulat']==$row['jamhadir']) {
+                      echo '<td><span style="background-color:green;color:white;padding:5px 15px;">Ya</span></td>';
+                    } else {
+                      echo '<td><span style="background-color:red;color:white;padding:5px">Tidak</span></td>';
+                    }
+                  ?>
                   <td>
                 </tr>
 

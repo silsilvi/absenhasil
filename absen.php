@@ -3,7 +3,7 @@
   if(!isset($_GET['edit'])){
      $query = mysqli_query($koneksi, "SELECT * FROM tabsen"); 
 ?>
-     
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,9 +77,6 @@
       </li>
       <li class="treeview">
          <li><a href="absen.php"><i class="glyphicon glyphicon-briefcase"></i> <span>Absen</span></a></li>
-      </li>
-      <li class="treeview">
-         <li><a href="absensanner.php"><i class="glyphicon glyphicon-briefcase"></i> <span>Absen Scanner</span></a></li>
       </li>
       <li class="treeview">
          <li><a href="perbandingan.php"><i class="glyphicon glyphicon-file"></i> <span>Perbandingan</span></a></li>
