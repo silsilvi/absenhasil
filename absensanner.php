@@ -115,9 +115,11 @@
         <div class="col-xs-12">
           <div class="box box-primary">
             <div class="box-header">
-              <button type="button" name="import"<a data-toggle="modal" data-target="#import" class=" btn btn-primary  text-white";> Import <i class="glyphicon glyphicon-import"></i></a></button>
-            </a>
-            </div>
+              <button type="button" name="import"<a data-toggle="modal" data-target="#import" class=" btn btn-primary  text-white" style="display: inline-block; float:right;";> Import <i class="glyphicon glyphicon-import"></i></a></button>
+              <b>Pilih Tanggal:</b> <input id="tglp" type="date" class="btn btn-default btn-sm" value="<?= date('d-m-Y'); ?>">
+              <button class='btn btn-danger ' data-toggle='modal' data-target='#hapusdata' data-href="pages/hapusscanner.php?tanggal=<?php echo $row['tanggal'];?>"><i class="glyphicon glyphicon-trash"></i>
+            </div>        
+            
           <div class="box-body table-responsive">
             <table id="absen" class="table table-bordered table-hover">
               <thead>
@@ -181,8 +183,8 @@
 								<div class="modal-dialog">
 								    <div class="modal-content">
 										<div class="modal-header">
-											<h4 class="modal-title">Import Data Absen Scanner</h4>
-												<button type="button" class="close" data-dismiss="modal">&times;</button>
+											  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"><center><b>Import Data Absen Scanner</b></center></h4>
 										</div>
 										<form action="" method="POST" enctype="multipart/form-data">
 										    <div class="modal-body">
@@ -203,6 +205,28 @@
 								</div>
 							</div>
 <!-- /.Modal Import -->
+
+<!--modal hapus pegawai-->
+<div class="modal fade" id="hapusdata" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">Apakah Anda Yakin ingin menghapus data ini?</div>
+        <div class="modal-footer">
+          <a class="btn btn-danger btn-hapus">Hapus</a>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end modal hapus pegawai -->
+
+  <script type="text/javascript">
+    //Hapus Data
+    $(document).ready(function() {
+        $('#hapusdata').on('show.bs.modal', function(e) {
+            $(this).find('.btn-hapus').attr('href', $(e.relatedTarget).data('href'));
+        });
+    });
 
 <!-- Javascript Datatable -->
 <script type="text/javascript">
