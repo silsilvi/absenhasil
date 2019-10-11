@@ -1,3 +1,9 @@
+<?php
+  include "conf/conn.php";
+  if(!isset($_GET['edit'])){
+     $query = mysqli_query($koneksi, "SELECT * FROM tabsen"); 
+?>
+     
 <!DOCTYPE html>
 <html>
 <head>
@@ -73,6 +79,7 @@
          <li><a href="absen.php"><i class="glyphicon glyphicon-briefcase"></i> <span>Absen</span></a></li>
       </li>
       <li class="treeview">
+      <li class="treeview">
          <li><a href="absensanner.php"><i class="glyphicon glyphicon-briefcase"></i> <span>Absen Scanner</span></a></li>
       </li>
       <li class="treeview">
@@ -101,7 +108,7 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><b>DATA STOK</b></h1>
+      <h1><b>DATA ABSEN SCANNER</b></h1>
     </section>
     <!-- Main content -->
     <section class="content">
@@ -109,45 +116,48 @@
         <div class="col-xs-12">
           <div class="box box-primary">
             <div class="box-header">
-              <button type="button"<a data-toggle="modal" data-target="#tambahpegawai" class=" btn btn-primary  text-white";> Tambah <i class="glyphicon glyphicon-plus"></i></a></button>
+              <button type="button" name="import"<a data-toggle="modal" data-target="#import" class=" btn btn-primary  text-white";> Import <i class="glyphicon glyphicon-import"></i></a></button>
+            </a>
             </div>
           <div class="box-body table-responsive">
-            <table id="pegawai" class="table table-bordered table-hover">
+            <table id="absen" class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <th><center>kode Pegawai</center></th>
+                <th><center>Kode Absen</center></th>
+                  <th><center>Tanggal</center></th>
+                  <th><center>Kode Pegawai</center></th>
                   <th><center>Nama</center></th>
-                  <th><center>Alamat</center></th>
-                  <th><center>Jenis kelamin</center></th>
-                  <th><center>No telp</center></th>
-                  <th><center>Kode Jabatan</center></th>
-                  <th><center>ID Jadwal</center></th>
-                  <th><center>Aksi</center></th>
+                  <th><center>Jam Hadir</center></th>
+                  <th><center>Jam Pulang</center></th>
+                  <th><center>Jam Hadir (bulat)</center></th>
+                  <th><center>Jam Pulang (bulat)</center></th>
+                  <th><center>Keterangan</center></th>
+                  <th><center>Telat</center></th>
+                  <th><center>Jam Kerja</center></th>
+                  
                 </tr>
               </thead>
               <tbody>
 
                 <?php
                 include "conf/conn.php";
-                $query=mysql_query("SELECT * FROM pegawai ORDER BY kodep DESC");
+                $query = mysqli_query($koneksi, "SELECT * FROM absensi ORDER BY kodeabsen DESC");
 
-                while ($row=mysql_fetch_array($query)){
+                while ($row = mysqli_fetch_array($query)) {
                 ?>
 
                 <tr>
+                <td><?php echo $row['kodeabsen'];?></td>
+                  <td><?php echo $row['tanggal'];?></td>
                   <td><?php echo $row['kodep'];?></td>
                   <td><?php echo $row['Nama'];?></td>
-                  <td><?php echo $row['alamat'];?></td>
-                  <td><?php echo $row['jeniskelamin'];?></td>
-                  <td><?php echo $row['notelp'];?></td>
-                  <td><?php echo $row['kodej'];?></td>
-                  <td><?php echo $row['idjadwal'];?></td>
-                  <td>
-                    <center>
-                      <a href="index.php?page=ubah_pegawai&id=<?=$row['kodep'];?>" class="btn btn-success" role="button" title="Ubah Data"><i class="glyphicon glyphicon-edit"></i></a>
-                      <a href="pages/pegawai/hapus_pegawai.php?id=<?=$row['kodep'];?>" class="btn btn-danger" role="button" title="Hapus Data"><i class="glyphicon glyphicon-trash"></i></a>
-                  </center>
-                  </td>
+                  <td><?php echo $row['jamhadir'];?></td>
+                  <td><?php echo $row['jampulang'];?></td>
+                  <td><?php echo $row['jamhadir_bulat'];?></td>
+                  <td><?php echo $row['jampulang_bulat'];?></td>
+                  <td><?php echo $row['ketr'];?></td>
+                  <td><?php echo $row['telat'];?></td>
+                  <td><?php echo $row['jamkerja'];?></td>
                 </tr>
 
                 <?php } ?>
@@ -166,83 +176,42 @@
     <!-- /.content -->
   </div>
 <!-- /.content-wrapper -->
-<!-- modal tambah pegawai -->
-        <div class="modal fade" id="tambahpegawai" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-              <h4 class="modal-title" id="exampleModalLabel"><center><b>TAMBAH DATA PEGAWAI</b></center></h4>
-            </div>
-            <div class="modal-body">
-              <form action="tambahpegawai.php" method="POST" enctype="multipart/form-data">
-                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kode Pegawai</label>
-                  <div class="col-sm-3">
-                    <input type="text" class="form-control" name="kodep" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Nama</label>
-                  <div class="col-sm-7">
-                    <input type="text" class="form-control" name="Nama" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Alamat</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" name="alamat" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
-                  </div>
-                </div>
-                <div class="form-group row">
-                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Jenis Kelamin</label>
-                <div class="col-sm-3">
-                <select class="form-control" id="exampleFormControlSelect1" name="jeniskelamin" min>
-                  <option>Laki-laki</option>
-                  <option>Perempuan</option>
-                </select> 
-                </div>
-                </div>
-                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">No Telp</label>
-                  <div class="col-sm-5">
-                    <input type="number" class="form-control" name="notelp" id="formGroupExampleInput" required="true" maxlength="12">
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kode Jabatan</label>
-                  <div class="col-sm-3">
-                    <input type="number" class="form-control" name="kodej" id="formGroupExampleInput" required="true">
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">ID Jadwal</label>
-                  <div class="col-sm-3">
-                    <input type="number" class="form-control" name="idjadwal" id="formGroupExampleInput" required="true">
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary" name="btntambahbrg">Tambah</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-  <!-- end modal tambah pegawai -->
+
+<!-- Modal Import -->
+<div style="margin-top:100px;" id="import" class="modal fade" role="dialog">
+								<div class="modal-dialog">
+								    <div class="modal-content">
+										<div class="modal-header">
+											<h4 class="modal-title">Import Data Absen Scanner</h4>
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+										</div>
+										<form action="" method="POST" enctype="multipart/form-data">
+										    <div class="modal-body">
+											    <div class="row">
+												    <div class="col-md-12">
+													<div class="col-md-12"><label>Pilih File CSV : </label></div>
+													<div class="col-md-12"><input type="file" class="form-control" accept=".csv" name="file"></div>
+													<br>
+													</div>
+												</div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+													<button type="submit" class="btn btn-success" name="Import">Import</button>
+												</div>
+										</form>
+									</div>
+								</div>
+							</div>
+<!-- /.Modal Import -->
 
 <!-- Javascript Datatable -->
 <script type="text/javascript">
   $(document).ready(function(){
-    $('#pegawai').DataTable();
+    $('#absen').DataTable();
   });
 </script>
-  <footer class="main-footer">
-    <strong>Copyright &copy; 2019 PT. Wijaya Plywoods .</strong>
-  </footer>
+
 
 <!-- ./wrapper -->
 
@@ -283,5 +252,33 @@
 <script src="dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+
 </body>
 </html>
+
+<?php
+if(isset($_POST["Import"])){
+		$filename=$_FILES["file"]["tmp_name"];		
+		if($_FILES["file"]["size"] > 0){
+		  	$file = fopen($filename, "r");
+	        while(($getData = fgetcsv($file, 10000, ",")) !== FALSE){
+				$sql = "INSERT into absensi (kodeabsen,tanggal,kodep,Nama,jamhadir,jampulang,jamhadir_bulat,jampulang_bulat,ketr,telat,jamkerja) 
+				values ('".$getData[0]."','".$getData[1]."','".$getData[2]."','".$getData[3]."','".$getData[4]."','".$getData[5]."','".$getData[6]."','".$getData[7]."','".$getData[8]."','".$getData[9]."','".$getData[10]."')";
+                $result = mysqli_query($koneksi, $sql);
+					if(!isset($result)){	
+						echo "<script type=\"text/javascript\">
+								alert(\"Invalid File:Please Upload CSV File.\");
+								window.location = \"absensanner.php\"
+							  </script>";
+					}else{
+						  echo "<script type=\"text/javascript\">
+							alert(\"CSV File has been successfully Imported.\");
+							window.location = \"absensanner.php\"
+							</script>";
+					}
+	        }
+	         fclose($file);	
+		}
+}	 
+  }
+?>

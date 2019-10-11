@@ -79,6 +79,10 @@
          <li><a href="absen.php"><i class="glyphicon glyphicon-briefcase"></i> <span>Absen</span></a></li>
       </li>
       <li class="treeview">
+      <li class="treeview">
+         <li><a href="absensanner.php"><i class="glyphicon glyphicon-briefcase"></i> <span>Absen Scanner</span></a></li>
+      </li>
+      <li class="treeview">
          <li><a href="perbandingan.php"><i class="glyphicon glyphicon-file"></i> <span>Perbandingan</span></a></li>
       </li>
       <li class="treeview">
@@ -112,27 +116,6 @@
         <div class="col-xs-12">
           <div class="box box-primary">
             <div class="box-header">
-              <div class="card-body">
-         <form action="exportbanding.php" method="POST">
-          <div class="row">
-           <div class="col-md-5"><b>Mulai</b>
-           <div class="form-group">
-             <input type="date" class="form-control" name="tglm">
-           </div>
-           </div>
-           <div class="col-md-5"><b>Selesai</b></h5>
-            <div class="form-group">
-             <input type="date" class="form-control" name="tgls">
-           </div>
-         </div>
-         <div class="col-md-2">
-           <div class="form-group">&nbsp;<br>
-             <button type="submit" class="btn btn-primary" name="print">Cetak</button>
-           </div>
-         </div> 
-       </div>
-       </form>
-     </div>
             </div>
           <div class="box-body table-responsive">
             <table id="pegawai" class="table table-bordered table-hover">
@@ -146,21 +129,20 @@
                   <th><center>Jam Pulang</center></th>
                   <th><center>Jam Hadir (bulat)</center></th>
                   <th><center>Jam Pulang (bulat)</center></th>
-                  <th><center>Jam Hadir(Hasil)</center></th>
-                  <th><center>Jam Pulang (Hasil)</center></th>
-                  <th><center>Ketr</center></th>
-                  
+                  <th><center>jam Hadir (hasil)</center></th>
+                  <th><center>Jam Pulang (hasil)</center></th>
+                  <th><center>Keterangan</center></th>
+
                 </tr>
               </thead>
               <tbody>
 
-                <?php
+              <?php
                 include "conf/conn.php";
-                $query = mysqli_query($koneksi, "SELECT * FROM absensi JOIN tabsen on absensi.kodep=tabsen.kodep WHERE absensi.tanggal=tabsen.tanggal");
+                $query = mysqli_query($koneksi, "SELECT * FROM absensi inner join tabsen on absensi.kodep = tabsen.kodep");
 
                 while ($row = mysqli_fetch_array($query)) {
                 ?>
-
                 <tr>
                   <td><?php echo $row['kodeabsen'];?></td>
                   <td><?php echo $row['tanggal'];?></td>
@@ -172,13 +154,8 @@
                   <td><?php echo $row['jampulang_bulat'];?></td>
                   <td><?php echo $row['jamhadir'];?></td>
                   <td><?php echo $row['jampulang'];?></td>
-                  <?php 
-                    if ($row['jamhadir_bulat']==$row['jamhadir'] && $row['jampulang_bulat']==$row['jampulang']) {
-                      echo '<td><span style="background-color:green;color:white;padding:5px 15px;">Ya</span></td>';
-                    } else {
-                      echo '<td><span style="background-color:red;color:white;padding:5px">Tidak</span></td>';
-                    }
-                  ?>
+                  <td><?php echo $row['ketr'];?></td>
+
                   <td>
                 </tr>
 

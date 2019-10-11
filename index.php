@@ -1,5 +1,10 @@
 <?php
+session_start();
   include "conf/conn.php";
+  if(isset($SESSION['username'])){
+     echo "<script>location='index.php';</script>";
+  }
+
   if(!isset($_GET['edit'])){
      $query = mysqli_query($koneksi, "SELECT * FROM pegawai"); 
 ?>
@@ -79,6 +84,9 @@
          <li><a href="absen.php"><i class="glyphicon glyphicon-briefcase"></i> <span>Absen</span></a></li>
       </li>
       <li class="treeview">
+         <li><a href="absensanner.php"><i class="glyphicon glyphicon-briefcase"></i> <span>Absen Scanner</span></a></li>
+      </li>
+      <li class="treeview">
          <li><a href="perbandingan.php"><i class="glyphicon glyphicon-file"></i> <span>Perbandingan</span></a></li>
       </li>
       <li class="treeview">
@@ -93,7 +101,7 @@
       <li class="header">SETTING</li>
         <li class="treeview">
           <li><a href="user.php"><i class="glyphicon glyphicon-user"></i> <span>User</span></a></li>
-          <li><a href="pages/logout_process.php"><i class="glyphicon glyphicon-lock"></i> <span>Logout</span></a></li>
+          <li><a href="logout.php"><i class="glyphicon glyphicon-lock"></i> <span>Logout</span></a></li>
         </li>
       </ul>
     </section>
@@ -160,6 +168,12 @@
             </div>
             <!-- /.box-body -->
           </div>
+          
+<?php
+echo '<pre>';
+var_dump($_SESSION);
+echo '</pre>';
+?>
           <!-- /.box -->
         </div>
         <!-- /.col -->
