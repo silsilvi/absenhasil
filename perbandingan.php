@@ -176,7 +176,7 @@
                   <td><?php echo $row['jamhadir'];?></td>
                   <td><?php echo $row['jampulang'];?></td>
                   <?php 
-                    if ($row['jamhadir_bulat']==$row['jamhadir']) {
+                    if ($row['jamhadir_bulat']==$row['jamhadir'] AND $row['jampulang_bulat']==$row['jampulang']) {
                       echo '<td><span style="background-color:green;color:white;padding:5px 15px;">Ya</span></td>';
                     } else {
                       echo '<td><span style="background-color:red;color:white;padding:5px">Tidak</span></td>';
