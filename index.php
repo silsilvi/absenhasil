@@ -72,7 +72,6 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
       <li class="header">MENU</li>
-      <li class="treeview">
       <li><a href="index.php"><i class="glyphicon glyphicon-home"></i> <span>Pegawai</span></a></li>
       </li>
       <li class="treeview">
@@ -81,15 +80,28 @@
       <li class="treeview">
          <li><a href="absensanner.php"><i class="glyphicon glyphicon-briefcase"></i> <span>Absen Scanner</span></a></li>
       </li>
-      <li class="treeview">
-         <li><a href="perbandingan.php"><i class="glyphicon glyphicon-file"></i> <span>Perbandingan</span></a></li>
+      <li><a href="perbandingan.php"><i class="glyphicon glyphicon-check"></i> <span>Perbandingan</span></a></li>
       </li>
       <li class="treeview">
          <li><a href="stok.php"><i class="glyphicon glyphicon-list"></i> <span>Stok</span></a></li>
       </li>
-      <li class="treeview">
-         <li><a href="hasil.php"><i class="glyphicon glyphicon-pencil"></i> <span>Hasil</span></a></li>
-      </li>  
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="active treeview">
+          <a href="#">
+            <i class="fa fa-file"></i> <span>Hasil</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i>Kupasan</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dryer</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i> Tembel</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i> Hotpress</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i> Finishing</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i> Lain-lain</a></li>
+          </ul>
+        </li>
       <li class="treeview">
          <li><a href="report.php"><i class="glyphicon glyphicon-print"></i> <span>Report</span></a></li>
       </li>      
