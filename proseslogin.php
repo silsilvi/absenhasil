@@ -17,9 +17,9 @@ $cek = mysqli_num_rows($data);
  
 if($cek > 0){
 	$_SESSION['username'] = $data->fetch_assoc();
-	header("location:pegawai.php");
+	header("location:index.php");
 }else{
-  header("location:index.php?pesan=gagal");
+  header("location:login.php?pesan=gagal");
   
 }
 ?>

@@ -1,5 +1,10 @@
 <?php
+  session_start();
   include "conf/conn.php";
+  if (!isset($_SESSION['login'])){
+    echo "<script>location='login.php';</script>";
+    exit();
+  }
   if(!isset($_GET['edit'])){
      $query = mysqli_query($koneksi, "SELECT * FROM pegawai"); 
 ?>
@@ -108,7 +113,7 @@
       <li class="header">SETTING</li>
         <li class="treeview">
           <li><a href="user.php"><i class="glyphicon glyphicon-user"></i> <span>User</span></a></li>
-          <li><a href="pages/logout_process.php"><i class="glyphicon glyphicon-lock"></i> <span>Logout</span></a></li>
+          <li><a href="logout.php"><i class="glyphicon glyphicon-lock"></i> <span>Logout</span></a></li>
         </li>
       </ul>
     </section>
