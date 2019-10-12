@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 12, 2019 at 09:15 AM
+-- Generation Time: Oct 12, 2019 at 09:32 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -62,6 +62,7 @@ CREATE TABLE `absensi` (
   `jampulang_bulat` time DEFAULT NULL,
   `ketr` varchar(100) DEFAULT NULL,
   `telat` float DEFAULT NULL,
+  `lembur` float DEFAULT NULL,
   `jamkerja` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
