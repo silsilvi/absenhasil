@@ -115,12 +115,27 @@
         <div class="col-xs-12">
           <div class="box box-primary">
             <div class="box-header">
-              <button type="button" name="import"<a data-toggle="modal" data-target="#import" class=" btn btn-primary  text-white" style="display: inline-block; float:right;";> Import <i class="glyphicon glyphicon-import"></i></a></button>
-              <b>Pilih Tanggal:</b> <input id="tglp" type="date" class="btn btn-default btn-sm" value="<?= date('d-m-Y'); ?>">
-              <button class='btn btn-danger ' data-toggle='modal' data-target='#hapusdata' data-href="pages/hapusscanner.php?tanggal=<?php echo $row['tanggal'];?>"><i class="glyphicon glyphicon-trash"></i>
-            </div>        
-            
-          <div class="box-body table-responsive">
+              <form action="pages/hapusscanner.php" method="POST">
+                <div class="col-md-2"><b>Mulai</b>
+                 <div class="form-group">
+                  <input type="date" class="form-control" name="tglm">
+                </div>
+              </div>
+                <div class="col-md-2"><b>Selesai</b>
+                  <div class="form-group">
+                  <input type="date" class="form-control" name="tgls">
+              </div>
+            </div>
+		          <br>
+                <div class="col-md-2">    
+                <button class='btn btn-danger ' data-toggle='modal' data-target='#hapusscan'><i class="glyphicon glyphicon-trash"></i>
+              </div>
+              <div>    
+              </div>
+             <button type="button" name="import"<a data-toggle="modal" data-target="#import" class=" btn btn-primary  text-white" style="display: inline-block; float:right;";> Import <i class="glyphicon glyphicon-import"></i></a></button>  
+              </div>
+          </form>       
+            <div class="box-body table-responsive">
             <table id="absen" class="table table-bordered table-hover">
               <thead>
                 <tr>
@@ -207,7 +222,7 @@
 <!-- /.Modal Import -->
 
 <!--modal hapus pegawai-->
-<div class="modal fade" id="hapusdata" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="hapusscan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body">Apakah Anda Yakin ingin menghapus data ini?</div>
