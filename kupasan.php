@@ -90,7 +90,6 @@
       <li class="treeview">
          <li><a href="stok.php"><i class="glyphicon glyphicon-list"></i> <span>Stok</span></a></li>
       </li>
-      <ul class="sidebar-menu" data-widget="tree">
         <li class="treeview">
           <a href="#">
             <i class="fa fa-file"></i> <span>Hasil</span>

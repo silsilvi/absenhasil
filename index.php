@@ -79,18 +79,26 @@
       <li class="header">MENU</li>
       <li><a href="index.php"><i class="glyphicon glyphicon-home"></i> <span>Pegawai</span></a></li>
       </li>
-      <li class="treeview">
-         <li><a href="absen.php"><i class="glyphicon glyphicon-briefcase"></i> <span>Absen</span></a></li>
-      </li>
-      <li class="treeview">
-         <li><a href="absensanner.php"><i class="glyphicon glyphicon-briefcase"></i> <span>Absen Scanner</span></a></li>
-      </li>
+      <li>
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-file"></i> <span>Absen</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="active"><a href="absen.php"><i class="fa fa-circle-o"></i>Absen Hasil</a></li>
+            <li><a href="absensanner.php"><i class="fa fa-circle-o"></i>Absen Scanner</a></li>
+          </ul>
+        </li>
       <li><a href="perbandingan.php"><i class="glyphicon glyphicon-check"></i> <span>Perbandingan</span></a></li>
       </li>
       <li class="treeview">
          <li><a href="stok.php"><i class="glyphicon glyphicon-list"></i> <span>Stok</span></a></li>
       </li>
-      <ul class="sidebar-menu" data-widget="tree">
+      <li>
         <li class="treeview">
           <a href="#">
             <i class="fa fa-file"></i> <span>Hasil</span>
