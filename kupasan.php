@@ -6,7 +6,7 @@
     exit();
   }
   if(!isset($_GET['edit'])){
-     $query = mysqli_query($koneksi, "SELECT * FROM stok"); 
+     $query = mysqli_query($koneksi, "SELECT * FROM kupasan"); 
 ?>
 
 <!DOCTYPE html>
@@ -91,7 +91,7 @@
          <li><a href="stok.php"><i class="glyphicon glyphicon-list"></i> <span>Stok</span></a></li>
       </li>
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="active treeview">
+        <li class="treeview">
           <a href="#">
             <i class="fa fa-file"></i> <span>Hasil</span>
             <span class="pull-right-container">
@@ -99,12 +99,12 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i>Kupasan</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dryer</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i> Tembel</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i> Hotpress</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i> Finishing</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i> Lain-lain</a></li>
+            <li class="active"><a href="kupasan.php"><i class="fa fa-circle-o"></i>Kupasan</a></li>
+            <li><a href="dryer.php"><i class="fa fa-circle-o"></i> Dryer</a></li>
+            <li><a href="tembel.php"><i class="fa fa-circle-o"></i> Tembel</a></li>
+            <li><a href="hotpress.php"><i class="fa fa-circle-o"></i> Hotpress</a></li>
+            <li><a href="finishing.php"><i class="fa fa-circle-o"></i> Finishing</a></li>
+            <li><a href="lain.php"><i class="fa fa-circle-o"></i> Lain-lain</a></li>
           </ul>
         </li>
       <li class="treeview">
@@ -124,7 +124,7 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><b>DATA STOK</b></h1>
+      <h1><b>DATA KUPASAN</b></h1>
     </section>
     <!-- Main content -->
     <section class="content">
@@ -132,15 +132,21 @@
         <div class="col-xs-12">
           <div class="box box-primary">
             <div class="box-header">
-              <button type="button" name="btntambahstok"<a data-toggle="modal" data-target="#tambahstok" class=" btn btn-primary  text-white";> Tambah <i class="glyphicon glyphicon-plus"></i></a></button>
+              <button type="button" name="btntambahkupasan"<a data-toggle="modal" data-target="#tambahkupasan" class=" btn btn-primary  text-white";> Tambah <i class="glyphicon glyphicon-plus"></i></a></button>
             </div>
           <div class="box-body table-responsive">
-            <table id="stok" class="table table-bordered table-hover">
+            <table id="kupasan" class="table table-bordered table-hover">
               <thead>
                 <tr>
                   <th><center>Tanggal</center></th>
-                  <th><center>Jenis Kayu</center></th>
-                  <th><center>Jumlah</center></th>
+                  <th><center>Kode Departemen</center></th>
+                  <th><center>Kode Pegawai</center></th>
+                  <th><center>Panjang</center></th>
+                  <th><center>Lebar</center></th>
+                  <th><center>Tebal</center></th>
+                  <th><center>Kwalitas</center></th>
+                  <th><center>Jenis</center></th>
+                  <th><center>Hasil</center></th>
                   <th><center>Aksi</center></th>
                 </tr>
               </thead>
@@ -148,19 +154,23 @@
 
                 <?php
                 include "conf/conn.php";
-                $query = mysqli_query($koneksi, "SELECT * FROM stok ORDER BY tanggal DESC");
+                $query = mysqli_query($koneksi, "SELECT * FROM kupasan ORDER BY kodep DESC");
 
                 while ($row = mysqli_fetch_array($query)) {
                 ?>
 
                 <tr>
-                  <td><?php echo $row['tanggal'];?></td>
-                  <td><?php echo $row['jeniskayu'];?></td>
-                  <td><?php echo $row['jumlah'];?></td>
+                  <td><?php echo $row['kodep'];?></td>
+                  <td><?php echo $row['Nama'];?></td>
+                  <td><?php echo $row['alamat'];?></td>
+                  <td><?php echo $row['jeniskelamin'];?></td>
+                  <td><?php echo $row['notelp'];?></td>
+                  <td><?php echo $row['kodej'];?></td>
+                  <td><?php echo $row['idjadwal'];?></td>
                   <td>
                   <center>
-                  <!-- <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btneditstok' data-id="<?php echo $row['kodep']?>" data-nama="<?php echo $row['kodep']?>"><i class="glyphicon glyphicon-edit"></i></button> -->
-                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapusstok' data-href="pages/hapusstok.php?jeniskayu=<?php echo $row['jeniskayu'];?>"><i class="glyphicon glyphicon-trash"></i>
+                  <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btneditkupasan' data-id="<?php echo $row['kodep']?>" data-nama="<?php echo $row['kodep']?>"><i class="glyphicon glyphicon-edit"></i></button>
+                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapuskupasan' data-href="pages/hapuskupasan.php?kodep=<?php echo $row['kodep'];?>"><i class="glyphicon glyphicon-trash"></i>
                   </center>
                   </td>
                 </tr>
@@ -181,55 +191,94 @@
     <!-- /.content -->
   </div>
 <!-- /.content-wrapper -->
-<!-- modal  stok -->
-        <div class="modal fade" id="tambahstok" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- modal tambah kupasan -->
+        <div class="modal fade" id="tambahkupasan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
-              <h4 class="modal-title" id="exampleModalLabel"><center><b>TAMBAH STOK</b></center></h4>
+              <h4 class="modal-title" id="exampleModalLabel"><center><b>TAMBAH DATA kupasan</b></center></h4>
             </div>
             <div class="modal-body">
-              <form action="pages/tambahstok.php" method="POST" enctype="multipart/form-data">
+              <form action="pages/tambahkupasan.php" method="POST" enctype="multipart/form-data">
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Jenis Kayu</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kode kupasan</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" name="jeniskayu" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
+                    <input type="text" class="form-control" name="kodep" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Jumlah</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Nama</label>
                   <div class="col-sm-9">
-                    <input type="number" class="form-control" name="jumlah" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+                    <input type="text" class="form-control" name="Nama" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Alamat</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" name="alamat" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+                  </div>
+                </div>
+                <div class="form-group row">
+                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Jenis Kelamin</label>
+                <div class="col-sm-3">
+                <select class="form-control" id="exampleFormControlSelect1" name="jeniskelamin" min>
+                  <option>Laki-laki</option>
+                  <option>Perempuan</option>
+                </select> 
+                </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">No Telp</label>
+                  <div class="col-sm-9">
+                    <input type="int" class="form-control" name="notelp" id="formGroupExampleInput" required="true" maxlength="12">
+                  </div>
+                </div>                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kode Jabatan</label>
+                  <div class="col-sm-3">
+                  <select class="form-control" id="exampleFormControlSelect1" name="kodej" min>
+                  <?php
+                  $tampil = mysqli_query($koneksi, "SELECT * FROM tjabatan");
+                  while($baris = mysqli_fetch_assoc($tampil)){
+                    echo '<option value = "'.$baris['kodej'].'">'.$baris['jabatan'].'</option>';  
+                  }
+                  ?>
+                </select> 
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">ID Jadwal</label>
+                  <div class="col-sm-9">
+                    <input type="int" class="form-control" name="idjadwal" id="formGroupExampleInput" required="true" maxlength="10">
                   </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary" name="btntambahstok">Tambah</button>
+                  <button type="submit" class="btn btn-primary" name="btntambahkupasan">Tambah</button>
                 </div>
               </form>
             </div>
           </div>
         </div>
       </div>
-  <!-- end modal tambah stok -->
+  <!-- end modal tambah kupasan -->
 
- <!-- modal edit stok -->
- <div class="modal fade" id="editstok" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <!-- modal edit kupasan -->
+ <div class="modal fade" id="editkupasan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
  <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
-              <h4 class="modal-title" id="exampleModalLabel"><center><b>EDIT DATA stok</b></center></h4>
+              <h4 class="modal-title" id="exampleModalLabel"><center><b>EDIT DATA kupasan</b></center></h4>
             </div>
             <div class="modal-body">
-              <form action="pages/editstok.php" method="POST" enctype="multipart/form-data">
+              <form action="pages/editkupasan.php" method="POST" enctype="multipart/form-data">
               <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kode stok</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kode kupasan</label>
                   <div class="col-sm-9">
                     <input type="text" readonly class="form-control txtkodep" name="kodep" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
                   </div>
@@ -275,17 +324,17 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary" name="btneditstok">Edit</button>
+                  <button type="submit" class="btn btn-primary" name="btneditkupasan">Edit</button>
                 </div>
               </form>
             </div>
           </div>
         </div>
      </div>    
-  <!-- end modal edit stok -->
+  <!-- end modal edit kupasan -->
 
-<!--modal hapus stok-->
-<div class="modal fade" id="hapusstok" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!--modal hapus kupasan-->
+<div class="modal fade" id="hapuskupasan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body">Apakah Anda Yakin ingin menghapus data ini?</div>
@@ -296,7 +345,7 @@
       </div>
     </div>
   </div>
-  <!-- end modal hapus stok -->
+  <!-- end modal hapus kupasan -->
   <footer class="main-footer">
     <strong>Copyright &copy; 2019 PT. Wijaya Plywoods .</strong>
   </footer>
@@ -308,7 +357,7 @@
   <script type="text/javascript">
     //Hapus Data
     $(document).ready(function() {
-        $('#hapusstok').on('show.bs.modal', function(e) {
+        $('#hapuskupasan').on('show.bs.modal', function(e) {
             $(this).find('.btn-hapus').attr('href', $(e.relatedTarget).data('href'));
         });
     });
@@ -339,7 +388,7 @@
 <!-- Javascript Datatable -->
 <script type="text/javascript">
   $(document).ready(function(){
-    $('#stok').DataTable();
+    $('#kupasan').DataTable();
   });
 </script>
 
@@ -396,7 +445,7 @@
       },
       "dataType"  : "json",
       "success" : function(e){
-        $("#editstok").modal();
+        $("#editkupasan").modal();
         $(".txtkodep").val(kodep);
         $(".Nama").val(e.Nama);
         $(".txtalamat").val(e.alamat);
@@ -412,7 +461,7 @@
 <script type="text/javascript">
     //Hapus Data
     $(document).ready(function() {
-        $('#hapusstok').on('show.bs.modal', function(e) {
+        $('#hapuskupasan').on('show.bs.modal', function(e) {
             $(this).find('.btn-hapus').attr('href', $(e.relatedTarget).data('href'));
         });
     });
@@ -425,7 +474,7 @@
   }
   if(isset($_GET['edit'])){
     $kodep = $_GET['kodep'];
-    $sql = "SELECT * FROM stok WHERE kodep='". $kodep ."'";
+    $sql = "SELECT * FROM kupasan WHERE kodep='". $kodep ."'";
     $q = mysqli_query($koneksi, $sql);
     while($row=mysqli_fetch_assoc($q)){
       echo json_encode($row);

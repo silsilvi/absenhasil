@@ -91,7 +91,7 @@
          <li><a href="stok.php"><i class="glyphicon glyphicon-list"></i> <span>Stok</span></a></li>
       </li>
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="active treeview">
+        <li class="treeview">
           <a href="#">
             <i class="fa fa-file"></i> <span>Hasil</span>
             <span class="pull-right-container">
@@ -99,12 +99,12 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i>Kupasan</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dryer</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i> Tembel</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i> Hotpress</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i> Finishing</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i> Lain-lain</a></li>
+            <li class="active"><a href="kupasan.php"><i class="fa fa-circle-o"></i>Kupasan</a></li>
+            <li><a href="dryer.php"><i class="fa fa-circle-o"></i> Dryer</a></li>
+            <li><a href="tembel.php"><i class="fa fa-circle-o"></i> Tembel</a></li>
+            <li><a href="hotpress.php"><i class="fa fa-circle-o"></i> Hotpress</a></li>
+            <li><a href="finishing.php"><i class="fa fa-circle-o"></i> Finishing</a></li>
+            <li><a href="lain.php"><i class="fa fa-circle-o"></i> Lain-lain</a></li>
           </ul>
         </li>
       <li class="treeview">
