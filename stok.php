@@ -147,8 +147,14 @@
               <thead>
                 <tr>
                   <th><center>Tanggal</center></th>
-                  <th><center>Jenis Kayu</center></th>
-                  <th><center>Jumlah</center></th>
+                  <th><center>Nama</center></th>
+                  <th><center>Seri</center></th>
+                  <th><center>Panjang</center></th>
+                  <th><center>Jenis</center></th>
+                  <th><center>Lahan</center></th>
+                  <th><center>Banyak</center></th>
+                  <th><center>m<sup>3</sup></center></th>
+                  <th><center>Uang</center></th>
                   <th><center>Aksi</center></th>
                 </tr>
               </thead>
@@ -156,15 +162,21 @@
 
                 <?php
                 include "conf/conn.php";
-                $query = mysqli_query($koneksi, "SELECT * FROM stok ORDER BY tanggal DESC");
+                $query = mysqli_query($koneksi, "SELECT * FROM kayumasuk ORDER BY tanggal DESC");
 
                 while ($row = mysqli_fetch_array($query)) {
                 ?>
 
                 <tr>
                   <td><?php echo $row['tanggal'];?></td>
-                  <td><?php echo $row['jeniskayu'];?></td>
-                  <td><?php echo $row['jumlah'];?></td>
+                  <td><?php echo $row['nama'];?></td>
+                  <td><?php echo $row['seri'];?></td>
+                  <td><?php echo $row['panjang'];?></td>
+                  <td><?php echo $row['jenis'];?></td>
+                  <td><?php echo $row['lahan'];?></td>
+                  <td><?php echo $row['banyak'];?></td>
+                  <td><?php echo $row['m3'];?></td>
+                  <td><?php echo $row['uang'];?></td>
                   <td>
                   <center>
                   <!-- <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btneditstok' data-id="<?php echo $row['kodep']?>" data-nama="<?php echo $row['kodep']?>"><i class="glyphicon glyphicon-edit"></i></button> -->
@@ -197,21 +209,36 @@
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
-              <h4 class="modal-title" id="exampleModalLabel"><center><b>TAMBAH STOK</b></center></h4>
+              <h4 class="modal-title" id="exampleModalLabel"><center><b>TAMBAH STOK KAYU MASUK</b></center></h4>
             </div>
             <div class="modal-body">
-              <form action="pages/tambahstok.php" method="POST" enctype="multipart/form-data">
+              <form action="pages/tambahpegawai.php" method="POST" enctype="multipart/form-data">
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Jenis Kayu</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kode Pegawai</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" name="jeniskayu" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
+                    <input type="text" class="form-control" name="kodep" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Jumlah</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Nama</label>
                   <div class="col-sm-9">
-                    <input type="number" class="form-control" name="jumlah" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+                    <input type="text" class="form-control" name="Nama" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
                   </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Alamat</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" name="alamat" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+                  </div>
+                </div>
+                <div class="form-group row">
+                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Jenis Kelamin</label>
+                <div class="col-sm-3">
+                <select class="form-control" id="exampleFormControlSelect1" name="jeniskelamin" min>
+                  <option>Laki-laki</option>
+                  <option>Perempuan</option>
+                </select> 
+                </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -433,7 +460,7 @@
   }
   if(isset($_GET['edit'])){
     $kodep = $_GET['kodep'];
-    $sql = "SELECT * FROM stok WHERE kodep='". $kodep ."'";
+    $sql = "SELECT * FROM kayumasuk WHERE kodep='". $kodep ."'";
     $q = mysqli_query($koneksi, $sql);
     while($row=mysqli_fetch_assoc($q)){
       echo json_encode($row);

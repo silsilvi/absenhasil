@@ -6,7 +6,7 @@
     exit();
   }
   if(!isset($_GET['edit'])){
-     $query = mysqli_query($koneksi, "SELECT * FROM pegawai"); 
+     $query = mysqli_query($koneksi, "SELECT * FROM kayumasuk"); 
 ?>
 
 <!DOCTYPE html>
@@ -142,7 +142,7 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><b>DATA PEGAWAI</b></h1>
+      <h1><b>DATA STOK</b></h1>
     </section>
     <!-- Main content -->
     <section class="content">
@@ -150,19 +150,21 @@
         <div class="col-xs-12">
           <div class="box box-primary">
             <div class="box-header">
-              <button type="button" name="btntambahpegawai"<a data-toggle="modal" data-target="#tambahpegawai" class=" btn btn-primary  text-white";> Tambah <i class="glyphicon glyphicon-plus"></i></a></button>
+              <button type="button" name="btntambahstokkm"<a data-toggle="modal" data-target="#tambahstokkm" class=" btn btn-primary  text-white";> Tambah <i class="glyphicon glyphicon-plus"></i></a></button>
             </div>
           <div class="box-body table-responsive">
-            <table id="pegawai" class="table table-bordered table-hover">
+            <table id="stokkm" class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <th><center>kode Pegawai</center></th>
+                  <th><center>Tanggal</center></th>
                   <th><center>Nama</center></th>
-                  <th><center>Alamat</center></th>
-                  <th><center>Jenis kelamin</center></th>
-                  <th><center>No telp</center></th>
-                  <th><center>Kode Jabatan</center></th>
-                  <th><center>ID Jadwal</center></th>
+                  <th><center>Seri</center></th>
+                  <th><center>Panjang</center></th>
+                  <th><center>Jenis</center></th>
+                  <th><center>Lahan</center></th>
+                  <th><center>Banyak</center></th>
+                  <th><center>m<sup>3</sup></center></th>
+                  <th><center>Uang</center></th>
                   <th><center>Aksi</center></th>
                 </tr>
               </thead>
@@ -170,23 +172,25 @@
 
                 <?php
                 include "conf/conn.php";
-                $query = mysqli_query($koneksi, "SELECT * FROM pegawai ORDER BY kodep DESC");
+                $query = mysqli_query($koneksi, "SELECT * FROM kayumasuk ORDER BY tanggal DESC");
 
                 while ($row = mysqli_fetch_array($query)) {
                 ?>
 
                 <tr>
-                  <td><?php echo $row['kodep'];?></td>
-                  <td><?php echo $row['Nama'];?></td>
-                  <td><?php echo $row['alamat'];?></td>
-                  <td><?php echo $row['jeniskelamin'];?></td>
-                  <td><?php echo $row['notelp'];?></td>
-                  <td><?php echo $row['kodej'];?></td>
-                  <td><?php echo $row['idjadwal'];?></td>
+                  <td><?php echo $row['tanggal'];?></td>
+                  <td><?php echo $row['nama'];?></td>
+                  <td><?php echo $row['seri'];?></td>
+                  <td><?php echo $row['panjang'];?></td>
+                  <td><?php echo $row['jenis'];?></td>
+                  <td><?php echo $row['lahan'];?></td>
+                  <td><?php echo $row['banyak'];?></td>
+                  <td><?php echo $row['m3'];?></td>
+                  <td><?php echo $row['uang'];?></td>
                   <td>
                   <center>
-                  <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btneditpegawai' data-id="<?php echo $row['kodep']?>" data-nama="<?php echo $row['kodep']?>"><i class="glyphicon glyphicon-edit"></i></button>
-                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapuspegawai' data-href="pages/hapuspegawai.php?kodep=<?php echo $row['kodep'];?>"><i class="glyphicon glyphicon-trash"></i>
+                  <!-- <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btneditstokkm' data-id="<?php echo $row['kodep']?>" data-nama="<?php echo $row['kodep']?>"><i class="glyphicon glyphicon-edit"></i></button> -->
+                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapusstokkm' data-href="pages/hapusstokkm.php?jeniskayu=<?php echo $row['jeniskayu'];?>"><i class="glyphicon glyphicon-trash"></i>
                   </center>
                   </td>
                 </tr>
@@ -207,67 +211,78 @@
     <!-- /.content -->
   </div>
 <!-- /.content-wrapper -->
-<!-- modal tambah pegawai -->
-        <div class="modal fade" id="tambahpegawai" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- modal  stokkm -->
+        <div class="modal fade" id="tambahstokkm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
-              <h4 class="modal-title" id="exampleModalLabel"><center><b>TAMBAH DATA PEGAWAI</b></center></h4>
+              <h4 class="modal-title" id="exampleModalLabel"><center><b>TAMBAH STOK KAYU MASUK</b></center></h4>
             </div>
             <div class="modal-body">
               <form action="pages/tambahpegawai.php" method="POST" enctype="multipart/form-data">
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kode Pegawai</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" name="kodep" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Tanggal</label>
+                  <div class="col-sm-4">
+                    <input type="date" class="form-control" name="tanggal" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Nama</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" name="Nama" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+                    <input type="text" class="form-control" name="nama" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Alamat</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Seri</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" name="alamat" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+                    <input type="int" class="form-control" name="seri" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
                   </div>
                 </div>
                 <div class="form-group row">
-                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Jenis Kelamin</label>
+                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Panjang</label>
                 <div class="col-sm-3">
-                <select class="form-control" id="exampleFormControlSelect1" name="jeniskelamin" min>
-                  <option>Laki-laki</option>
-                  <option>Perempuan</option>
+                <select class="form-control" id="exampleFormControlSelect1" name="panjang">
+                  <option>120</option>
+                  <option>130</option>
+                  <option>260</option>
                 </select> 
                 </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">No Telp</label>
-                  <div class="col-sm-9">
-                    <input type="int" class="form-control" name="notelp" id="formGroupExampleInput" required="true" maxlength="12">
-                  </div>
-                </div>                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kode Jabatan</label>
-                  <div class="col-sm-3">
-                  <select class="form-control" id="exampleFormControlSelect1" name="kodej" min>
-                  <?php
-                  $tampil = mysqli_query($koneksi, "SELECT * FROM tjabatan");
-                  while($baris = mysqli_fetch_assoc($tampil)){
-                    echo '<option value = "'.$baris['kodej'].'">'.$baris['jabatan'].'</option>';  
-                  }
-                  ?>
+                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Jenis</label>
+                <div class="col-sm-3">
+                <select class="form-control" id="exampleFormControlSelect1" name="jenis">
+                  <option>Keras</option>
+                  <option>Lunak</option>
+                  <option>Sengon</option>
                 </select> 
+                </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Lahan</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" name="lahan" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">ID Jadwal</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Banyak</label>
                   <div class="col-sm-9">
-                    <input type="int" class="form-control" name="idjadwal" id="formGroupExampleInput" required="true" maxlength="10">
+                    <input type="int" class="form-control" name="banyak" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">m<sup>3</sup></label>
+                  <div class="col-sm-9">
+                    <input type="int" class="form-control" name="lahan" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Uang</label>
+                  <div class="col-sm-9">
+                    <input type="int" class="form-control" name="uang" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -279,22 +294,22 @@
           </div>
         </div>
       </div>
-  <!-- end modal tambah pegawai -->
+  <!-- end modal tambah stokkm -->
 
- <!-- modal edit pegawai -->
- <div class="modal fade" id="editpegawai" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <!-- modal edit stokkm -->
+ <div class="modal fade" id="editstokkm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
  <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
-              <h4 class="modal-title" id="exampleModalLabel"><center><b>EDIT DATA PEGAWAI</b></center></h4>
+              <h4 class="modal-title" id="exampleModalLabel"><center><b>EDIT DATA stokkm</b></center></h4>
             </div>
             <div class="modal-body">
-              <form action="pages/editpegawai.php" method="POST" enctype="multipart/form-data">
+              <form action="pages/editstokkm.php" method="POST" enctype="multipart/form-data">
               <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kode Pegawai</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kode stokkm</label>
                   <div class="col-sm-9">
                     <input type="text" readonly class="form-control txtkodep" name="kodep" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
                   </div>
@@ -340,17 +355,17 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary" name="btneditpegawai">Edit</button>
+                  <button type="submit" class="btn btn-primary" name="btneditstokkm">Edit</button>
                 </div>
               </form>
             </div>
           </div>
         </div>
      </div>    
-  <!-- end modal edit pegawai -->
+  <!-- end modal edit stokkm -->
 
-<!--modal hapus pegawai-->
-<div class="modal fade" id="hapuspegawai" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!--modal hapus stokkm-->
+<div class="modal fade" id="hapusstokkm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body">Apakah Anda Yakin ingin menghapus data ini?</div>
@@ -361,7 +376,7 @@
       </div>
     </div>
   </div>
-  <!-- end modal hapus pegawai -->
+  <!-- end modal hapus stokkm -->
   <footer class="main-footer">
     <strong>Copyright &copy; 2019 PT. Wijaya Plywoods .</strong>
   </footer>
@@ -373,7 +388,7 @@
   <script type="text/javascript">
     //Hapus Data
     $(document).ready(function() {
-        $('#hapuspegawai').on('show.bs.modal', function(e) {
+        $('#hapusstokkm').on('show.bs.modal', function(e) {
             $(this).find('.btn-hapus').attr('href', $(e.relatedTarget).data('href'));
         });
     });
@@ -404,7 +419,7 @@
 <!-- Javascript Datatable -->
 <script type="text/javascript">
   $(document).ready(function(){
-    $('#pegawai').DataTable();
+    $('#stokkm').DataTable();
   });
 </script>
 
@@ -461,7 +476,7 @@
       },
       "dataType"  : "json",
       "success" : function(e){
-        $("#editpegawai").modal();
+        $("#editstokkm").modal();
         $(".txtkodep").val(kodep);
         $(".Nama").val(e.Nama);
         $(".txtalamat").val(e.alamat);
@@ -477,7 +492,7 @@
 <script type="text/javascript">
     //Hapus Data
     $(document).ready(function() {
-        $('#hapuspegawai').on('show.bs.modal', function(e) {
+        $('#hapusstokkm').on('show.bs.modal', function(e) {
             $(this).find('.btn-hapus').attr('href', $(e.relatedTarget).data('href'));
         });
     });
@@ -490,7 +505,7 @@
   }
   if(isset($_GET['edit'])){
     $kodep = $_GET['kodep'];
-    $sql = "SELECT * FROM pegawai WHERE kodep='". $kodep ."'";
+    $sql = "SELECT * FROM kayumasuk WHERE kodep='". $kodep ."'";
     $q = mysqli_query($koneksi, $sql);
     while($row=mysqli_fetch_assoc($q)){
       echo json_encode($row);
