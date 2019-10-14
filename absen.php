@@ -198,6 +198,9 @@
     </section>
     <!-- /.content -->
   </div>
+  <footer class="main-footer">
+    <strong>Copyright &copy; 2019 PT. Wijaya Plywoods .</strong>
+  </footer>
 <!-- /.content-wrapper -->
 <!-- modal tambah absen -->
         <div class="modal fade" id="tambahabsen" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -296,9 +299,6 @@
     </div>
   </div>
 <!-- end modal hapus absen -->
-<footer class="main-footer">
-    <strong>Copyright &copy; 2019 PT. Wijaya Plywoods .</strong>
-  </footer>
   </div>
 </div>
 
