@@ -6,7 +6,7 @@
     exit();
   }
   if(!isset($_GET['edit'])){
-     $query = mysqli_query($koneksi, "SELECT * FROM user"); 
+     $query = mysqli_query($koneksi, "SELECT * FROM tlogin"); 
 ?>
 
 <!DOCTYPE html>
@@ -148,14 +148,14 @@
                 <tr>
                   <th><center>ID</center></th>
                   <th><center>Username</center></th>
-                  <th><center>Aksi</center></th>
+                  <!-- <th><center>Aksi</center></th> -->
                 </tr>
               </thead>
               <tbody>
 
                 <?php
                 include "conf/conn.php";
-                $query = mysqli_query($koneksi, "SELECT * FROM user ORDER BY id DESC");
+                $query = mysqli_query($koneksi, "SELECT * FROM tlogin ORDER BY id DESC");
 
                 while ($row = mysqli_fetch_array($query)) {
                 ?>
@@ -165,8 +165,8 @@
                   <td><?php echo $row['username'];?></td>
                   <td>
                   <center>
-                  <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btnedituser' data-id="<?php echo $row['kodep']?>" data-nama="<?php echo $row['kodep']?>"><i class="glyphicon glyphicon-edit"></i></button>
-                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapususer' data-href="pages/hapususer.php?kodep=<?php echo $row['kodep'];?>"><i class="glyphicon glyphicon-trash"></i>
+                  <!-- <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btnedituser' data-id="<?php echo $row['id']?>" data-nama="<?php echo $row['id']?>"><i class="glyphicon glyphicon-edit"></i></button> -->
+                  <!-- <button class='btn btn-danger ' data-toggle='modal' data-target='#hapususer' data-href="pages/hapususer.php?id=<?php echo $row['id'];?>"><i class="glyphicon glyphicon-trash"></i> -->
                   </center>
                   </td>
                 </tr>
@@ -200,54 +200,15 @@
             <div class="modal-body">
               <form action="pages/tambahuser.php" method="POST" enctype="multipart/form-data">
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kode user</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Username</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" name="kodep" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
+                    <input type="text" class="form-control" name="username" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Nama</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Password</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" name="Nama" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Alamat</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" name="alamat" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
-                  </div>
-                </div>
-                <div class="form-group row">
-                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Jenis Kelamin</label>
-                <div class="col-sm-3">
-                <select class="form-control" id="exampleFormControlSelect1" name="jeniskelamin" min>
-                  <option>Laki-laki</option>
-                  <option>Perempuan</option>
-                </select> 
-                </div>
-                </div>
-                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">No Telp</label>
-                  <div class="col-sm-9">
-                    <input type="int" class="form-control" name="notelp" id="formGroupExampleInput" required="true" maxlength="12">
-                  </div>
-                </div>                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kode Jabatan</label>
-                  <div class="col-sm-3">
-                  <select class="form-control" id="exampleFormControlSelect1" name="kodej" min>
-                  <?php
-                  $tampil = mysqli_query($koneksi, "SELECT * FROM tjabatan");
-                  while($baris = mysqli_fetch_assoc($tampil)){
-                    echo '<option value = "'.$baris['kodej'].'">'.$baris['jabatan'].'</option>';  
-                  }
-                  ?>
-                </select> 
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">ID Jadwal</label>
-                  <div class="col-sm-9">
-                    <input type="int" class="form-control" name="idjadwal" id="formGroupExampleInput" required="true" maxlength="10">
+                    <input type="text" class="form-control" name="password" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -269,53 +230,20 @@
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
-              <h4 class="modal-title" id="exampleModalLabel"><center><b>EDIT DATA user</b></center></h4>
+              <h4 class="modal-title" id="exampleModalLabel"><center><b>EDIT DATA USER</b></center></h4>
             </div>
             <div class="modal-body">
               <form action="pages/edituser.php" method="POST" enctype="multipart/form-data">
               <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kode user</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Username</label>
                   <div class="col-sm-9">
-                    <input type="text" readonly class="form-control txtkodep" name="kodep" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
+                    <input type="text" readonly class="form-control txtid" name="username" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Nama</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Password</label>
                   <div class="col-sm-9">
-                    <input type="text" class="Nama form-control" name="Nama" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Alamat</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control txtalamat" name="alamat" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
-                  </div>
-                </div>
-                <div class="form-group row">
-                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Jenis Kelamin</label>
-                <div class="col-sm-3">
-                <select class="form-control seljeniskelamin" id="exampleFormControlSelect1" name="jeniskelamin" min>
-                  <option>Laki-laki</option>
-                  <option>Perempuan</option>
-                </select> 
-                </div>
-                </div>
-                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">No Telp</label>
-                  <div class="col-sm-9">
-                    <input type="int" class="form-control txtnotelp" name="notelp" id="formGroupExampleInput" required="true" maxlength="12">
-                  </div>
-                </div>                
-                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kode Jabatan</label>
-                  <div class="col-sm-3">
-                    <input type="int" class="form-control txtkodej" name="kodej" id="formGroupExampleInput" required="true" maxlength="10">
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">ID Jadwal</label>
-                  <div class="col-sm-9">
-                    <input type="int" class="form-control txtidjadwal" name="idjadwal" id="formGroupExampleInput" required="true" maxlength="10">
+                    <input type="text" class="Nama form-control" name="password" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -431,24 +359,19 @@
 
 <script>
   $(".btn-edit").click(function(e){
-    var kodep = $(this).attr("data-id");
+    var id = $(this).attr("data-id");
     $.ajax({
       "method"  : "get",
       "url"   : "index.php",
       "data"    : {
         "edit"      : true,
-        "kodep"  : kodep,
+        "id"  : id,
       },
       "dataType"  : "json",
       "success" : function(e){
         $("#edituser").modal();
-        $(".txtkodep").val(kodep);
-        $(".Nama").val(e.Nama);
-        $(".txtalamat").val(e.alamat);
-        $(".seljeniskelamin").val(e.jeniskelamin);
-        $(".txtnotelp").val(e.notelp);
-        $(".txtkodej").val(e.kodej);
-        $(".txtidjadwal").val(e.idjadwal);
+        $(".txtid").val(id);
+        $(".Nama").val(e.username);
       }
     });
   });
@@ -469,8 +392,8 @@
 <?php
   }
   if(isset($_GET['edit'])){
-    $kodep = $_GET['kodep'];
-    $sql = "SELECT * FROM user WHERE kodep='". $kodep ."'";
+    $id = $_GET['id'];
+    $sql = "SELECT * FROM tlogin WHERE id='". $id ."'";
     $q = mysqli_query($koneksi, $sql);
     while($row=mysqli_fetch_assoc($q)){
       echo json_encode($row);
