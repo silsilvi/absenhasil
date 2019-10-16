@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 14, 2019 at 08:32 AM
+-- Generation Time: Oct 15, 2019 at 11:44 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -57,6 +57,35 @@ INSERT INTO `absensi` (`kodeabsen`, `tanggal`, `kodep`, `Nama`, `jamhadir`, `jam
 (1119, '2019-10-09', 1111, '', '10:30:29', '13:06:00', '11:00:00', '13:00:00', 'Telat', 5, 0, 2.6),
 (1128, '2019-10-09', 1205, '', '13:48:42', '13:45:14', '14:00:00', '13:30:00', 'Telat', -436257, 0, 0),
 (1129, '2019-10-09', 2222, 'Unc', '14:17:27', '00:00:00', '14:30:00', '00:00:00', 'Telat', 8.5, 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `detailkayumasuk`
+--
+
+CREATE TABLE `detailkayumasuk` (
+  `no` int(11) NOT NULL,
+  `tanggal` date DEFAULT NULL,
+  `nama` varchar(50) DEFAULT NULL,
+  `seri` int(50) DEFAULT NULL,
+  `panjang` int(50) DEFAULT NULL,
+  `jenis` varchar(50) DEFAULT NULL,
+  `lahan` varchar(50) DEFAULT NULL,
+  `banyak` int(50) DEFAULT NULL,
+  `m3` double DEFAULT NULL,
+  `uang` int(50) DEFAULT NULL,
+  `totalbanyak` int(50) DEFAULT NULL,
+  `totalm3` float DEFAULT NULL,
+  `totaluang` int(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `detailkayumasuk`
+--
+
+INSERT INTO `detailkayumasuk` (`no`, `tanggal`, `nama`, `seri`, `panjang`, `jenis`, `lahan`, `banyak`, `m3`, `uang`, `totalbanyak`, `totalm3`, `totaluang`) VALUES
+(1, '2019-10-15', 'asd', 10021, 120, 'Lunak', '1A', 67, 1, 2500000, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -115,20 +144,35 @@ CREATE TABLE `hotpress` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `kayumasuk`
+--
+
+CREATE TABLE `kayumasuk` (
+  `no` int(11) NOT NULL,
+  `tgl` date DEFAULT NULL,
+  `nama` varchar(100) DEFAULT NULL,
+  `uang` int(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `kupasan`
 --
 
 CREATE TABLE `kupasan` (
   `tanggal` date DEFAULT NULL,
-  `kodedept` int(10) NOT NULL,
-  `kodep` int(10) DEFAULT NULL,
-  `panjang` int(50) DEFAULT NULL,
-  `lebar` int(50) DEFAULT NULL,
-  `tebal` int(50) DEFAULT NULL,
-  `kw` int(50) DEFAULT NULL,
-  `jenis` varchar(100) DEFAULT NULL,
-  `hasil` int(100) DEFAULT NULL
+  `batang` int(100) DEFAULT NULL,
+  `lahan` varchar(100) DEFAULT NULL,
+  `seri` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `kupasan`
+--
+
+INSERT INTO `kupasan` (`tanggal`, `batang`, `lahan`, `seri`) VALUES
+('2019-10-15', 7, '1A', 10021);
 
 -- --------------------------------------------------------
 
@@ -302,6 +346,12 @@ ALTER TABLE `absensi`
   ADD PRIMARY KEY (`kodeabsen`);
 
 --
+-- Indexes for table `detailkayumasuk`
+--
+ALTER TABLE `detailkayumasuk`
+  ADD PRIMARY KEY (`no`);
+
+--
 -- Indexes for table `dryyer`
 --
 ALTER TABLE `dryyer`
@@ -320,10 +370,16 @@ ALTER TABLE `hotpress`
   ADD PRIMARY KEY (`kodedept`);
 
 --
+-- Indexes for table `kayumasuk`
+--
+ALTER TABLE `kayumasuk`
+  ADD PRIMARY KEY (`no`);
+
+--
 -- Indexes for table `kupasan`
 --
 ALTER TABLE `kupasan`
-  ADD PRIMARY KEY (`kodedept`);
+  ADD PRIMARY KEY (`seri`);
 
 --
 -- Indexes for table `lain`
@@ -378,6 +434,12 @@ ALTER TABLE `tlogin`
 --
 
 --
+-- AUTO_INCREMENT for table `detailkayumasuk`
+--
+ALTER TABLE `detailkayumasuk`
+  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `dryyer`
 --
 ALTER TABLE `dryyer`
@@ -396,10 +458,16 @@ ALTER TABLE `hotpress`
   MODIFY `kodedept` int(10) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `kayumasuk`
+--
+ALTER TABLE `kayumasuk`
+  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `kupasan`
 --
 ALTER TABLE `kupasan`
-  MODIFY `kodedept` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `seri` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10022;
 
 --
 -- AUTO_INCREMENT for table `lain`

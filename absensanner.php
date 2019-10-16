@@ -83,7 +83,7 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-file"></i> <span>Absen</span>
+            <i class="glyphicon glyphicon-briefcase"></i> <span>Absen</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -95,9 +95,10 @@
         </li>
       <li><a href="perbandingan.php"><i class="glyphicon glyphicon-check"></i> <span>Perbandingan</span></a></li>
       </li>
+      <li>
       <li class="treeview">
-         <li><a href="stok.php"><i class="glyphicon glyphicon-list"></i> <span>Stok</span></a></li>
-      </li>
+         <li><a href="kayumasuk.php"><i class="glyphicon glyphicon-book"></i> <span>Stok Kayu Masuk</span></a></li>
+      </li>  
       <li>
         <li class="treeview">
           <a href="#">
