@@ -7,14 +7,18 @@
   $lahan = $_POST['lahan'];
   $seri = $_POST['seri'];
 
+  $tampil=mysqli_query($koneksi, "SELECT * FROM kupasan JOIN detailkayumasuk on kupasan.seri=detailkayumasuk.seri");
+  $row=mysqli_fetch_assoc($tampil);
+  if ($row['batang'] > $row['banyak']){
+    echo '<script>alert("Stok kayu tidak mencukupi!");</script>';
+    echo "<script>location='../kupasan.php';</script>";
+  }
+  else{
   $query = mysqli_query($koneksi, "INSERT into kupasan (tanggal,batang,lahan,seri) VALUES ('$tanggal','$batang','$lahan','$seri')");
   $koneksi->query("UPDATE detailkayumasuk SET banyak=banyak-$batang WHERE seri='$seri'");
-  if ($query) {
-    echo '<script>alert("Data Telah Ditambahkan!");</script>';
-    echo "<script>location='../kupasan.php';</script>";
-  } else {
-    echo '<script>alert("Data Belum Tersimpan, Kode Sudah Terpakai");</script>';
-    echo "<script>location='../kupasan.php';</script>";
+  echo '<script>alert("Data Berhasil Ditambahkan!");</script>';
+  echo "<script>location='../kupasan.php';</script>";
+}
   }
-  }
+
 ?>

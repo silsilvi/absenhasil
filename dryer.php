@@ -6,7 +6,7 @@
     exit();
   }
   if(!isset($_GET['edit'])){
-     $query = mysqli_query($koneksi, "SELECT * FROM dryer"); 
+     $query = mysqli_query($koneksi, "SELECT * FROM kupasan"); 
 ?>
 
 <!DOCTYPE html>
@@ -79,17 +79,27 @@
       <li class="header">MENU</li>
       <li><a href="index.php"><i class="glyphicon glyphicon-home"></i> <span>Pegawai</span></a></li>
       </li>
-      <li class="treeview">
-         <li><a href="absen.php"><i class="glyphicon glyphicon-briefcase"></i> <span>Absen</span></a></li>
-      </li>
-      <li class="treeview">
-         <li><a href="absensanner.php"><i class="glyphicon glyphicon-briefcase"></i> <span>Absen Scanner</span></a></li>
-      </li>
+      <li>
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-briefcase"></i> <span>Absen</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="active"><a href="absen.php"><i class="fa fa-circle-o"></i>Absen Hasil</a></li>
+            <li><a href="absensanner.php"><i class="fa fa-circle-o"></i>Absen Scanner</a></li>
+          </ul>
+        </li>
       <li><a href="perbandingan.php"><i class="glyphicon glyphicon-check"></i> <span>Perbandingan</span></a></li>
       </li>
+      <li>
       <li class="treeview">
-         <li><a href="stok.php"><i class="glyphicon glyphicon-list"></i> <span>Stok</span></a></li>
-      </li>
+         <li><a href="kayumasuk.php"><i class="glyphicon glyphicon-book"></i> <span>Stok Kayu Masuk</span></a></li>
+      </li>  
+      <li>
         <li class="treeview">
           <a href="#">
             <i class="fa fa-file"></i> <span>Hasil</span>
@@ -138,14 +148,9 @@
               <thead>
                 <tr>
                   <th><center>Tanggal</center></th>
-                  <th><center>Kode Departemen</center></th>
-                  <th><center>Kode Pegawai</center></th>
-                  <th><center>Panjang</center></th>
-                  <th><center>Lebar</center></th>
-                  <th><center>Tebal</center></th>
-                  <th><center>Kwalitas</center></th>
-                  <th><center>Jenis</center></th>
-                  <th><center>Hasil</center></th>
+                  <th><center>Batang</center></th>
+                  <th><center>Lahan</center></th>
+                  <th><center>kodep</center></th>
                   <th><center>Aksi</center></th>
                 </tr>
               </thead>
@@ -159,13 +164,10 @@
                 ?>
 
                 <tr>
+                  <td><?php echo $row['tanggal'];?></td>
+                  <td><?php echo $row['batang'];?></td>
+                  <td><?php echo $row['lahan'];?></td>
                   <td><?php echo $row['kodep'];?></td>
-                  <td><?php echo $row['Nama'];?></td>
-                  <td><?php echo $row['alamat'];?></td>
-                  <td><?php echo $row['jeniskelamin'];?></td>
-                  <td><?php echo $row['notelp'];?></td>
-                  <td><?php echo $row['kodej'];?></td>
-                  <td><?php echo $row['idjadwal'];?></td>
                   <td>
                   <center>
                   <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btneditkupasan' data-id="<?php echo $row['kodep']?>" data-nama="<?php echo $row['kodep']?>"><i class="glyphicon glyphicon-edit"></i></button>
@@ -198,14 +200,14 @@
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
-              <h4 class="modal-title" id="exampleModalLabel"><center><b>TAMBAH DATA kupasan</b></center></h4>
+              <h4 class="modal-title" id="exampleModalLabel"><center><b>TAMBAH DATA KUPASAN</b></center></h4>
             </div>
             <div class="modal-body">
               <form action="pages/tambahkupasan.php" method="POST" enctype="multipart/form-data">
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kode kupasan</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Tanggal</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" name="kodep" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
+                    <input type="text" class="form-control" name="tanggal" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
                   </div>
                 </div>
                 <div class="form-group row">
