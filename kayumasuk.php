@@ -133,7 +133,7 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><b>DATA KAYU MASUK</b></h1>
+      <h1><b>STOK KAYU MASUK</b></h1>
     </section>
     <!-- Main content -->
     <section class="content">
@@ -142,6 +142,26 @@
           <div class="box box-primary">
             <div class="box-header">
               <button type="button" name="btntambahkayumasuk"<a data-toggle="modal" data-target="#tambahkayumasuk" class=" btn btn-primary  text-white";> Tambah <i class="glyphicon glyphicon-plus"></i></a></button>
+              <div class="card-body">
+         <form action="exportkayu.php" method="POST">
+          <div class="row">
+           <div class="col-md-5"><b>Mulai</b>
+           <div class="form-group">
+             <input type="date" class="form-control" name="tglm">
+           </div>
+           </div>
+           <div class="col-md-5"><b>Selesai</b>
+            <div class="form-group">
+             <input type="date" class="form-control" name="tgls">
+           </div>
+         </div>
+		 <br>
+          <div class="col-md-2">
+              <button type="submit" class="btn btn-primary" name="print"> Export <i class="glyphicon glyphicon-print text-white"></i></button>
+          </div> 
+          </div>
+          </form>
+        </div>
             </div>
           <div class="box-body table-responsive">
             <table id="kayumasuk" class="table table-bordered table-hover">
@@ -164,7 +184,7 @@
 
                 <?php
                 include "conf/conn.php";
-                $query = mysqli_query($koneksi, "SELECT * FROM detailkayumasuk ORDER BY tanggal DESC");
+                $query = mysqli_query($koneksi, "SELECT * FROM detailkayumasuk ORDER BY tanggal ASC");
 
                 while ($row = mysqli_fetch_array($query)) {
                 ?>
@@ -184,7 +204,7 @@
                   <td>
                   <center>
                   <!-- <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btneditkayumasuk' data-id="<?php echo $row['kodep']?>" data-nama="<?php echo $row['kodep']?>"><i class="glyphicon glyphicon-edit"></i></button> -->
-                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapuskayumasuk' data-href="pages/hapuskayumasuk.php?tanggal=<?php echo $row['tanggal'];?>"><i class="glyphicon glyphicon-trash"></i>
+                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapuskayumasuk' data-href="pages/hapuskayumasuk.php?no=<?php echo $row['no'];?>"><i class="glyphicon glyphicon-trash"></i>
                   </center>
                   </td>
                 </tr>

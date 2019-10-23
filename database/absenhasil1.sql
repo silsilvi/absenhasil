@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 15, 2019 at 11:44 AM
+-- Generation Time: Oct 22, 2019 at 11:55 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -85,7 +85,9 @@ CREATE TABLE `detailkayumasuk` (
 --
 
 INSERT INTO `detailkayumasuk` (`no`, `tanggal`, `nama`, `seri`, `panjang`, `jenis`, `lahan`, `banyak`, `m3`, `uang`, `totalbanyak`, `totalm3`, `totaluang`) VALUES
-(1, '2019-10-15', 'asd', 10021, 120, 'Lunak', '1A', 67, 1, 2500000, 0, 0, 0);
+(21, '2019-10-22', 'AAAA', 1111, 120, 'Keras', '1A', 20, 1, 5000000, NULL, NULL, NULL),
+(22, '2019-10-22', 'BBBB', 2222, 120, 'Keras', '1A', 100, 1, 3500000, NULL, NULL, NULL),
+(24, '2019-10-22', 'BBB', 1122, 120, 'Keras', '2', 18, 0.678, 2000000, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -161,18 +163,30 @@ CREATE TABLE `kayumasuk` (
 --
 
 CREATE TABLE `kupasan` (
+  `no` int(11) NOT NULL,
   `tanggal` date DEFAULT NULL,
   `batang` int(100) DEFAULT NULL,
   `lahan` varchar(100) DEFAULT NULL,
-  `seri` int(100) NOT NULL
+  `seri` int(100) DEFAULT NULL,
+  `mesin` int(11) DEFAULT NULL,
+  `panjang` int(11) DEFAULT NULL,
+  `lebar` int(11) DEFAULT NULL,
+  `tebal` float DEFAULT NULL,
+  `kw` int(11) DEFAULT NULL,
+  `jenis` varchar(11) DEFAULT NULL,
+  `hasil` int(11) DEFAULT NULL,
+  `ket` varchar(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `kupasan`
 --
 
-INSERT INTO `kupasan` (`tanggal`, `batang`, `lahan`, `seri`) VALUES
-('2019-10-15', 7, '1A', 10021);
+INSERT INTO `kupasan` (`no`, `tanggal`, `batang`, `lahan`, `seri`, `mesin`, `panjang`, `lebar`, `tebal`, `kw`, `jenis`, `hasil`, `ket`) VALUES
+(34, '2019-10-22', 50, '1A', 1111, 1, 1, 1, 1, 1, 'S', 1, 'Belum'),
+(35, '2019-10-22', 30, '1A', 1111, 1, 1, 1, 1, 1, 'S', 1, 'Habis'),
+(36, '2019-10-22', 10, '2', 1122, 1, 1, 1, 1, 1, 'S', 200, 'Habis'),
+(37, '2019-10-22', 2, '2', 1122, 1, 1, 1, 1, 1, 's', 250, 'Belum');
 
 -- --------------------------------------------------------
 
@@ -245,9 +259,9 @@ INSERT INTO `stok` (`tanggal`, `jeniskayu`, `jumlah`) VALUES
 
 CREATE TABLE `tabsen` (
   `kodeabsen` int(10) NOT NULL,
-  `tanggal` date DEFAULT NULL,
-  `jamhadir` time DEFAULT NULL,
-  `jampulang` time DEFAULT NULL,
+  `tanggal1` date DEFAULT NULL,
+  `jamhadir1` time DEFAULT NULL,
+  `jampulang1` time DEFAULT NULL,
   `kodep` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -255,7 +269,7 @@ CREATE TABLE `tabsen` (
 -- Dumping data for table `tabsen`
 --
 
-INSERT INTO `tabsen` (`kodeabsen`, `tanggal`, `jamhadir`, `jampulang`, `kodep`) VALUES
+INSERT INTO `tabsen` (`kodeabsen`, `tanggal1`, `jamhadir1`, `jampulang1`, `kodep`) VALUES
 (1250, '2019-10-08', '08:00:00', '17:00:00', 2),
 (1252, '2019-10-09', '09:00:00', '21:00:00', 1111),
 (1254, '2019-10-14', '08:00:00', '17:00:00', 2222);
@@ -379,7 +393,7 @@ ALTER TABLE `kayumasuk`
 -- Indexes for table `kupasan`
 --
 ALTER TABLE `kupasan`
-  ADD PRIMARY KEY (`seri`);
+  ADD PRIMARY KEY (`no`);
 
 --
 -- Indexes for table `lain`
@@ -437,7 +451,7 @@ ALTER TABLE `tlogin`
 -- AUTO_INCREMENT for table `detailkayumasuk`
 --
 ALTER TABLE `detailkayumasuk`
-  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `dryyer`
@@ -455,7 +469,7 @@ ALTER TABLE `finishing`
 -- AUTO_INCREMENT for table `hotpress`
 --
 ALTER TABLE `hotpress`
-  MODIFY `kodedept` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `kodedept` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `kayumasuk`
@@ -467,7 +481,7 @@ ALTER TABLE `kayumasuk`
 -- AUTO_INCREMENT for table `kupasan`
 --
 ALTER TABLE `kupasan`
-  MODIFY `seri` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10022;
+  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `lain`

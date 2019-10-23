@@ -37,26 +37,24 @@ $tgls = $_POST['tgls'];
                   <th><center>Jam Pulang (bulat)</center></th>
                   <th><center>Jam Hadir(Hasil)</center></th>
                   <th><center>Jam Pulang (Hasil)</center></th>
-				  <th><center>Telat</center></th>
                   <th><center>Ketr</center></th>
     </tr>
     </thead>
     <tbody>                                            
         <?php 
-          $query = mysqli_query($koneksi, "SELECT * FROM absensi INNER JOIN tabsen on absensi.kodep=tabsen.kodep WHERE tabsen.tanggal BETWEEN '$tglm' AND '$tgls'");
+          $query = mysqli_query($koneksi, "SELECT a.kodeabsen,ta.tanggal1,k.kodep,k.Nama,a.jamhadir,a.jampulang,a.jamhadir_bulat,a.jampulang_bulat,ta.jamhadir1,ta.jampulang1 FROM pegawai k LEFT JOIN absensi a ON k.kodep = a.kodep LEFT JOIN tabsen ta ON a.kodep=ta.kodep");
           while ($row = mysqli_fetch_array($query)) {
             echo "<tr>";
             echo "<td>" . $row['kodeabsen'] . "</td>";
-            echo "<td>" . $row['tanggal'] . "</td>"; 
+            echo "<td>" . $row['tanggal1'] . "</td>"; 
             echo "<td>" . $row['kodep'] . "</td>";
             echo "<td>" . $row['Nama'] . "</td>";
             echo "<td>" . $row['jamhadir'] . "</td>";
             echo "<td>" . $row['jampulang'] . "</td>";
             echo "<td>" . $row['jamhadir_bulat'] . "</td>";
             echo "<td>" . $row['jampulang_bulat'] . "</td>";
-            echo "<td>" . $row['jamhadir'] . "</td>";
-            echo "<td>" . $row['jampulang'] . "</td>";
-			echo "<td>" . $row['telat'] . "</td>";
+            echo "<td>" . $row['jamhadir1'] . "</td>";
+            echo "<td>" . $row['jampulang1'] . "</td>";
             if ($row['jamhadir_bulat']==$row['jamhadir'] && $row['jampulang_bulat']==$row['jampulang']) {
 				echo '<td>Ya</td>';
             } else {

@@ -9,6 +9,13 @@
     $query = mysqli_query($koneksi, "SELECT * FROM kupasan JOIN detailkayumasuk on kupasan.seri=detailkayumasuk.seri");
 ?>
 
+<?php 
+include "conf/conn.php";
+$koneksi = mysqli_connect("localhost", "root", "", "absenhasil1");
+$query = "SELECT * FROM kupasan";
+$result = mysqli_query($koneksi, $query);
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,6 +45,14 @@
   <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    <!-- DataTables -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+  <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>  
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -141,24 +156,54 @@
         <div class="col-xs-12">
           <div class="box box-primary">
             <div class="box-header">
-              <button type="button" name="btntambahkupasan"<a data-toggle="modal" data-target="#tambahkupasan" class=" btn btn-primary  text-white";> Tambah <i class="glyphicon glyphicon-plus"></i></a></button>
+              <button type="button" name="btntambahkupasan"<a data-toggle="modal" data-target="#tambahkupasan" class=" btn btn-primary text-white";> Tambah <i class="glyphicon glyphicon-plus"></i></a></button>
             </div>
           <div class="box-body table-responsive">
             <table id="kupasan" class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <th><center>Tanggal</center></th>
-                  <th><center>Batang</center></th>
+                  <!-- <th><center>Tanggal</center></th> -->
+                  <th>
+                  <select name="category" id="category" class="form-control">
+                  <option value="">Tanggal</option>
+                  <?php 
+                  while($row = mysqli_fetch_array($result))
+                  {
+                    echo '<option value="'.$row["tanggal"].'">'.$row["tanggal"].'</option>';
+                  }
+                  ?>
+                  </select>
+                </th>
+                <!-- <th><center>Batang</center></th> -->
+                  <th>
+                  <select name="category" id="category" class="form-control">
+                  <option value="">Batang</option>
+                  <?php 
+                  while($row = mysqli_fetch_array($result))
+                  {
+                    echo '<option value="'.$row["batang"].'">'.$row["batang"].'</option>';
+                  }
+                  ?>
+                </select>
+                </th>
                   <th><center>Lahan</center></th>
                   <th><center>Seri</center></th>
+                  <th><center>Keterangan</center></th>
+                  <th><center>Mesin</center></th>
+                  <th><center>Panjang</center></th>
+                  <th><center>Lebar</center></th>
+                  <th><center>Tebal</center></th>
+                  <th><center>Kwalitas</center></th>
+                  <th><center>Jenis</center></th>
+                  <th><center>Veneer Basah</center></th>
                   <th><center>Aksi</center></th>
                 </tr>
               </thead>
               <tbody>
 
-                <?php
+                 <?php
                 include "conf/conn.php";
-                $query = mysqli_query($koneksi, "SELECT * FROM kupasan JOIN detailkayumasuk on kupasan.seri=detailkayumasuk.seri");
+                $query = mysqli_query($koneksi, "SELECT * FROM kupasan ");
                 while ($row = mysqli_fetch_array($query)) {
                 ?>
 
@@ -167,6 +212,14 @@
                   <td><?php echo $row['batang'];?></td>
                   <td><?php echo $row['lahan'];?></td>
                   <td><?php echo $row['seri'];?></td>
+                  <td><?php echo $row['ket'];?></td>
+                  <td><?php echo $row['mesin'];?></td>
+                  <td><?php echo $row['panjang'];?></td>
+                  <td><?php echo $row['lebar'];?></td>
+                  <td><?php echo $row['tebal'];?></td>
+                  <td><?php echo $row['kw'];?></td>
+                  <td><?php echo $row['jenis'];?></td>
+                  <td><?php echo $row['hasil'];?></td>
                   <td>
                   <center>
                   <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btneditkupasan' data-id="<?php echo $row['seri']?>" ><i class="glyphicon glyphicon-edit"></i></button>
@@ -181,16 +234,21 @@
               </table>
             </div>
             <!-- /.box-body -->
-          </div>
+            </div>
           <!-- /.box -->
         </div>
-        <!-- /.col -->
+       <!-- /.col -->
       </div>
+      
       <!-- /.row -->
     </section>
     <!-- /.content -->
   </div>
 <!-- /.content-wrapper -->
+<footer class="main-footer">
+    <strong>Copyright &copy; 2019 PT. Wijaya Plywoods .</strong>
+  </footer>
+  
 <!-- modal tambah kupasan -->
         <div class="modal fade" id="tambahkupasan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -203,6 +261,7 @@
             </div>
             <div class="modal-body">
               <form action="pages/tambahkupasan.php" method="POST" enctype="multipart/form-data">
+              <p style="background-color:#71D0FF;" ><b><u>Pemakaian Bahan</u></b></p>
                 <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Tanggal</label>
                   <div class="col-sm-9">
@@ -225,6 +284,58 @@
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Seri</label>
                   <div class="col-sm-9">
                     <input type="int" class="form-control" name="seri" id="formGroupExampleInput" required="true" maxlength="12">
+                  </div>
+                </div>
+                <div class="form-group row">
+                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Ket</label>
+                <div class="col-sm-3">
+                <select class="form-control" id="exampleFormControlSelect1" name="ket">
+                  <option>Habis</option>
+                  <option>Belum</option>
+                </select> 
+                </div>
+                </div>
+                <p style="background-color:#71D0FF;" ><b><u>Hasil</u></b></p>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Mesin</label>
+                  <div class="col-sm-9">
+                    <input type="int" class="form-control" name="mesin" id="formGroupExampleInput" required="true" maxlength="12">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Panjang</label>
+                  <div class="col-sm-9">
+                    <input type="int" class="form-control" name="panjang" id="formGroupExampleInput" required="true" maxlength="12">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Lebar</label>
+                  <div class="col-sm-9">
+                    <input type="int" class="form-control" name="lebar" id="formGroupExampleInput" required="true" maxlength="12">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Tebal</label>
+                  <div class="col-sm-9">
+                    <input type="float" class="form-control" name="tebal" id="formGroupExampleInput" required="true" maxlength="12">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kwalitas</label>
+                  <div class="col-sm-9">
+                    <input type="int" class="form-control" name="kw" id="formGroupExampleInput" required="true" maxlength="12">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Jenis</label>
+                  <div class="col-sm-9">
+                    <input type="int" class="form-control" name="jenis" id="formGroupExampleInput" required="true" maxlength="12">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Hasil</label>
+                  <div class="col-sm-9">
+                    <input type="int" class="form-control" name="hasil" id="formGroupExampleInput" required="true" maxlength="12">
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -298,10 +409,8 @@
       </div>
     </div>
   </div>
+  </div>
   <!-- end modal hapus kupasan -->
-  <footer class="main-footer">
-    <strong>Copyright &copy; 2019 PT. Wijaya Plywoods .</strong>
-  </footer>
    </div>
   </div>
 
@@ -344,6 +453,47 @@
     $('#kupasan').DataTable();
   });
 </script>
+
+<!--script filter-->
+<script type="text/javascript" language="javascript" >
+$(document).ready(function(){
+ 
+ load_data();
+
+ function load_data(is_category)
+ {
+  var dataTable = $('#product_data').DataTable({
+   "processing":true,
+   "serverSide":true,
+   "order":[],
+   "ajax":{
+    url:"fetch.php",
+    type:"POST",
+    data:{is_category:is_category}
+   },
+   "columnDefs":[
+    {
+     "targets":[2],
+     "orderable":false,
+    },
+   ],
+  });
+ }
+
+ $(document).on('change', '#category', function(){
+  var category = $(this).val();
+  $('#product_data').DataTable().destroy();
+  if(category != '')
+  {
+   load_data(category);
+  }
+  else
+  {
+   load_data();
+  }
+ });
+});
+</script>y
 
 
 <!-- ./wrapper -->

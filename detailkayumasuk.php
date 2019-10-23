@@ -5,8 +5,8 @@
     echo "<script>location='login.php';</script>";
     exit();
   }
-  $query = mysqli_query($koneksi, "SELECT * FROM detailkayumasuk ORDER BY tanggal DESC");	
-  $row = mysqli_fetch_array($query);
+  if(!isset($_GET['edit'])){
+     $query = mysqli_query($koneksi, "SELECT * FROM detailkayumasuk"); 
 ?>
 
 <!DOCTYPE html>
@@ -159,12 +159,12 @@
           <div class="row">
           <div class="col-md-4">
             <p><b>Tanggal : <?php echo $row['tanggal'];?></b><br>
-            <b>Total banyak : <?php echo $row['banyak'];?></b><br>
-            <b>Total m<sup>3</sup> : <?php echo $row['m3'];?></b><br>
-            <b>Total Uang : Rp. <?php echo number_format($row['uang']);?></b>
+            <b>Total banyak : <?php echo $row['totalbanyak'];?></b><br>
+            <b>Total m<sup>3</sup> : <?php echo $row['totalm3'];?></b><br>
+            <b>Total Uang : Rp. <?php echo number_format($row['totaluang']);?></b>
           </p>
           </div>
-            <table id="kayumasuk" class="table table-bordered table-hover">
+            <table id="dataTable" class="table table-bordered table-hover">
               <thead>
                 <tr>
                   <th><center>No</center></th>
@@ -517,4 +517,5 @@
       echo json_encode($row);
     }
   }
+}
 ?>

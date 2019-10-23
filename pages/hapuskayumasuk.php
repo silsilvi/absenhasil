@@ -1,7 +1,7 @@
 <?php
  	include "../conf/conn.php";
- 	$tanggal = $_GET['tanggal'];
- 	$query = mysqli_query($koneksi, "DELETE FROM kayumasuk WHERE tanggal='$tanggal'");
+ 	$no = $_GET['no'];
+ 	$query = mysqli_query($koneksi, "DELETE FROM detailkayumasuk WHERE no='$no'");
 
  	if ($query) {
  		 header('location:../kayumasuk.php');

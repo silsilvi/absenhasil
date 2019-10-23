@@ -142,7 +142,7 @@
           <div class="box box-primary">
             <div class="box-header">
               <button type="button" name="btntambahabsen"<a data-toggle="modal" data-target="#tambahabsen" class=" btn btn-primary  text-white";> Tambah <i class="glyphicon glyphicon-plus"></i></a></button>
-              <a href="laporan.php" class="btn btn-succes shadow-sm text-white" style="display: inline-block; float:right;"> Report
+              <a href="laporan.php" class="btn btn-primary shadow-sm text-white" style="display: inline-block; float:right;"> Report
               <i class="glyphicon glyphicon-print text-white"></i>
               </a>
             </div>
@@ -172,9 +172,9 @@
                   <td><?php echo $row['kodeabsen'];?></td>
                   <td><?php echo $row['kodep'];?></td>
                   <td><?php echo $row['Nama'];?></td>
-                  <td><?php echo $row['tanggal'];?></td>
-                  <td><?php echo $row['jamhadir'];?></td>
-                  <td><?php echo $row['jampulang'];?></td>
+                  <td><?php echo $row['tanggal1'];?></td>
+                  <td><?php echo $row['jamhadir1'];?></td>
+                  <td><?php echo $row['jampulang1'];?></td>
                   
                   <td>
                   <center>
@@ -224,13 +224,13 @@
                 <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Jam Hadir</label>
                   <div class="col-sm-7">
-                    <input type="time" class="form-control" name="jamhadir" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+                    <input type="time" class="form-control" name="jamhadir1" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
                   </div>
                 </div>
                 <div class="form-group row">
                 <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Jam Pulang</label>
                 <div class="col-sm-7">
-                <input type="time" class="form-control" name="jampulang" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+                <input type="time" class="form-control" name="jampulang1" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
                 </div>
                 </div>               
                 </div>
@@ -267,13 +267,13 @@
                 <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Jam Hadir</label>
                   <div class="col-sm-9">
-                    <input type="time" class="form-control txtjamhadir" name="jamhadir" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+                    <input type="time" class="form-control txtjamhadir1" name="jamhadir1" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
                   </div>
                 </div>
                 <div class="form-group row">
                 <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Jam Pulang</label>
                 <div class="col-sm-9">
-                <input type="time" class="form-control txtjampulang" name="jampulang" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+                <input type="time" class="form-control txtjampulang1" name="jampulang1" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
                 </div>
                 </div>           
                 <div class="modal-footer">
@@ -397,8 +397,8 @@
         $("#editabsen").modal();
         $(".txtkodeabsen").val(e.kodeabsen);
         $(".txtkodep").val(e.kodep);
-        $(".txtjamhadir").val(e.jamhadir);
-        $(".txtjampulang").val(e.jampulang);
+        $(".txtjamhadir1").val(e.jamhadir1);
+        $(".txtjampulang1").val(e.jampulang1);
 
       }
     });

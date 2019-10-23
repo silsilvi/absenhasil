@@ -167,9 +167,8 @@
             <table id="pegawai" class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <th><center>Kode Absen</center></th>
-                  <th><center>Tanggal</center></th>
                   <th><center>Kode Pegawai</center></th>
+				  <th><center>Tanggal</center></th>
                   <th><center>Nama</center></th>
                   <th><center>Jam Hadir</center></th>
                   <th><center>Jam Pulang</center></th>
@@ -185,34 +184,36 @@
 
                 <?php
                 include "conf/conn.php";
-                $query = mysqli_query($koneksi, "SELECT * FROM absensi JOIN tabsen on absensi.kodep=tabsen.kodep WHERE absensi.tanggal=tabsen.tanggal");
-
+                $query = mysqli_query($koneksi, "SELECT a.kodeabsen,ta.tanggal1,k.kodep,k.Nama,a.jamhadir,a.jampulang,a.jamhadir_bulat,a.jampulang_bulat,ta.jamhadir1,ta.jampulang1 FROM pegawai k LEFT JOIN absensi a ON k.kodep = a.kodep LEFT JOIN tabsen ta ON a.kodep=ta.kodep");
                 while ($row = mysqli_fetch_array($query)) {
                 ?>
-
                 <tr>
-                  <td><?php echo $row['kodeabsen'];?></td>
-                  <td><?php echo $row['tanggal'];?></td>
                   <td><?php echo $row['kodep'];?></td>
+				  <td><?php echo $row['tanggal1'];?></td>
                   <td><?php echo $row['Nama'];?></td>
                   <td><?php echo $row['jamhadir'];?></td>
                   <td><?php echo $row['jampulang'];?></td>
                   <td><?php echo $row['jamhadir_bulat'];?></td>
                   <td><?php echo $row['jampulang_bulat'];?></td>
-                  <td><?php echo $row['jamhadir'];?></td>
-                  <td><?php echo $row['jampulang'];?></td>
+                  <td><?php echo $row['jamhadir1']?></td>
+                  <td><?php echo $row['jampulang1'];?></td>
                   <?php 
-                    if ($row['jamhadir_bulat']==$row['jamhadir'] AND $row['jampulang_bulat']==$row['jampulang']) {
-                      echo '<td><span style="background-color:green;color:white;padding:5px 15px;">Ya</span></td>';
+				  if(empty($row['jamhadir_bulat']AND$row['jampulang_bulat']) OR empty($row['jamhadir1']AND$row['jampulang1'])) {
+					echo '<td><span style="background-color:red;color:white;padding:2px 10px 2px 10px !important;">Tidak</span></td>';
+					echo "<td><button<a class='btn btn-primary' style='padding:2px 10px 2px 10px !important;' data-toggle='modal' data-target='#konfirmasi_hapus' data-href='hapusjabatan.php?kodej=".$row['kodep']."'><i class='glyphicon glyphicon-check text-white'></i></a></td>";
+				  } else {
+                    if ($row['jamhadir_bulat']==$row['jamhadir1'] AND $row['jampulang_bulat']==$row['jampulang1']) {
+                      echo '<td><span style="background-color:green;color:white;padding:2px 20px 2px 20px !important;">Ya</span></td>';
                     } else {
-                      echo '<td><span style="background-color:red;color:white;padding:5px">Tidak</span></td>';
+                      echo '<td><span style="background-color:red;color:white;padding:2px 10px 2px 10px !important;">Tidak</span></td>';
+					  echo "<td><button<a class='btn btn-primary' style='padding:2px 10px 2px 10px !important;' data-toggle='modal' data-target='#konfirmasi_hapus' data-href='hapusjabatan.php?kodej=".$row['kodep']."'><i class='glyphicon glyphicon-check text-white'></i></a></td>";
+					  
                     }
+				  }
                   ?>
-                  <td>
+ 
                 </tr>
-
                 <?php } ?>
-
                 </tbody>
               </table>
             </div>
