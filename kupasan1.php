@@ -161,7 +161,7 @@ $result = mysqli_query($koneksi, $query);
                   <th><center>Batang</center></th>
                   <th><center>Lahan</center></th>
                   <th><center>Seri</center></th>
-                  <th><center>Ket</center></th>
+                  <th><center>Keterangan</center></th>
                   <th><center>Mesin</center></th>
                   <th><center>Panjang</center></th>
                   <th><center>Lebar</center></th>
@@ -205,7 +205,7 @@ $result = mysqli_query($koneksi, $query);
 
                 </tbody>
                 <tfoot>
-                <tr>
+            <tr>
                 <th>tanggal</th>
                 <th>batang</th>
                 <th>lahan</th>
@@ -218,8 +218,8 @@ $result = mysqli_query($koneksi, $query);
                 <th>kw</th>
                 <th>jenis</th>
                 <th>hasil</th>
-                </tr>
-                </tfoot>
+            </tr>
+            </tfoot>
               </table>
             </div>
             <!-- /.box-body -->
@@ -445,7 +445,6 @@ $result = mysqli_query($koneksi, $query);
 <script type="text/javascript">
 $(document).ready(function() {
     $('#example').DataTable( {
-      scrollY:"250px",
         initComplete: function () {
             this.api().columns().every( function () {
                 var column = this;

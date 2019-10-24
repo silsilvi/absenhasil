@@ -10,18 +10,18 @@ if(isset($_POST["is_category"]))
 }
 if(isset($_POST["search"]["value"]))
 {
-$query .= '(kupasan.tanggal LIKE "%'.$_POST["search"]["value"].'%" ';
-$query .= 'OR kupasan.batang LIKE "%'.$_POST["search"]["value"].'%" ';
-$query .= 'OR kupasan.lahan LIKE "%'.$_POST["search"]["value"].'%" ';
-$query .= 'OR kupasan.seri LIKE "%'.$_POST["search"]["value"].'%" ';
-$query .= 'OR kupasan.ket LIKE "%'.$_POST["search"]["value"].'%" ';
-$query .= 'OR kupasan.mesin LIKE "%'.$_POST["search"]["value"].'%" ';
-$query .= 'OR kupasan.panjang LIKE "%'.$_POST["search"]["value"].'%" ';
-$query .= 'OR kupasan.lebar LIKE "%'.$_POST["search"]["value"].'%" ';
-$query .= 'OR kupasan.tebal LIKE "%'.$_POST["search"]["value"].'%" ';
-$query .= 'OR kupasan.kw LIKE "%'.$_POST["search"]["value"].'%" ';
-$query .= 'OR kupasan.jenis LIKE "%'.$_POST["search"]["value"].'%" ';
-$query .= 'OR kupasan.hasil LIKE "%'.$_POST["search"]["value"].'%" ';
+$query .= '(tanggal LIKE "%'.$_POST["search"]["value"].'%" ';
+$query .= 'OR batang LIKE "%'.$_POST["search"]["value"].'%" ';
+$query .= 'OR lahan LIKE "%'.$_POST["search"]["value"].'%" ';
+$query .= 'OR seri LIKE "%'.$_POST["search"]["value"].'%" ';
+$query .= 'OR ket LIKE "%'.$_POST["search"]["value"].'%" ';
+$query .= 'OR mesin LIKE "%'.$_POST["search"]["value"].'%" ';
+$query .= 'OR panjang LIKE "%'.$_POST["search"]["value"].'%" ';
+$query .= 'OR lebar LIKE "%'.$_POST["search"]["value"].'%" ';
+$query .= 'OR tebal LIKE "%'.$_POST["search"]["value"].'%" ';
+$query .= 'OR kw LIKE "%'.$_POST["search"]["value"].'%" ';
+$query .= 'OR jenis LIKE "%'.$_POST["search"]["value"].'%" ';
+$query .= 'OR hasil LIKE "%'.$_POST["search"]["value"].'%" ';
 
 }
 
