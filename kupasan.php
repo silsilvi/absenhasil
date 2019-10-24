@@ -152,6 +152,26 @@ $result = mysqli_query($koneksi, $query);
           <div class="box box-primary">
             <div class="box-header">
               <button type="button" name="btntambahkupasan"<a data-toggle="modal" data-target="#tambahkupasan" class=" btn btn-primary text-white";> Tambah <i class="glyphicon glyphicon-plus"></i></a></button>
+              <div class="card-body">
+              <form action="exportkupasan.php" method="POST">
+              <div class="row">
+              <div class="col-md-5"><b>Mulai</b>
+              <div class="form-group">
+              <input type="date" class="form-control" name="tglm">
+              </div>
+              </div>
+              <div class="col-md-5"><b>Selesai</b>
+              <div class="form-group">
+             <input type="date" class="form-control" name="tgls">
+           </div>
+         </div>
+		 <br>
+          <div class="col-md-2">
+              <button type="submit" class="btn btn-primary" name="print"> Export <i class="glyphicon glyphicon-print text-white"></i></button>
+          </div> 
+          </div>
+          </form>
+        </div>
             </div>
           <div class="box-body table-responsive">
           <table id="example" class="display table table-bordered table-hover">
@@ -161,7 +181,7 @@ $result = mysqli_query($koneksi, $query);
                   <th><center>Batang</center></th>
                   <th><center>Lahan</center></th>
                   <th><center>Seri</center></th>
-                  <th><center>Ket</center></th>
+                  <th><center>Keterangan</center></th>
                   <th><center>Mesin</center></th>
                   <th><center>Panjang</center></th>
                   <th><center>Lebar</center></th>
@@ -205,7 +225,7 @@ $result = mysqli_query($koneksi, $query);
 
                 </tbody>
                 <tfoot>
-                <tr>
+            <tr>
                 <th>tanggal</th>
                 <th>batang</th>
                 <th>lahan</th>
@@ -218,8 +238,8 @@ $result = mysqli_query($koneksi, $query);
                 <th>kw</th>
                 <th>jenis</th>
                 <th>hasil</th>
-                </tr>
-                </tfoot>
+            </tr>
+            </tfoot>
               </table>
             </div>
             <!-- /.box-body -->
@@ -445,7 +465,6 @@ $result = mysqli_query($koneksi, $query);
 <script type="text/javascript">
 $(document).ready(function() {
     $('#example').DataTable( {
-      scrollY:"250px",
         initComplete: function () {
             this.api().columns().every( function () {
                 var column = this;
