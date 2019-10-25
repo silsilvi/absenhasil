@@ -6,13 +6,13 @@
     exit();
   }
   if(!isset($_GET['edit'])){
-    $query = mysqli_query($koneksi, "SELECT * FROM kupasan JOIN detailkayumasuk on kupasan.seri=detailkayumasuk.seri");
+    $query = mysqli_query($koneksi, "SELECT * FROM hotpress JOIN detailkayumasuk on hotpress.seri=detailkayumasuk.seri");
 ?>
 
 <!-- <?php 
 include "conf/conn.php";
 $koneksi = mysqli_connect("localhost", "root", "", "absenhasil1");
-$query = "SELECT * FROM kupasan ORDER BY tanggal ASC";
+$query = "SELECT * FROM hotpress ORDER BY tanggal ASC";
 $result = mysqli_query($koneksi, $query);
 ?> -->
 
@@ -155,7 +155,7 @@ $result = mysqli_query($koneksi, $query);
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><b>DATA KUPASAN</b></h1>
+      <h1><b>DATA HOTPRESS</b></h1>
     </section>
     <!-- Main content -->
     <section class="content">
@@ -163,9 +163,9 @@ $result = mysqli_query($koneksi, $query);
         <div class="col-xs-12">
           <div class="box box-primary">
             <div class="box-header">
-              <button type="button" name="btntambahkupasan"<a data-toggle="modal" data-target="#tambahkupasan" class=" btn btn-primary text-white";> Tambah <i class="glyphicon glyphicon-plus"></i></a></button>
+              <button type="button" name="btntambahhotpress"<a data-toggle="modal" data-target="#tambahhotpress" class=" btn btn-primary text-white";> Tambah <i class="glyphicon glyphicon-plus"></i></a></button>
               <div class="card-body">
-              <form action="exportkupasan.php" method="POST">
+              <form action="exporthotpress.php" method="POST">
               <div class="row">
               <div class="col-md-5"><b>Mulai</b>
               <div class="form-group">
@@ -188,21 +188,22 @@ $result = mysqli_query($koneksi, $query);
           <div class="box-body table-responsive">
           <table id="example" class="display table table-bordered table-hover">
               <thead>
-              <td style="background-color:#71D0FF;" colspan="5"><b>Pemakaian Bahan</b></td>
-              <td style="background-color:#FFB6C1;" colspan="7"><b>Hasil<b></td>
+              <td style="background-color:#71D0FF;" colspan="7"><b>Pemakaian Bahan</b></td>
+              <td style="background-color:#FFB6C1;" colspan="6"><b>Hasil<b></td>
                 <tr>
-                  <th style="background-color:#E0FFFF"><center>Tanggal</center></th>
-                  <th style="background-color:#E0FFFF"><center>Batang</center></th>
-                  <th style="background-color:#E0FFFF"><center>Lahan</center></th>
-                  <th style="background-color:#E0FFFF"><center>Seri</center></th>
-                  <th style="background-color:#E0FFFF"><center>Keterangan</center></th>
-                  <th style="background-color:#FFE4E1"><center >Mesin</center></th>
-                  <th style="background-color:#FFE4E1"><center>Panjang</center></th>
-                  <th style="background-color:#FFE4E1"><center>Lebar</center></th>
-                  <th style="background-color:#FFE4E1"><center>Tebal</center></th>
-                  <th style="background-color:#FFE4E1"><center>Kwalitas</center></th>
-                  <th style="background-color:#FFE4E1"><center>Jenis</center></th>
-                  <th style="background-color:#FFE4E1"><center>Veneer Basah</center></th>
+                  <th style="background-color:#E0FFFF;"><center>Tanggal</center></th>
+                  <th style="background-color:#E0FFFF;"><center>Panjang</center></th>
+                  <th style="background-color:#E0FFFF;"><center>Lebar</center></th>
+                  <th style="background-color:#E0FFFF;"><center>Tebal</center></th>
+                  <th style="background-color:#E0FFFF;"><center>Kwalitas</center></th>
+                  <th style="background-color:#E0FFFF;"><center>Jenis</center></th>
+                  <th style="background-color:#E0FFFF;"><center>Banyak</center></th>
+                  <th style="background-color:#FFE4E1;"><center>Panjang</center></th>
+                  <th style="background-color:#FFE4E1;"><center>Lebar</center></th>
+                  <th style="background-color:#FFE4E1;"><center>Tebal</center></th>
+                  <th style="background-color:#FFE4E1;"><center>Kwalitas</center></th>
+                  <th style="background-color:#FFE4E1;"><center>Jenis</center></th>
+                  <th style="background-color:#FFE4E1;"><center>Hasil</center></th>
                   <!-- <th><center>Aksi</center></th> -->
                 </tr>
               </thead>
@@ -210,27 +211,28 @@ $result = mysqli_query($koneksi, $query);
 
                  <?php
                 include "conf/conn.php";
-                $query = mysqli_query($koneksi, "SELECT * FROM kupasan ");
+                $query = mysqli_query($koneksi, "SELECT * FROM hotpress ");
                 while ($row = mysqli_fetch_array($query)) {
                 ?>
 
                 <tr>
-                  <td style="background-color:#E0FFFF"><?php echo $row['tanggal'];?></td>
-                  <td style="background-color:#E0FFFF"><?php echo $row['batang'];?></td>
-                  <td style="background-color:#E0FFFF"><?php echo $row['lahan'];?></td>
-                  <td style="background-color:#E0FFFF"><?php echo $row['seri'];?></td>
-                  <td style="background-color:#E0FFFF"><?php echo $row['ket'];?></td>
-                  <td style="background-color:#FFE4E1"><?php echo $row['mesin'];?></td>
-                  <td style="background-color:#FFE4E1"><?php echo $row['panjang'];?></td>
-                  <td style="background-color:#FFE4E1"><?php echo $row['lebar'];?></td>
-                  <td style="background-color:#FFE4E1"><?php echo $row['tebal'];?></td>
-                  <td style="background-color:#FFE4E1"><?php echo $row['kw'];?></td>
-                  <td style="background-color:#FFE4E1"><?php echo $row['jenis'];?></td>
-                  <td style="background-color:#FFE4E1"><?php echo $row['hasil'];?></td>
+                  <td style="background-color:#E0FFFF;"><?php echo $row['tanggal'];?></td>
+                  <td style="background-color:#E0FFFF;"><?php echo $row['panjang'];?></td>
+                  <td style="background-color:#E0FFFF;"><?php echo $row['lebar'];?></td>
+                  <td style="background-color:#E0FFFF;"><?php echo $row['tebal'];?></td>
+                  <td style="background-color:#E0FFFF;"><?php echo $row['kw'];?></td>
+                  <td style="background-color:#E0FFFF;"><?php echo $row['jenis'];?></td>
+                  <td style="background-color:#E0FFFF;"><?php echo $row['banyak'];?></td>
+                  <td style="background-color:#FFE4E1;"><?php echo $row['panjangh'];?></td>
+                  <td style="background-color:#FFE4E1;"><?php echo $row['lebarh'];?></td>
+                  <td style="background-color:#FFE4E1;"><?php echo $row['tebalh'];?></td>
+                  <td style="background-color:#FFE4E1;"><?php echo $row['kwh'];?></td>
+                  <td style="background-color:#FFE4E1;"><?php echo $row['jenish'];?></td>
+                  <td style="background-color:#FFE4E1;"><?php echo $row['hasil'];?></td>
                   <!-- <td>
                   <center>
-                  <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btneditkupasan' data-id="<?php echo $row['seri']?>" ><i class="glyphicon glyphicon-edit"></i></button>
-                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapuskupasan' data-href="pages/hapuskupasan.php?seri=<?php echo $row['seri'];?>"><i class="glyphicon glyphicon-trash"></i>
+                  <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btnedithotpress' data-id="<?php echo $row['seri']?>" ><i class="glyphicon glyphicon-edit"></i></button>
+                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapushotpress' data-href="pages/hapushotpress.php?seri=<?php echo $row['seri'];?>"><i class="glyphicon glyphicon-trash"></i>
                   </center>
                   </td> -->
                 </tr>
@@ -240,18 +242,19 @@ $result = mysqli_query($koneksi, $query);
                 </tbody>
                 <tfoot>
             <tr>
-                <th>tanggal</th>
-                <th>batang</th>
-                <th>lahan</th>
-                <th>seri</th>
-                <th>ket</th>
-                <th>mesin</th>
-                <th>panjang</th>
-                <th>lebar</th>
-                <th>tebal</th>
-                <th>kw</th>
-                <th>jenis</th>
-                <th>hasil</th>
+            <th><center>Tanggal</center></th>
+            <th><center>Panjang</center></th>
+            <th><center>Lebar</center></th>
+            <th><center>Tebal</center></th>
+            <th><center>Kwalitas</center></th>
+            <th><center>Jenis</center></th>
+            <th><center>Banyak</center></th>
+            <th><center>Panjang</center></th>
+            <th><center>Lebar</center></th>
+            <th><center>Tebal</center></th>
+            <th><center>Kwalitas</center></th>
+            <th><center>Jenis</center></th>
+            <th><center>Hasil</center></th>
             </tr>
             </tfoot>
               </table>
@@ -272,18 +275,18 @@ $result = mysqli_query($koneksi, $query);
     <strong>Copyright &copy; 2019 PT. Wijaya Plywoods .</strong>
   </footer>
   
-<!-- modal tambah kupasan -->
-        <div class="modal fade" id="tambahkupasan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- modal tambah hotpress -->
+        <div class="modal fade" id="tambahhotpress" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
-              <h4 class="modal-title" id="exampleModalLabel"><center><b>TAMBAH DATA KUPASAN</b></center></h4>
+              <h4 class="modal-title" id="exampleModalLabel"><center><b>TAMBAH HOTPRESS</b></center></h4>
             </div>
             <div class="modal-body">
-              <form action="pages/tambahkupasan.php" method="POST" enctype="multipart/form-data">
+              <form action="pages/tambahhotpress.php" method="POST" enctype="multipart/form-data">
               <p style="background-color:#71D0FF;" ><b><u>Pemakaian Bahan</u></b></p>
                 <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Tanggal</label>
@@ -292,39 +295,42 @@ $result = mysqli_query($koneksi, $query);
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Batang</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Panjang</label>
                   <div class="col-sm-9">
-                    <input type="int" class="form-control" name="batang" id="formGroupExampleInput" required="true" minlength="1" maxlength="50" min="0">
+                    <input type="int" class="form-control" name="panjang" id="formGroupExampleInput" required="true" minlength="1" maxlength="50" min="0">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Lahan</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Lebar</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" name="lahan" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+                    <input type="int" class="form-control" name="lebar" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Seri</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Tebal</label>
                   <div class="col-sm-9">
-                    <input type="int" class="form-control" name="seri" id="formGroupExampleInput" required="true" maxlength="12">
+                    <input type="float" class="form-control" name="tebal" id="formGroupExampleInput" required="true" maxlength="12">
                   </div>
                 </div>
                 <div class="form-group row">
-                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Ket</label>
-                <div class="col-sm-3">
-                <select class="form-control" id="exampleFormControlSelect1" name="ket">
-                  <option>Habis</option>
-                  <option>Belum</option>
-                </select> 
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kwalitas</label>
+                  <div class="col-sm-9">
+                    <input type="float" class="form-control" name="kw" id="formGroupExampleInput" required="true" maxlength="12">
+                  </div>
                 </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Jenis</label>
+                  <div class="col-sm-9">
+                    <input type="float" class="form-control" name="jenis" id="formGroupExampleInput" required="true" maxlength="12">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Banyak</label>
+                  <div class="col-sm-9">
+                    <input type="int" class="form-control" name="banyak" id="formGroupExampleInput" required="true" maxlength="12">
+                  </div>
                 </div>
                 <p style="background-color:#71D0FF;" ><b><u>Hasil</u></b></p>
-                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Mesin</label>
-                  <div class="col-sm-9">
-                    <input type="int" class="form-control" name="mesin" id="formGroupExampleInput" required="true" maxlength="12">
-                  </div>
-                </div>
                 <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Panjang</label>
                   <div class="col-sm-9">
@@ -344,9 +350,15 @@ $result = mysqli_query($koneksi, $query);
                   </div>
                 </div>
                 <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Tebal</label>
+                  <div class="col-sm-9">
+                    <input type="float" class="form-control" name="tebal" id="formGroupExampleInput" required="true" maxlength="12">
+                  </div>
+                </div>
+                <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kwalitas</label>
                   <div class="col-sm-9">
-                    <input type="int" class="form-control" name="kw" id="formGroupExampleInput" required="true" maxlength="12">
+                    <input type="varchar" class="form-control" name="kw" id="formGroupExampleInput" required="true" maxlength="12">
                   </div>
                 </div>
                 <div class="form-group row">
@@ -363,27 +375,27 @@ $result = mysqli_query($koneksi, $query);
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary" name="btntambahkupasan">Tambah</button>
+                  <button type="submit" class="btn btn-primary" name="btntambahhotpress">Tambah</button>
                 </div>
               </form>
             </div>
           </div>
         </div>
       </div>
-  <!-- end modal tambah kupasan -->
+  <!-- end modal tambah hotpress -->
 
- <!-- modal edit kupasan -->
- <div class="modal fade" id="editkupasan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <!-- modal edit hotpress -->
+ <div class="modal fade" id="edithotpress" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
-              <h4 class="modal-title" id="exampleModalLabel"><center><b>EDIT DATA KUPASAN</b></center></h4>
+              <h4 class="modal-title" id="exampleModalLabel"><center><b>EDIT HOTPRESS</b></center></h4>
             </div>
             <div class="modal-body">
-              <form action="pages/editkupasan.php" method="POST" enctype="multipart/form-data">
+              <form action="pages/edithotpress.php" method="POST" enctype="multipart/form-data">
                 <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Tanggal</label>
                   <div class="col-sm-9">
@@ -411,17 +423,17 @@ $result = mysqli_query($koneksi, $query);
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary" name="btneditkupasan">Edit</button>
+                  <button type="submit" class="btn btn-primary" name="btnedithotpress">Edit</button>
                 </div>
               </form>
             </div>
           </div>
         </div>
       </div>
-  <!-- end modal edit kupasan -->
+  <!-- end modal edit hotpress -->
 
-<!--modal hapus kupasan-->
-<div class="modal fade" id="hapuskupasan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!--modal hapus hotpress-->
+<div class="modal fade" id="hapushotpress" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body">Apakah Anda Yakin ingin menghapus data ini?</div>
@@ -433,14 +445,14 @@ $result = mysqli_query($koneksi, $query);
     </div>
   </div>
   </div>
-  <!-- end modal hapus kupasan -->
+  <!-- end modal hapus hotpress -->
    </div>
   </div>
 
   <script type="text/javascript">
     //Hapus Data
     $(document).ready(function() {
-        $('#hapuskupasan').on('show.bs.modal', function(e) {
+        $('#hapushotpress').on('show.bs.modal', function(e) {
             $(this).find('.btn-hapus').attr('href', $(e.relatedTarget).data('href'));
         });
     });
@@ -471,7 +483,7 @@ $result = mysqli_query($koneksi, $query);
 <!-- Javascript Datatable -->
 <script type="text/javascript">
   $(document).ready(function(){
-    $('#kupasan').DataTable();
+    $('#hotpress').DataTable();
   });
 </script>
 
@@ -554,14 +566,14 @@ $(document).ready(function() {
     var seri = $(this).attr("data-id");
     $.ajax({
       "method"  : "get",
-      "url"   : "kupasan.php",
+      "url"   : "hotpress.php",
       "data"    : {
         "edit"      : true,
         "seri"  : seri,
       },
       "dataType"  : "json",
       "success" : function(e){
-        $("#editkupasan").modal();
+        $("#edithotpress").modal();
         $(".txttanggal").val(e.tanggal);
         $(".txtbatang").val(e.batang);
         $(".txtlahan").val(e.lahan);
@@ -574,7 +586,7 @@ $(document).ready(function() {
 <script type="text/javascript">
     //Hapus Data
     $(document).ready(function() {
-        $('#hapuskupasan').on('show.bs.modal', function(e) {
+        $('#hapushotpress').on('show.bs.modal', function(e) {
             $(this).find('.btn-hapus').attr('href', $(e.relatedTarget).data('href'));
         });
     });
@@ -587,7 +599,7 @@ $(document).ready(function() {
   }
   if(isset($_GET['edit'])){
     $seri = $_GET['seri'];
-    $sql = "SELECT * FROM kupasan WHERE seri='". $seri ."'";
+    $sql = "SELECT * FROM hotpress WHERE seri='". $seri ."'";
     $q = mysqli_query($koneksi, $sql);
     while($row=mysqli_fetch_assoc($q)){
       echo json_encode($row);

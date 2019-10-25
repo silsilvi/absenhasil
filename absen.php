@@ -112,7 +112,19 @@
             <li><a href="dryer.php"><i class="fa fa-circle-o"></i> Dryer</a></li>
             <li><a href="tembel.php"><i class="fa fa-circle-o"></i> Tembel</a></li>
             <li><a href="hotpress.php"><i class="fa fa-circle-o"></i> Hotpress</a></li>
-            <li><a href="finishing.php"><i class="fa fa-circle-o"></i> Finishing</a></li>
+            <li>
+          <li class="treeview">
+          <a href="#">
+            <i class="fa fa-circle-o"></i> <span>Finishing</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="active"><a href="dempul.php"><i class="fa fa-circle-o"></i> Dempul</a></li>
+            <li><a href="pilihtriplek.php"><i class="fa fa-circle-o"></i> Pilih Triplek</a></li>
+          </ul>
+          </li>
             <li><a href="lain.php"><i class="fa fa-circle-o"></i> Lain-lain</a></li>
           </ul>
         </li>

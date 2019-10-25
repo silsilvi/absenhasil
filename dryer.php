@@ -6,8 +6,15 @@
     exit();
   }
   if(!isset($_GET['edit'])){
-     $query = mysqli_query($koneksi, "SELECT * FROM kupasan"); 
+    $query = mysqli_query($koneksi, "SELECT * FROM dryer JOIN kupasan on dryer.panjang=kupasan.panjang");
 ?>
+
+<!-- <?php 
+include "conf/conn.php";
+$koneksi = mysqli_connect("localhost", "root", "", "absenhasil1");
+$query = "SELECT * FROM dryer ORDER BY tanggal ASC";
+$result = mysqli_query($koneksi, $query);
+?> -->
 
 <!DOCTYPE html>
 <html>
@@ -39,13 +46,16 @@
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
+  <!-- DataTables -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+  <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>  
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   </head>
@@ -108,11 +118,23 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="kupasan.php"><i class="fa fa-circle-o"></i>Kupasan</a></li>
+          <li class="active"><a href="kupasan.php"><i class="fa fa-circle-o"></i>Kupasan</a></li>
             <li><a href="dryer.php"><i class="fa fa-circle-o"></i> Dryer</a></li>
             <li><a href="tembel.php"><i class="fa fa-circle-o"></i> Tembel</a></li>
             <li><a href="hotpress.php"><i class="fa fa-circle-o"></i> Hotpress</a></li>
-            <li><a href="finishing.php"><i class="fa fa-circle-o"></i> Finishing</a></li>
+            <li>
+          <li class="treeview">
+          <a href="#">
+            <i class="fa fa-circle-o"></i> <span>Finishing</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="active"><a href="dempul.php"><i class="fa fa-circle-o"></i> Dempul</a></li>
+            <li><a href="pilihtriplek.php"><i class="fa fa-circle-o"></i> Pilih Triplek</a></li>
+          </ul>
+          </li>
             <li><a href="lain.php"><i class="fa fa-circle-o"></i> Lain-lain</a></li>
           </ul>
         </li>
@@ -133,7 +155,7 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><b>DATA KUPASAN</b></h1>
+      <h1><b>DATA DRYER</b></h1>
     </section>
     <!-- Main content -->
     <section class="content">
@@ -141,201 +163,264 @@
         <div class="col-xs-12">
           <div class="box box-primary">
             <div class="box-header">
-              <button type="button" name="btntambahkupasan"<a data-toggle="modal" data-target="#tambahkupasan" class=" btn btn-primary  text-white";> Tambah <i class="glyphicon glyphicon-plus"></i></a></button>
+              <button type="button" name="btntambahdryer"<a data-toggle="modal" data-target="#tambahdryer" class=" btn btn-primary text-white";> Tambah <i class="glyphicon glyphicon-plus"></i></a></button>
+              <div class="card-body">
+              <form action="exportdryer.php" method="POST">
+              <div class="row">
+              <div class="col-md-5"><b>Mulai</b>
+              <div class="form-group">
+              <input type="date" class="form-control" name="tglm">
+              </div>
+              </div>
+              <div class="col-md-5"><b>Selesai</b>
+              <div class="form-group">
+             <input type="date" class="form-control" name="tgls">
+           </div>
+         </div>
+		 <br>
+          <div class="col-md-2">
+              <button type="submit" class="btn btn-primary" name="print"> Export <i class="glyphicon glyphicon-print text-white"></i></button>
+          </div> 
+          </div>
+          </form>
+        </div>
             </div>
           <div class="box-body table-responsive">
-            <table id="kupasan" class="table table-bordered table-hover">
+          <table id="example" class="display table table-bordered table-hover">
               <thead>
                 <tr>
-                  <th><center>Tanggal</center></th>
-                  <th><center>Batang</center></th>
+                  <!-- <th><center>Tanggal</center></th> -->
+                  <!-- <th><center>Batang</center></th>
                   <th><center>Lahan</center></th>
-                  <th><center>kodep</center></th>
-                  <th><center>Aksi</center></th>
+                  <th><center>Seri</center></th>
+                  <th><center>Keterangan</center></th>
+                  <th><center>Mesin</center></th> -->
+                  <th><center>Tanggal</center></th>
+                  <th><center>Dryer</center></th>
+                  <th><center>Mesin</center></th>
+                  <th><center>Panjang</center></th>
+                  <th><center>Lebar</center></th>
+                  <th><center>Tebal</center></th>
+                  <th><center>Kwalitas</center></th>
+                  <th><center>Jenis</center></th>
+                  <th><center>Hasil</center></th>
+                  <th><center>Kurang</center></th>
+                  <!-- <th><center>Aksi</center></th> -->
                 </tr>
               </thead>
               <tbody>
 
-                <?php
+                 <?php
                 include "conf/conn.php";
-                $query = mysqli_query($koneksi, "SELECT * FROM kupasan ORDER BY kodep DESC");
-
+                $query = mysqli_query($koneksi, "SELECT * FROM dryer");
                 while ($row = mysqli_fetch_array($query)) {
                 ?>
 
                 <tr>
                   <td><?php echo $row['tanggal'];?></td>
-                  <td><?php echo $row['batang'];?></td>
-                  <td><?php echo $row['lahan'];?></td>
-                  <td><?php echo $row['kodep'];?></td>
-                  <td>
+                  <td><?php echo $row['dryer'];?></td>
+                  <td><?php echo $row['mesin'];?></td>
+                  <td><?php echo $row['panjang'];?></td>
+                  <td><?php echo $row['lebar'];?></td>
+                  <td><?php echo $row['tebal'];?></td>
+                  <td><?php echo $row['kw'];?></td>
+                  <td><?php echo $row['jenis'];?></td>
+                  <td><?php echo $row['hasil'];?></td>
+                  <td><?php echo $row['kurang'];?></td>
+                  <!-- <td>
                   <center>
-                  <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btneditkupasan' data-id="<?php echo $row['kodep']?>" data-nama="<?php echo $row['kodep']?>"><i class="glyphicon glyphicon-edit"></i></button>
-                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapuskupasan' data-href="pages/hapuskupasan.php?kodep=<?php echo $row['kodep'];?>"><i class="glyphicon glyphicon-trash"></i>
+                  <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btneditdryer' data-id="<?php echo $row['seri']?>" ><i class="glyphicon glyphicon-edit"></i></button>
+                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapusdryer' data-href="pages/hapusdryer.php?seri=<?php echo $row['seri'];?>"><i class="glyphicon glyphicon-trash"></i>
                   </center>
-                  </td>
+                  </td> -->
                 </tr>
 
                 <?php } ?>
 
                 </tbody>
+                <tfoot>
+            <tr>
+                <th>tanggal</th>
+                <th>dryer</th>
+                <th>mesin</th>
+                <th>panjang</th>
+                <th>lebar</th>
+                <th>tebal</th>
+                <th>kw</th>
+                <th>jenis</th>
+                <th>hasil</th>
+                <th>kurang</th>
+            </tfoot>
               </table>
             </div>
             <!-- /.box-body -->
-          </div>
+            </div>
           <!-- /.box -->
         </div>
-        <!-- /.col -->
+       <!-- /.col -->
       </div>
+      
       <!-- /.row -->
     </section>
     <!-- /.content -->
   </div>
 <!-- /.content-wrapper -->
-<!-- modal tambah kupasan -->
-        <div class="modal fade" id="tambahkupasan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<footer class="main-footer">
+    <strong>Copyright &copy; 2019 PT. Wijaya Plywoods .</strong>
+  </footer>
+  
+<!-- modal tambah dryer -->
+        <div class="modal fade" id="tambahdryer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
-              <h4 class="modal-title" id="exampleModalLabel"><center><b>TAMBAH DATA KUPASAN</b></center></h4>
+              <h4 class="modal-title" id="exampleModalLabel"><center><b>TAMBAH DATA DRYER</b></center></h4>
             </div>
             <div class="modal-body">
-              <form action="pages/tambahkupasan.php" method="POST" enctype="multipart/form-data">
+              <form action="pages/tambahdryer.php" method="POST" enctype="multipart/form-data">
+              <!-- <p style="background-color:#71D0FF;" ><b><u>Pemakaian Bahan</u></b></p> -->
                 <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Tanggal</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" name="tanggal" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
+                    <input type="date" class="form-control" name="tanggal" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Nama</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" name="Nama" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Alamat</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" name="alamat" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
-                  </div>
-                </div>
-                <div class="form-group row">
-                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Jenis Kelamin</label>
-                <div class="col-sm-3">
-                <select class="form-control" id="exampleFormControlSelect1" name="jeniskelamin" min>
-                  <option>Laki-laki</option>
-                  <option>Perempuan</option>
+                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Dryer</label>
+                <div class="col-sm-9">
+                <select class="form-control" id="exampleFormControlSelect1" name="dryer">
+                  <option>Dryer Pagi</option>
+                  <option>Dryer Malam</option>
+                  <option>Continous Pagi</option>
                 </select> 
                 </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">No Telp</label>
-                  <div class="col-sm-9">
-                    <input type="int" class="form-control" name="notelp" id="formGroupExampleInput" required="true" maxlength="12">
-                  </div>
-                </div>                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kode Jabatan</label>
-                  <div class="col-sm-3">
-                  <select class="form-control" id="exampleFormControlSelect1" name="kodej" min>
-                  <?php
-                  $tampil = mysqli_query($koneksi, "SELECT * FROM tjabatan");
-                  while($baris = mysqli_fetch_assoc($tampil)){
-                    echo '<option value = "'.$baris['kodej'].'">'.$baris['jabatan'].'</option>';  
-                  }
-                  ?>
+                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Mesin</label>
+                <div class="col-sm-9">
+                <select class="form-control" id="exampleFormControlSelect1" name="mesin">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>1 & 2</option>
                 </select> 
+                </div>
+                </div>
+                <div class="form-group row">
+                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Panjang</label>
+                <div class="col-sm-9">
+                <select class="form-control" id="exampleFormControlSelect1" name="panjang">
+                  <option>122</option>
+                  <option>244</option>
+                </select> 
+                </div>
+                </div>
+                <div class="form-group row">
+                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Lebar</label>
+                <div class="col-sm-9">
+                <select class="form-control" id="exampleFormControlSelect1" name="lebar">
+                  <option>244</option>
+                  <option>122</option>
+                </select> 
+                </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Tebal</label>
+                  <div class="col-sm-9">
+                    <input type="float" class="form-control" name="tebal" id="formGroupExampleInput" required="true" maxlength="12">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">ID Jadwal</label>
+                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Kwalitas</label>
+                <div class="col-sm-9">
+                <select class="form-control" id="exampleFormControlSelect1" name="kw">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>af</option>
+                </select> 
+                </div>
+                </div>
+                <div class="form-group row">
+                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Jenis</label>
+                <div class="col-sm-9">
+                <select class="form-control" id="exampleFormControlSelect1" name="jenis">
+                  <option>S</option>
+                  <option>M</option>
+                  <option>J</option>
+                </select> 
+                </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Hasil</label>
                   <div class="col-sm-9">
-                    <input type="int" class="form-control" name="idjadwal" id="formGroupExampleInput" required="true" maxlength="10">
+                    <input type="int" class="form-control" name="hasil" id="formGroupExampleInput" required="true" maxlength="12">
                   </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary" name="btntambahkupasan">Tambah</button>
+                  <button type="submit" class="btn btn-primary" name="btntambahdryer">Tambah</button>
                 </div>
               </form>
             </div>
           </div>
         </div>
       </div>
-  <!-- end modal tambah kupasan -->
+  <!-- end modal tambah dryer -->
 
- <!-- modal edit kupasan -->
- <div class="modal fade" id="editkupasan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
- <div class="modal-dialog" role="document">
+ <!-- modal edit dryer -->
+ <div class="modal fade" id="editdryer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
-              <h4 class="modal-title" id="exampleModalLabel"><center><b>EDIT DATA kupasan</b></center></h4>
+              <h4 class="modal-title" id="exampleModalLabel"><center><b>EDIT DATA dryer</b></center></h4>
             </div>
             <div class="modal-body">
-              <form action="pages/editkupasan.php" method="POST" enctype="multipart/form-data">
-              <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kode kupasan</label>
+              <form action="pages/editdryer.php" method="POST" enctype="multipart/form-data">
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Tanggal</label>
                   <div class="col-sm-9">
-                    <input type="text" readonly class="form-control txtkodep" name="kodep" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
+                    <input type="date" class="form-control txttanggal" name="tanggal" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Nama</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Batang</label>
                   <div class="col-sm-9">
-                    <input type="text" class="Nama form-control" name="Nama" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+                    <input type="int" class="form-control txtbatang" name="batang" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+                  
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Alamat</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Lahan</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control txtalamat" name="alamat" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+                    <input type="text" class="form-control txtlahan" name="lahan" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
                   </div>
                 </div>
                 <div class="form-group row">
-                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Jenis Kelamin</label>
-                <div class="col-sm-3">
-                <select class="form-control seljeniskelamin" id="exampleFormControlSelect1" name="jeniskelamin" min>
-                  <option>Laki-laki</option>
-                  <option>Perempuan</option>
-                </select> 
-                </div>
-                </div>
-                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">No Telp</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Seri</label>
                   <div class="col-sm-9">
-                    <input type="int" class="form-control txtnotelp" name="notelp" id="formGroupExampleInput" required="true" maxlength="12">
-                  </div>
-                </div>                
-                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kode Jabatan</label>
-                  <div class="col-sm-3">
-                    <input type="int" class="form-control txtkodej" name="kodej" id="formGroupExampleInput" required="true" maxlength="10">
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">ID Jadwal</label>
-                  <div class="col-sm-9">
-                    <input type="int" class="form-control txtidjadwal" name="idjadwal" id="formGroupExampleInput" required="true" maxlength="10">
+                    <input type="int" class="form-control txtseri" name="seri" id="formGroupExampleInput" required="true" maxlength="12">
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary" name="btneditkupasan">Edit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary" name="btneditdryer">Edit</button>
                 </div>
               </form>
             </div>
           </div>
         </div>
-     </div>    
-  <!-- end modal edit kupasan -->
+      </div>
+  <!-- end modal edit dryer -->
 
-<!--modal hapus kupasan-->
-<div class="modal fade" id="hapuskupasan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!--modal hapus dryer-->
+<div class="modal fade" id="hapusdryer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body">Apakah Anda Yakin ingin menghapus data ini?</div>
@@ -346,19 +431,15 @@
       </div>
     </div>
   </div>
-  <!-- end modal hapus kupasan -->
-  <footer class="main-footer">
-    <strong>Copyright &copy; 2019 PT. Wijaya Plywoods .</strong>
-  </footer>
+  </div>
+  <!-- end modal hapus dryer -->
    </div>
   </div>
-
-
 
   <script type="text/javascript">
     //Hapus Data
     $(document).ready(function() {
-        $('#hapuskupasan').on('show.bs.modal', function(e) {
+        $('#hapusdryer').on('show.bs.modal', function(e) {
             $(this).find('.btn-hapus').attr('href', $(e.relatedTarget).data('href'));
         });
     });
@@ -389,8 +470,36 @@
 <!-- Javascript Datatable -->
 <script type="text/javascript">
   $(document).ready(function(){
-    $('#kupasan').DataTable();
+    $('#dryer').DataTable();
   });
+</script>
+
+<!-- Javascript Filter -->
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example').DataTable( {
+        initComplete: function () {
+            this.api().columns().every( function () {
+                var column = this;
+                var select = $('<select><option value=""></option></select>')
+                    .appendTo( $(column.footer()).empty() )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+ 
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
+ 
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+            } );
+        }
+    } );
+} );
 </script>
 
 
@@ -434,26 +543,28 @@
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 
+<!-- Data -->
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
+
 <script>
-  $(".btn-edit").click(function(e){
-    var kodep = $(this).attr("data-id");
+   $(".btn-edit").click(function(e){
+    var seri = $(this).attr("data-id");
     $.ajax({
       "method"  : "get",
-      "url"   : "index.php",
+      "url"   : "dryer.php",
       "data"    : {
         "edit"      : true,
-        "kodep"  : kodep,
+        "seri"  : seri,
       },
       "dataType"  : "json",
       "success" : function(e){
-        $("#editkupasan").modal();
-        $(".txtkodep").val(kodep);
-        $(".Nama").val(e.Nama);
-        $(".txtalamat").val(e.alamat);
-        $(".seljeniskelamin").val(e.jeniskelamin);
-        $(".txtnotelp").val(e.notelp);
-        $(".txtkodej").val(e.kodej);
-        $(".txtidjadwal").val(e.idjadwal);
+        $("#editdryer").modal();
+        $(".txttanggal").val(e.tanggal);
+        $(".txtbatang").val(e.batang);
+        $(".txtlahan").val(e.lahan);
+        $(".txtseri").val(e.seri);
       }
     });
   });
@@ -462,7 +573,7 @@
 <script type="text/javascript">
     //Hapus Data
     $(document).ready(function() {
-        $('#hapuskupasan').on('show.bs.modal', function(e) {
+        $('#hapusdryer').on('show.bs.modal', function(e) {
             $(this).find('.btn-hapus').attr('href', $(e.relatedTarget).data('href'));
         });
     });
@@ -474,8 +585,8 @@
 <?php
   }
   if(isset($_GET['edit'])){
-    $kodep = $_GET['kodep'];
-    $sql = "SELECT * FROM kupasan WHERE kodep='". $kodep ."'";
+    $seri = $_GET['seri'];
+    $sql = "SELECT * FROM dryer WHERE seri='". $seri ."'";
     $q = mysqli_query($koneksi, $sql);
     while($row=mysqli_fetch_assoc($q)){
       echo json_encode($row);
