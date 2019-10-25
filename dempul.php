@@ -112,7 +112,7 @@ $result = mysqli_query($koneksi, $query);
       <li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-file"></i> <span>Hasil</span>
+            <i class="fa fa-file"></i> <span>Departemen</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>

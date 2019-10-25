@@ -6,13 +6,13 @@
     exit();
   }
   if(!isset($_GET['edit'])){
-    $query = mysqli_query($koneksi, "SELECT * FROM pilihtriplek JOIN dryer on pilihtriplek.panjang=dryer.panjang");
+    $query = mysqli_query($koneksi, "SELECT * FROM lain JOIN dryer on lain.panjang=dryer.panjang");
 ?>
 
 <!-- <?php 
 include "conf/conn.php";
 $koneksi = mysqli_connect("localhost", "root", "", "absenhasil1");
-$query = "SELECT * FROM pilihtriplek ORDER BY tanggal ASC";
+$query = "SELECT * FROM lain ORDER BY tanggal ASC";
 $result = mysqli_query($koneksi, $query);
 ?> -->
 
@@ -132,7 +132,7 @@ $result = mysqli_query($koneksi, $query);
           </a>
           <ul class="treeview-menu">
             <li class="active"><a href="dempul.php"><i class="fa fa-circle-o"></i> Dempul</a></li>
-            <li><a href="pilihtriplek.php"><i class="fa fa-circle-o"></i> Pilih Triplek</a></li>
+            <li><a href="lain.php"><i class="fa fa-circle-o"></i> Pilih Triplek</a></li>
           </ul>
           </li>
             <li><a href="lain.php"><i class="fa fa-circle-o"></i> Lain-lain</a></li>
@@ -155,7 +155,7 @@ $result = mysqli_query($koneksi, $query);
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><b>DATA PILIH TRIPLEK</b></h1>
+      <h1><b>DATA LAIN</b></h1>
     </section>
     <!-- Main content -->
     <section class="content">
@@ -163,9 +163,9 @@ $result = mysqli_query($koneksi, $query);
         <div class="col-xs-12">
           <div class="box box-primary">
             <div class="box-header">
-              <button type="button" name="btntambahpilihtriplek"<a data-toggle="modal" data-target="#tambahpilihtriplek" class=" btn btn-primary text-white";> Tambah <i class="glyphicon glyphicon-plus"></i></a></button>
+              <button type="button" name="btntambahlain"<a data-toggle="modal" data-target="#tambahlain" class=" btn btn-primary text-white";> Tambah <i class="glyphicon glyphicon-plus"></i></a></button>
               <div class="card-body">
-              <form action="exportpilihtriplek.php" method="POST">
+              <form action="exportlain.php" method="POST">
               <div class="row">
               <div class="col-md-5"><b>Mulai</b>
               <div class="form-group">
@@ -195,14 +195,14 @@ $result = mysqli_query($koneksi, $query);
                   <th><center>Seri</center></th>
                   <th><center>Keterangan</center></th>
                   <th><center>Mesin</center></th> -->
+                  <th><center>No</center></th>
                   <th><center>Tanggal</center></th>
-                  <th><center>Kerja</center></th>
-                  <th><center>Panjang</center></th>
-                  <th><center>Lebar</center></th>
-                  <th><center>Tebal</center></th>
-                  <th><center>Kwalitas</center></th>
-                  <th><center>Jenis</center></th>
-                  <th><center>Hasil</center></th>
+                  <th><center>Kegiatan</center></th>
+                  <th><center>Keterangan</center></th>
+                  <th><center>No ID</center></th>
+                  <th><center>Masuk</center></th>
+                  <th><center>Pulang</center></th>
+                  <th><center>Potongan</center></th>
                   <!-- <th><center>Aksi</center></th> -->
                 </tr>
               </thead>
@@ -210,23 +210,23 @@ $result = mysqli_query($koneksi, $query);
 
                  <?php
                 include "conf/conn.php";
-                $query = mysqli_query($koneksi, "SELECT * FROM pilihtriplek");
+                $query = mysqli_query($koneksi, "SELECT * FROM lain");
                 while ($row = mysqli_fetch_array($query)) {
                 ?>
 
                 <tr>
+                  <td><?php echo $row['no'];?></td>
                   <td><?php echo $row['tanggal'];?></td>
-                  <td><?php echo $row['kerja'];?></td>
-                  <td><?php echo $row['panjang'];?></td>
-                  <td><?php echo $row['lebar'];?></td>
-                  <td><?php echo $row['tebal'];?></td>
-                  <td><?php echo $row['kw'];?></td>
-                  <td><?php echo $row['jenis'];?></td>
-                  <td><?php echo $row['hasil'];?></td>
+                  <td><?php echo $row['kegiatan'];?></td>
+                  <td><?php echo $row['keterangan'];?></td>
+                  <td><?php echo $row['kodep'];?></td>
+                  <td><?php echo $row['masuk'];?></td>
+                  <td><?php echo $row['pulang'];?></td>
+                  <td><?php echo $row['potong'];?></td>
                   <!-- <td>
                   <center>
-                  <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btneditpilihtriplek' data-id="<?php echo $row['seri']?>" ><i class="glyphicon glyphicon-edit"></i></button>
-                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapuspilihtriplek' data-href="pages/hapuspilihtriplek.php?seri=<?php echo $row['seri'];?>"><i class="glyphicon glyphicon-trash"></i>
+                  <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btneditlain' data-id="<?php echo $row['seri']?>" ><i class="glyphicon glyphicon-edit"></i></button>
+                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapuslain' data-href="pages/hapuslain.php?seri=<?php echo $row['seri'];?>"><i class="glyphicon glyphicon-trash"></i>
                   </center>
                   </td> -->
                 </tr>
@@ -236,14 +236,15 @@ $result = mysqli_query($koneksi, $query);
                 </tbody>
                 <tfoot>
             <tr>
+                <th>no</th>
                 <th>tanggal</th>
-                <th>kerja</th>
-                <th>panjang</th>
-                <th>lebar</th>
-                <th>tebal</th>
-                <th>kw</th>
-                <th>jenis</th>
-                <th>hasil</th>
+                <th>kegiatan</th>
+                <th>keterangan</th>
+                <th>kodep</th>
+                <th>masuk</th>
+                <th>pulang</th>
+                <th>potong</th>
+                
             </tfoot>
               </table>
             </div>
@@ -263,18 +264,18 @@ $result = mysqli_query($koneksi, $query);
     <strong>Copyright &copy; 2019 PT. Wijaya Plywoods .</strong>
   </footer>
   
-<!-- modal tambah pilihtriplek -->
-        <div class="modal fade" id="tambahpilihtriplek" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- modal tambah lain -->
+        <div class="modal fade" id="tambahlain" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
-              <h4 class="modal-title" id="exampleModalLabel"><center><b>TAMBAH DATA PILIH TRIPLEK</b></center></h4>
+              <h4 class="modal-title" id="exampleModalLabel"><center><b>TAMBAH DATA LAIN</b></center></h4>
             </div>
             <div class="modal-body">
-              <form action="pages/tambahpilihtriplek.php" method="POST" enctype="multipart/form-data">
+              <form action="pages/tambahlain.php" method="POST" enctype="multipart/form-data">
               <!-- <p style="background-color:#71D0FF;" ><b><u>Pemakaian Bahan</u></b></p> -->
                 <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Tanggal</label>
@@ -283,66 +284,54 @@ $result = mysqli_query($koneksi, $query);
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kerja</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kegiatan</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" name="bahankurang" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
+                    <input type="text" class="form-control" name="kegiatan" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
                   </div>
                 </div>
                 <div class="form-group row">
-                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Panjang</label>
-                <div class="col-sm-9">
-                <select class="form-control" id="exampleFormControlSelect1" name="panjang">
-                  <option>122</option>
-                  <option>244</option>
-                </select> 
-                </div>
-                </div>
-                <div class="form-group row">
-                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Lebar</label>
-                <div class="col-sm-9">
-                <select class="form-control" id="exampleFormControlSelect1" name="lebar">
-                  <option>244</option>
-                  <option>122</option>
-                </select> 
-                </div>
-                </div>
-                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Tebal</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Keterangan</label>
                   <div class="col-sm-9">
-                    <input type="float" class="form-control" name="tebal" id="formGroupExampleInput" required="true" maxlength="12">
+                    <input type="text" class="form-control" name="keterangan" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kwalitas</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">No ID</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" name="tanggal" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
+                    <input type="int" class="form-control" name="kodep" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Jenis</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Masuk</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" name="tanggal" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
+                    <input type="time" class="form-control" name="masuk" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Hasil</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Pulang</label>
                   <div class="col-sm-9">
-                    <input type="int" class="form-control" name="hasil" id="formGroupExampleInput" required="true" maxlength="12">
+                    <input type="time" class="form-control" name="pulang" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Potong</label>
+                  <div class="col-sm-9">
+                    <input type="int" class="form-control" name="potong" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
                   </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary" name="btntambahpilihtriplek">Tambah</button>
+                  <button type="submit" class="btn btn-primary" name="btntambahlain">Tambah</button>
                 </div>
               </form>
             </div>
           </div>
         </div>
       </div>
-  <!-- end modal tambah pilihtriplek -->
+  <!-- end modal tambah lain -->
 
- <!-- modal edit pilihtriplek -->
- <div class="modal fade" id="editpilihtriplek" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <!-- modal edit lain -->
+ <div class="modal fade" id="editlain" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -352,7 +341,7 @@ $result = mysqli_query($koneksi, $query);
               <h4 class="modal-title" id="exampleModalLabel"><center><b>EDIT DATA PILIH TRIPLEK</b></center></h4>
             </div>
             <div class="modal-body">
-              <form action="pages/editpilihtriplek.php" method="POST" enctype="multipart/form-data">
+              <form action="pages/editlain.php" method="POST" enctype="multipart/form-data">
                 <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Tanggal</label>
                   <div class="col-sm-9">
@@ -380,17 +369,17 @@ $result = mysqli_query($koneksi, $query);
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary" name="btneditpilihtriplek">Edit</button>
+                  <button type="submit" class="btn btn-primary" name="btneditlain">Edit</button>
                 </div>
               </form>
             </div>
           </div>
         </div>
       </div>
-  <!-- end modal edit pilihtriplek -->
+  <!-- end modal edit lain -->
 
-<!--modal hapus pilihtriplek-->
-<div class="modal fade" id="hapuspilihtriplek" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!--modal hapus lain-->
+<div class="modal fade" id="hapuslain" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body">Apakah Anda Yakin ingin menghapus data ini?</div>
@@ -402,14 +391,14 @@ $result = mysqli_query($koneksi, $query);
     </div>
   </div>
   </div>
-  <!-- end modal hapus pilihtriplek -->
+  <!-- end modal hapus lain -->
    </div>
   </div>
 
   <script type="text/javascript">
     //Hapus Data
     $(document).ready(function() {
-        $('#hapuspilihtriplek').on('show.bs.modal', function(e) {
+        $('#hapuslain').on('show.bs.modal', function(e) {
             $(this).find('.btn-hapus').attr('href', $(e.relatedTarget).data('href'));
         });
     });
@@ -440,7 +429,7 @@ $result = mysqli_query($koneksi, $query);
 <!-- Javascript Datatable -->
 <script type="text/javascript">
   $(document).ready(function(){
-    $('#pilihtriplek').DataTable();
+    $('#lain').DataTable();
   });
 </script>
 
@@ -523,14 +512,14 @@ $(document).ready(function() {
     var seri = $(this).attr("data-id");
     $.ajax({
       "method"  : "get",
-      "url"   : "pilihtriplek.php",
+      "url"   : "lain.php",
       "data"    : {
         "edit"      : true,
         "seri"  : seri,
       },
       "dataType"  : "json",
       "success" : function(e){
-        $("#editpilihtriplek").modal();
+        $("#editlain").modal();
         $(".txttanggal").val(e.tanggal);
         $(".txtbatang").val(e.batang);
         $(".txtlahan").val(e.lahan);
@@ -543,7 +532,7 @@ $(document).ready(function() {
 <script type="text/javascript">
     //Hapus Data
     $(document).ready(function() {
-        $('#hapuspilihtriplek').on('show.bs.modal', function(e) {
+        $('#hapuslain').on('show.bs.modal', function(e) {
             $(this).find('.btn-hapus').attr('href', $(e.relatedTarget).data('href'));
         });
     });
@@ -556,7 +545,7 @@ $(document).ready(function() {
   }
   if(isset($_GET['edit'])){
     $seri = $_GET['seri'];
-    $sql = "SELECT * FROM pilihtriplek WHERE seri='". $seri ."'";
+    $sql = "SELECT * FROM lain WHERE seri='". $seri ."'";
     $q = mysqli_query($koneksi, $sql);
     while($row=mysqli_fetch_assoc($q)){
       echo json_encode($row);
