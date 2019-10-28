@@ -1,14 +1,15 @@
 <?php
-    session_start();
-    include "conf/conn.php";
-    if (!isset($_SESSION['login'])){
-      echo "<script>location='login.php';</script>";
-      exit();
-    }
-  if(!isset($_GET['edit'])){
-     $query = mysqli_query($koneksi, "SELECT * FROM tabsen"); 
+  session_start();
+  include "conf/conn.php";
+  if (!isset($_SESSION['login'])){
+    echo "<script>location='login.php';</script>";
+    exit();
+  }
+  $kodep = $_GET['kodep'];
+  $query = mysqli_query($koneksi,"SELECT * FROM absensi WHERE kodep='$kodep'");
+  $row = mysqli_fetch_array($query);
 ?>
-     
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -132,7 +133,7 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><b>DATA ABSEN SCANNER</b></h1>
+      <h1><b>ABSEN BANDING</b></h1>
     </section>
     <!-- Main content -->
     <section class="content">
@@ -140,68 +141,47 @@
         <div class="col-xs-12">
           <div class="box box-primary">
             <div class="box-header">
-              <form action="pages/hapusscanner.php" method="POST">
-                <div class="col-md-2"><b>Mulai</b>
-                 <div class="form-group">
-                  <input type="date" class="form-control" name="tglm">
+            <div class="card-body">
+				<form action="" method="POST" enctype="multipart/form-data">
+              <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kode Pegawai</label>
+                  <div class="col-sm-9">
+                    <input type="text" readonly class="form-control txtkodep" name="kodep" id="formGroupExampleInput" value="<?php echo $row['kodep'];?>" required="true" minlength="1" maxlength="20">
+                  </div>
                 </div>
-              </div>
-                <div class="col-md-2"><b>Selesai</b>
-                  <div class="form-group">
-                  <input type="date" class="form-control" name="tgls">
-              </div>
-            </div>
-		          <br>
-                <div class="col-md-2">    
-                <button class='btn btn-danger ' data-toggle='modal' data-target='#hapusscan'><i class="glyphicon glyphicon-trash"></i>
-              </div>
-              <div>    
-              </div>
-             <button type="button" name="import"<a data-toggle="modal" data-target="#import" class=" btn btn-primary  text-white" style="display: inline-block; float:right;";> Import <i class="glyphicon glyphicon-import"></i></a></button>  
-              </div>
-          </form>       
-            <div class="box-body table-responsive">
-            <table id="absen" class="table table-bordered table-hover">
-              <thead>
-                <tr>
-                <th><center>Kode Absen</center></th>
-                  <th><center>Tanggal</center></th>
-                  <th><center>Kode Pegawai</center></th>
-                  <th><center>Nama</center></th>
-                  <th><center>Jam Hadir</center></th>
-                  <th><center>Jam Pulang</center></th>
-                  <th><center>Jam Hadir (bulat)</center></th>
-                  <th><center>Jam Pulang (bulat)</center></th>
-                  <th><center>Shift</center></th>
-                </tr>
-              </thead>
-              <tbody>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Nama</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="Nama form-control" name="nama" id="formGroupExampleInput" value="<?php echo $row['Nama'];?>" required="true" minlength="1" maxlength="50">
+                  </div>
+                </div>
+				<div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Ketr</label>
+                  <div class="col-sm-9">
+                    <textarea class="form-control pj" name="ketr" id="formGroupExampleInput" value="<?php echo $row['ketr'];?>" required="true" maxlength="250"></textarea>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary" name="btnlembur">Edit</button>
+                </div>
+              </form>
+        </div>
+       </div>
 
-                <?php
-                include "conf/conn.php";
-                $query = mysqli_query($koneksi, "SELECT * FROM absensi ORDER BY kodeabsen DESC");
-
-                while ($row = mysqli_fetch_array($query)) {
-                ?>
-
-                <tr>
-                <td><?php echo $row['kodeabsen'];?></td>
-                  <td><?php echo $row['tanggal'];?></td>
-                  <td><?php echo $row['kodep'];?></td>
-                  <td><?php echo $row['Nama'];?></td>
-                  <td><?php echo $row['jamhadir'];?></td>
-                  <td><?php echo $row['jampulang'];?></td>
-                  <td><?php echo $row['jamhadir_bulat'];?></td>
-                  <td><?php echo $row['jampulang_bulat'];?></td>
-                  <td><?php echo $row['shift'];?></td>
-                </tr>
-
-                <?php } ?>
-
-                </tbody>
-              </table>
-            </div>
-            <!-- /.box-body -->
+		<?php
+			if (isset($_POST['btnlembur'])) {
+				$update = mysqli_query($koneksi,"UPDATE absensi SET ketr='$_POST[ketr]' WHERE kodep='$_POST[kodep]'");
+				if ($update) {
+					echo "<script>alert('Berhasil diUpdate');</script>";
+					echo "<script>location='perbandingan.php';</script>";
+				} else {
+					echo "<script>alert('gagal');</script>";
+				}
+				
+			}
+		?>
+          
           </div>
           <!-- /.box -->
         </div>
@@ -212,66 +192,50 @@
     <!-- /.content -->
   </div>
 <!-- /.content-wrapper -->
-
-<!-- Modal Import -->
-<div style="margin-top:100px;" id="import" class="modal fade" role="dialog">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><center><b>Import Data Absen Scanner</b></center></h4>
-			</div>
-			<form action="" method="POST" enctype="multipart/form-data">
-				<div class="modal-body">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="col-md-12"><label>Pilih File CSV : </label></div>
-									<div class="col-md-12"><input type="file" class="form-control" accept=".csv" name="file"></div>
-										<br>
-									</div>
-							</div>
-						</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="submit" class="btn btn-success" name="Import">Import</button>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
-<!-- /.Modal Import -->
-
-<!--modal hapus pegawai-->
-<div class="modal fade" id="hapusscan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-body">Apakah Anda Yakin ingin menghapus data ini?</div>
-        <div class="modal-footer">
-          <a class="btn btn-danger btn-hapus">Hapus</a>
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- end modal hapus pegawai -->
+ 
   <footer class="main-footer">
     <strong>Copyright &copy; 2019 PT. Wijaya Plywoods .</strong>
   </footer>
+   </div>
   </div>
-</div>
+
+
 
   <script type="text/javascript">
     //Hapus Data
     $(document).ready(function() {
-        $('#hapusdata').on('show.bs.modal', function(e) {
+        $('#hapuspegawai').on('show.bs.modal', function(e) {
             $(this).find('.btn-hapus').attr('href', $(e.relatedTarget).data('href'));
         });
     });
+  </script>
+  <script type="text/javascript">
+    function fileValidation(){
+      var fileInput = document.getElementById('file');
+      var filePath = fileInput.value;
+      var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+      if(!allowedExtensions.exec(filePath)){
+        alert('Please upload file having extensions .jpeg/.jpg/.png/.gif only.');
+        fileInput.value = '';
+        return false;
+      }else{
+        //Image preview
+        if (fileInput.files && fileInput.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function(e) {
+            document.getElementById('imagePreview').innerHTML = '<img style="width:50px;height:50px;padding-bottom: 5px;" src="'+e.target.result+'"/>';
+          };
+          reader.readAsDataURL(fileInput.files[0]);
+        }
+      }
+    }
+  </script>
+  
 
 <!-- Javascript Datatable -->
 <script type="text/javascript">
   $(document).ready(function(){
-    $('#absen').DataTable();
+    $('#pegawai').DataTable();
   });
 </script>
 
@@ -316,32 +280,14 @@
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 
+<script type="text/javascript">
+    //Hapus Data
+    $(document).ready(function() {
+        $('#hapuspegawai').on('show.bs.modal', function(e) {
+            $(this).find('.btn-hapus').attr('href', $(e.relatedTarget).data('href'));
+        });
+    });
+  </script>
+
 </body>
 </html>
-
-<?php
-if(isset($_POST["Import"])){
-		$filename=$_FILES["file"]["tmp_name"];		
-		if($_FILES["file"]["size"] > 0){
-		  	$file = fopen($filename, "r");
-	        while(($getData = fgetcsv($file, 10000, ",")) !== FALSE){
-				$sql = "INSERT into absensi (kodeabsen,tanggal,kodep,Nama,jamhadir,jampulang,jamhadir_bulat,jampulang_bulat,shift,ketr,telat,lembur,jamkerja) 
-				values ('".$getData[0]."','".$getData[1]."','".$getData[2]."','".$getData[3]."','".$getData[4]."','".$getData[5]."','".$getData[6]."','".$getData[7]."','".$getData[8]."','".$getData[9]."','".$getData[10]."','".$getData[11]."','".$getData[12]."')";
-                $result = mysqli_query($koneksi, $sql);
-					if(!isset($result)){	
-						echo "<script type=\"text/javascript\">
-								alert(\"Invalid File:Please Upload CSV File.\");
-								window.location = \"absensanner.php\"
-							  </script>";
-					}else{
-						  echo "<script type=\"text/javascript\">
-							alert(\"CSV File has been successfully Imported.\");
-							window.location = \"absensanner.php\"
-							</script>";
-					}
-	        }
-	         fclose($file);	
-		}
-}	 
-  }
-?>

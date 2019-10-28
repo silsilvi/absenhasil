@@ -6,7 +6,7 @@
     exit();
   }
   if(!isset($_GET['edit'])){
-     $query = mysqli_query($koneksi, "SELECT * FROM pegawai k LEFT JOIN absensi a ON k.kodep = a.kodep LEFT JOIN tabsen ta ON a.kodep=ta.kodep ORDER BY kodep");
+     $query = mysqli_query($koneksi, "SELECT * FROM pegawai");
 ?>
 
 <!DOCTYPE html>
@@ -175,15 +175,17 @@
                   <th><center>Jam Pulang (bulat)</center></th>
                   <th><center>Jam Hadir(Hasil)</center></th>
                   <th><center>Jam Pulang (Hasil)</center></th>
-				  <th><center>Ketr</center></th>
-                  
+				  <th><center>Telat</center></th>
+				  <th><center>Lembur</center></th>
+				 <th><center>PJ / Ketr</center></th>
+				 <th><center>Status</center></th>
                 </tr>
               </thead>
               <tbody>
 
                 <?php
                 include "conf/conn.php";
-                $query = mysqli_query($koneksi, "SELECT a.kodeabsen,ta.tanggal1,k.kodep,k.Nama,a.jamhadir,a.jampulang,a.jamhadir_bulat,a.jampulang_bulat,ta.jamhadir1,ta.jampulang1 FROM pegawai k LEFT JOIN absensi a ON k.kodep = a.kodep LEFT JOIN tabsen ta ON a.kodep=ta.kodep ORDER BY kodep");
+                $query = mysqli_query($koneksi, "SELECT a.kodeabsen,ta.tanggal1,k.kodep,k.Nama,a.jamhadir,a.jampulang,a.jamhadir_bulat,a.jampulang_bulat,ta.jamhadir1,ta.jampulang1,k.idjadwal,a.ketr FROM pegawai k LEFT JOIN absensi a ON k.kodep = a.kodep LEFT JOIN tabsen ta ON a.kodep=ta.kodep ORDER BY kodep");
                 while ($row = mysqli_fetch_array($query)) {
                 ?>
                 <tr>
@@ -196,19 +198,48 @@
                   <td><?php echo $row['jampulang_bulat'];?></td>
                   <td><?php echo $row['jamhadir1']?></td>
                   <td><?php echo $row['jampulang1'];?></td>
-				  
                   <?php 
+				  $cek_jadwal = mysqli_query($koneksi, "SELECT * FROM pegawai k JOIN tjadwal j ON k.idjadwal=j.id_jadwal WHERE kodep='$row[kodep]'");
+				  $data_jadwal= mysqli_fetch_assoc($cek_jadwal);
+				 
 				  if(empty($row['jamhadir_bulat']AND$row['jampulang_bulat']) OR empty($row['jamhadir1']AND$row['jampulang1'])) {
+					echo "<td></td>";
+					echo "<td></td>";
+					echo "<td>$row[ketr]</td>";
+					echo '<td><span style="background-color:red;color:white;padding:2px 10px 2px 10px !important;">Tidak</span></td>';
+				  } else {
+					if ($row['jamhadir_bulat']==$row['jamhadir1'] AND $row['jampulang_bulat']==$row['jampulang1']) {
+			  
+						  if ($row['jamhadir_bulat']>$data_jadwal['jam_masuk']) {
+							$telat  = round((strtotime($row['jamhadir_bulat']) - strtotime($data_jadwal['jam_masuk']))/3600, 1);
+							echo "<td>".$telat."</td>";
+							if ($row['jampulang_bulat']>$data_jadwal['jam_pulang']) {
+								  $lembur  = round((strtotime($row['jampulang_bulat']) - strtotime($data_jadwal['jam_pulang']))/3600, 1);
+								  echo "<td>".$lembur."</td>";
+							  } else {
+								  echo "<td></td>";
+							  }
+						  } else {
+							  echo "<td></td>";
+							  if ($row['jampulang_bulat']>$data_jadwal['jam_pulang']) {
+								  $lembur  = round((strtotime($row['jampulang_bulat']) - strtotime($data_jadwal['jam_pulang']))/3600, 1);
+								  echo "<td>".$lembur."</td>";
+							  } else {
+								  echo "<td></td>";
+							  }
+						  }
+						  echo "<td>$row[ketr]</td>";
+						echo '<td><span style="background-color:green;color:white;padding:2px 20px 2px 20px !important;">Ya</span></td>';
+						echo "<td><a class='btn btn-warning' style='padding:2px 10px 2px 10px' href='konfirlembur.php?kodep=".$row['kodep']."'><i class='glyphicon glyphicon-check text-white'></i></a></td>";
+						
+							
+					} else {
+						echo "<td></td>";
+					echo "<td></td>";
+					echo "<td>$row[ketr]</td>";
 					echo '<td><span style="background-color:red;color:white;padding:2px 10px 2px 10px !important;">Tidak</span></td>';
 					echo "<td><button class='btn btn-primary btn-edit' style='padding:2px 10px 2px 10px' name='btneditabsen' data-id='$row[kodep]'><i class='glyphicon glyphicon-check text-white'></i></button>";
-				  } else {
-                    if ($row['jamhadir_bulat']==$row['jamhadir1'] AND $row['jampulang_bulat']==$row['jampulang1']) {
-                      echo '<td><span style="background-color:green;color:white;padding:2px 20px 2px 20px !important;">Ya</span></td>';
-                    } else {
-                      echo '<td><span style="background-color:red;color:white;padding:2px 10px 2px 10px !important;">Tidak</span></td>';
-					  echo "<td><button class='btn btn-primary btn-edit' style='padding:2px 10px 2px 10px' name='btneditabsen' data-id='$row[kodep]'><i class='glyphicon glyphicon-check text-white'></i></button>";
-					  
-                    }
+					}
 				  }
                   ?>
                 </tr>
@@ -238,7 +269,7 @@
               <h4 class="modal-title" id="exampleModalLabel"><center><b>Pertanggung Jawaban</b></center></h4>
             </div>
             <div class="modal-body">
-              <form action="pages/editpegawai.php" method="POST" enctype="multipart/form-data">
+              <form action="pages/konfirabsen.php" method="POST" enctype="multipart/form-data">
               <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kode Pegawai</label>
                   <div class="col-sm-9">
@@ -248,7 +279,7 @@
                 <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Nama</label>
                   <div class="col-sm-9">
-                    <input type="text" class="Nama form-control" name="Nama" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+                    <input type="text" class="Nama form-control" name="nama" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
                   </div>
                 </div>
                 <div class="form-group row">
@@ -278,7 +309,7 @@
 				<div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Pertanggung Jawaban</label>
                   <div class="col-sm-9">
-                    <textarea class="form-control pj" name="pj" id="formGroupExampleInput" required="true" maxlength="12"></textarea>
+                    <textarea class="form-control pj" name="pj" id="formGroupExampleInput" required="true" maxlength="250"></textarea>
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -407,10 +438,10 @@
         $("#editpegawai").modal();
         $(".txtkodep").val(kodep);
         $(".Nama").val(e.Nama);
-        $(".txtjamh_bulat").val(e.jamhadir);
-        $(".txtjamp_bulat").val(e.jampulang);
+        $(".txtjamh_bulat").val(e.jamhadir_bulat);
+        $(".txtjamp_bulat").val(e.jampulang_bulat);
 		$(".txtjamhasil_masuk").val(e.jamhadir1);
-        $(".txtjamhasil_pulang").val(e.jampulang1);
+		$(".txtjamhasil_pulang").val(e.jampulang1);
         $(".txtidjadwal").val(e.idjadwal);
       }
     });
@@ -433,7 +464,7 @@
   }
   if(isset($_GET['edit'])){
     $kodep = $_GET['kodep'];
-    $sql = "SELECT * FROM absensi WHERE kodep='". $kodep ."'";
+    $sql = "SELECT * FROM absensi WHERE kodep='".$kodep."'";
     $q = mysqli_query($koneksi, $sql);
     while($row=mysqli_fetch_assoc($q)){
       echo json_encode($row);
