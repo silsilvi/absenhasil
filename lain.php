@@ -186,7 +186,7 @@ $result = mysqli_query($koneksi, $query);
         </div>
             </div>
           <div class="box-body table-responsive">
-          <table id="example" class="display table table-bordered table-hover">
+          <table id="lain" class="display table table-bordered table-hover">
               <thead>
                 <tr>
                   <!-- <th><center>Tanggal</center></th> -->
@@ -222,7 +222,7 @@ $result = mysqli_query($koneksi, $query);
                   <td><?php echo $row['kodep'];?></td>
                   <td><?php echo $row['masuk'];?></td>
                   <td><?php echo $row['pulang'];?></td>
-                  <td><?php echo $row['potong'];?></td>
+                  <td><?php echo $row['potongan'];?></td>
                   <!-- <td>
                   <center>
                   <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btneditlain' data-id="<?php echo $row['seri']?>" ><i class="glyphicon glyphicon-edit"></i></button>
@@ -234,7 +234,7 @@ $result = mysqli_query($koneksi, $query);
                 <?php } ?>
 
                 </tbody>
-                <tfoot>
+                <!-- <tfoot>
             <tr>
                 <th>no</th>
                 <th>tanggal</th>
@@ -245,7 +245,7 @@ $result = mysqli_query($koneksi, $query);
                 <th>pulang</th>
                 <th>potong</th>
                 
-            </tfoot>
+            </tfoot> -->
               </table>
             </div>
             <!-- /.box-body -->
@@ -278,12 +278,6 @@ $result = mysqli_query($koneksi, $query);
               <form action="pages/tambahlain.php" method="POST" enctype="multipart/form-data">
               <!-- <p style="background-color:#71D0FF;" ><b><u>Pemakaian Bahan</u></b></p> -->
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Tanggal</label>
-                  <div class="col-sm-9">
-                    <input type="date" class="form-control" name="tanggal" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
-                  </div>
-                </div>
-                <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kegiatan</label>
                   <div class="col-sm-9">
                     <input type="text" class="form-control" name="kegiatan" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
@@ -314,9 +308,9 @@ $result = mysqli_query($koneksi, $query);
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Potong</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Potongan</label>
                   <div class="col-sm-9">
-                    <input type="int" class="form-control" name="potong" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
+                    <input type="int" class="form-control" name="potongan" id="formGroupExampleInput" minlength="1" maxlength="20">
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -434,7 +428,7 @@ $result = mysqli_query($koneksi, $query);
 </script>
 
 <!-- Javascript Filter -->
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 $(document).ready(function() {
     $('#example').DataTable( {
         initComplete: function () {
@@ -459,7 +453,7 @@ $(document).ready(function() {
         }
     } );
 } );
-</script>
+</script> -->
 
 
 <!-- ./wrapper -->

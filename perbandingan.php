@@ -39,14 +39,17 @@
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
+  <!-- DataTables -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 
-  <!-- Google Font -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+  <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>  
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
@@ -180,7 +183,7 @@
               <thead>
                 <tr>
                   <th><center>Kode Pegawai</center></th>
-				  <th><center>Tanggal</center></th>
+				          <th><center>Tanggal</center></th>
                   <th><center>Nama</center></th>
                   <th><center>Jam Hadir</center></th>
                   <th><center>Jam Pulang</center></th>
@@ -201,7 +204,7 @@
                 ?>
                 <tr>
                   <td><?php echo $row['kodep'];?></td>
-				  <td><?php echo $row['tanggal1'];?></td>
+				          <td><?php echo $row['tanggal1'];?></td>
                   <td><?php echo $row['Nama'];?></td>
                   <td><?php echo $row['jamhadir'];?></td>
                   <td><?php echo $row['jampulang'];?></td>
@@ -481,6 +484,10 @@
 <script src="dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+
+<!-- Data -->
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 
 <script>
   $(".btn-edit").click(function(e){

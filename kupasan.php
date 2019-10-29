@@ -6,15 +6,8 @@
     exit();
   }
   if(!isset($_GET['edit'])){
-    $query = mysqli_query($koneksi, "SELECT * FROM kupasan JOIN detailkayumasuk on kupasan.seri=detailkayumasuk.seri");
+     $query = mysqli_query($koneksi, "SELECT * FROM kupasan"); 
 ?>
-
-<!-- <?php 
-include "conf/conn.php";
-$koneksi = mysqli_connect("localhost", "root", "", "absenhasil1");
-$query = "SELECT * FROM kupasan ORDER BY tanggal ASC";
-$result = mysqli_query($koneksi, $query);
-?> -->
 
 <!DOCTYPE html>
 <html>
@@ -46,16 +39,23 @@ $result = mysqli_query($koneksi, $query);
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
-  <!-- DataTables -->
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-  <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>  
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>  
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   </head>
@@ -155,7 +155,7 @@ $result = mysqli_query($koneksi, $query);
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><b>DATA KUPASAN</b></h1>
+      <h1><b>DEPARTEMEN KUPASAN</b></h1>
     </section>
     <!-- Main content -->
     <section class="content">
@@ -163,58 +163,38 @@ $result = mysqli_query($koneksi, $query);
         <div class="col-xs-12">
           <div class="box box-primary">
             <div class="box-header">
-              <button type="button" name="btntambahkupasan"<a data-toggle="modal" data-target="#tambahkupasan" class=" btn btn-primary text-white";> Tambah <i class="glyphicon glyphicon-plus"></i></a></button>
-              <div class="card-body">
-              <form action="exportkupasan.php" method="POST">
-              <div class="row">
-              <div class="col-md-5"><b>Mulai</b>
-              <div class="form-group">
-              <input type="date" class="form-control" name="tglm">
-              </div>
-              </div>
-              <div class="col-md-5"><b>Selesai</b>
-              <div class="form-group">
-             <input type="date" class="form-control" name="tgls">
-           </div>
-         </div>
-		 <br>
-          <div class="col-md-2">
-              <button type="submit" class="btn btn-primary" name="print"> Export <i class="glyphicon glyphicon-print text-white"></i></button>
-          </div> 
-          </div>
-          </form>
-        </div>
+              <button type="button" name="btntambahkupasan"<a data-toggle="modal" data-target="#tambahkupasan" class=" btn btn-primary  text-white";> Tambah <i class="glyphicon glyphicon-plus"></i></a></button>
             </div>
           <div class="box-body table-responsive">
-          <table id="example" class="display table table-bordered table-hover">
+            <table id="kupasan" class="table table-bordered table-hover">
               <thead>
-              <td style="background-color:#71D0FF;" colspan="5"><b>Pemakaian Bahan</b></td>
-              <td style="background-color:#FFB6C1;" colspan="7"><b>Hasil<b></td>
-                <tr>
+              <tr>
                   <th style="background-color:#E0FFFF"><center>Tanggal</center></th>
                   <th style="background-color:#E0FFFF"><center>Batang</center></th>
                   <th style="background-color:#E0FFFF"><center>Lahan</center></th>
                   <th style="background-color:#E0FFFF"><center>Seri</center></th>
-                  <th style="background-color:#E0FFFF"><center>Keterangan</center></th>
+                  <th style="background-color:#E0FFFF"><center>Ket</center></th>
                   <th style="background-color:#FFE4E1"><center >Mesin</center></th>
-                  <th style="background-color:#FFE4E1"><center>Panjang</center></th>
-                  <th style="background-color:#FFE4E1"><center>Lebar</center></th>
-                  <th style="background-color:#FFE4E1"><center>Tebal</center></th>
-                  <th style="background-color:#FFE4E1"><center>Kwalitas</center></th>
+                  <th style="background-color:#FFE4E1"><center>P</center></th>
+                  <th style="background-color:#FFE4E1"><center>L</center></th>
+                  <th style="background-color:#FFE4E1"><center>T</center></th>
+                  <th style="background-color:#FFE4E1"><center>Kw</center></th>
                   <th style="background-color:#FFE4E1"><center>Jenis</center></th>
-                  <th style="background-color:#FFE4E1"><center>Veneer Basah</center></th>
+                  <th style="background-color:#FFE4E1"><center>Hasil</center></th>
+                  <th style="background-color:#FFE4E1"><center>Aksi</center></th>
                   <!-- <th><center>Aksi</center></th> -->
                 </tr>
               </thead>
               <tbody>
 
-                 <?php
+                <?php
                 include "conf/conn.php";
-                $query = mysqli_query($koneksi, "SELECT * FROM kupasan ");
+                $query = mysqli_query($koneksi, "SELECT * FROM kupasan ORDER BY seri DESC");
+
                 while ($row = mysqli_fetch_array($query)) {
                 ?>
 
-                <tr>
+<tr>
                   <td style="background-color:#E0FFFF"><?php echo $row['tanggal'];?></td>
                   <td style="background-color:#E0FFFF"><?php echo $row['batang'];?></td>
                   <td style="background-color:#E0FFFF"><?php echo $row['lahan'];?></td>
@@ -227,53 +207,32 @@ $result = mysqli_query($koneksi, $query);
                   <td style="background-color:#FFE4E1"><?php echo $row['kw'];?></td>
                   <td style="background-color:#FFE4E1"><?php echo $row['jenis'];?></td>
                   <td style="background-color:#FFE4E1"><?php echo $row['hasil'];?></td>
-                  <!-- <td>
+                  <td style="background-color:#FFE4E1">
                   <center>
-                  <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btneditkupasan' data-id="<?php echo $row['seri']?>" ><i class="glyphicon glyphicon-edit"></i></button>
-                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapuskupasan' data-href="pages/hapuskupasan.php?seri=<?php echo $row['seri'];?>"><i class="glyphicon glyphicon-trash"></i>
+                  <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btneditkupasan' data-id="<?php echo $row['seri']?>" data-nama="<?php echo $row['seri']?>"><i class="glyphicon glyphicon-edit"></i></button>
+                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapuskupasan' data-href="pages/hapuskupasan.php?kodep=<?php echo $row['kodep'];?>"><i class="glyphicon glyphicon-trash"></i>
                   </center>
-                  </td> -->
+                  </td>
                 </tr>
 
                 <?php } ?>
 
                 </tbody>
-                <tfoot>
-            <tr>
-                <th>tanggal</th>
-                <th>batang</th>
-                <th>lahan</th>
-                <th>seri</th>
-                <th>ket</th>
-                <th>mesin</th>
-                <th>panjang</th>
-                <th>lebar</th>
-                <th>tebal</th>
-                <th>kw</th>
-                <th>jenis</th>
-                <th>hasil</th>
-            </tr>
-            </tfoot>
               </table>
             </div>
             <!-- /.box-body -->
-            </div>
+          </div>
           <!-- /.box -->
         </div>
-       <!-- /.col -->
+        <!-- /.col -->
       </div>
-      
       <!-- /.row -->
     </section>
     <!-- /.content -->
   </div>
 <!-- /.content-wrapper -->
-<footer class="main-footer">
-    <strong>Copyright &copy; 2019 PT. Wijaya Plywoods .</strong>
-  </footer>
-  
 <!-- modal tambah kupasan -->
-        <div class="modal fade" id="tambahkupasan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="tambahkupasan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -285,12 +244,6 @@ $result = mysqli_query($koneksi, $query);
             <div class="modal-body">
               <form action="pages/tambahkupasan.php" method="POST" enctype="multipart/form-data">
               <p style="background-color:#71D0FF;" ><b><u>Pemakaian Bahan</u></b></p>
-                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Tanggal</label>
-                  <div class="col-sm-9">
-                    <input type="date" class="form-control" name="tanggal" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
-                  </div>
-                </div>
                 <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Batang</label>
                   <div class="col-sm-9">
@@ -326,16 +279,22 @@ $result = mysqli_query($koneksi, $query);
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Panjang</label>
-                  <div class="col-sm-9">
-                    <input type="int" class="form-control" name="panjang" id="formGroupExampleInput" required="true" maxlength="12">
-                  </div>
+                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Panjang</label>
+                <div class="col-sm-9">
+                <select class="form-control" id="exampleFormControlSelect1" name="panjang">
+                  <option>122</option>
+                  <option>244</option>
+                </select> 
+                </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Lebar</label>
-                  <div class="col-sm-9">
-                    <input type="int" class="form-control" name="lebar" id="formGroupExampleInput" required="true" maxlength="12">
-                  </div>
+                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Lebar</label>
+                <div class="col-sm-9">
+                <select class="form-control" id="exampleFormControlSelect1" name="lebar">
+                  <option>244</option>
+                  <option>122</option>
+                </select> 
+                </div>
                 </div>
                 <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Tebal</label>
@@ -372,9 +331,9 @@ $result = mysqli_query($koneksi, $query);
       </div>
   <!-- end modal tambah kupasan -->
 
- <!-- modal edit kupasan -->
+ <!-- modal edit pegawai -->
  <div class="modal fade" id="editkupasan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+ <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -384,44 +343,94 @@ $result = mysqli_query($koneksi, $query);
             </div>
             <div class="modal-body">
               <form action="pages/editkupasan.php" method="POST" enctype="multipart/form-data">
-                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Tanggal</label>
-                  <div class="col-sm-9">
-                    <input type="date" class="form-control txttanggal" name="tanggal" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
-                  </div>
-                </div>
-                <div class="form-group row">
+              <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Batang</label>
                   <div class="col-sm-9">
-                    <input type="int" class="form-control txtbatang" name="batang" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
-                  
+                    <input type="int" readonly class="form-control txtbatang" name="batang" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Lahan</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control txtlahan" name="lahan" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+                    <input type="text" class="txtlahan form-control" name="lahan" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Seri</label>
                   <div class="col-sm-9">
-                    <input type="int" class="form-control txtseri" name="seri" id="formGroupExampleInput" required="true" maxlength="12">
+                    <input type="text" class="form-control txtseri" name="seri" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+                  </div>
+                </div>
+                <div class="form-group row">
+                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Keterangan</label>
+                <div class="col-sm-3">
+                <select class="form-control txtket" id="exampleFormControlSelect1" name="ket" min>
+                  <option>Habis</option>
+                  <option>Belum</option>
+                </select> 
+                </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Mesin</label>
+                  <div class="col-sm-9">
+                    <input type="int" class="form-control txtmesin" name="mesin" id="formGroupExampleInput" required="true" maxlength="12">
+                  </div>
+                </div>
+                <div class="form-group row">
+                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Panjang</label>
+                <div class="col-sm-3">
+                <select class="form-control txtpanjang" id="exampleFormControlSelect1" name="panjang" min>
+                  <option>244</option>
+                  <option>122</option>
+                </select> 
+                </div>
+                </div>
+                <div class="form-group row">
+                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">lebar</label>
+                <div class="col-sm-3">
+                <select class="form-control txtlebar" id="exampleFormControlSelect1" name="lebar" min>
+                  <option>122</option>
+                  <option>244</option>                  
+                </select> 
+                </div>
+                </div>                   
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Tebal</label>
+                  <div class="col-sm-3">
+                    <input type="float" class="form-control txttebal" name="tebal" id="formGroupExampleInput" required="true" maxlength="10">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kwalitas</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control txtkw" name="kw" id="formGroupExampleInput" required="true" maxlength="10">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Jenis</label>
+                  <div class="col-sm-9">
+                    <input type="int" class="form-control txtjenis" name="jenis" id="formGroupExampleInput" required="true" maxlength="10">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Hasil</label>
+                  <div class="col-sm-9">
+                    <input type="int" class="form-control txthasil" name="hasil" id="formGroupExampleInput" required="true" maxlength="10">
                   </div>
                 </div>
                 <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                   <button type="submit" class="btn btn-primary" name="btneditkupasan">Edit</button>
                 </div>
               </form>
             </div>
           </div>
         </div>
-      </div>
-  <!-- end modal edit kupasan -->
+     </div>    
+  <!-- end modal edit pegawai -->
 
-<!--modal hapus kupasan-->
-<div class="modal fade" id="hapuskupasan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!--modal hapus pegawai-->
+<div class="modal fade" id="hapuspegawai" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body">Apakah Anda Yakin ingin menghapus data ini?</div>
@@ -432,15 +441,19 @@ $result = mysqli_query($koneksi, $query);
       </div>
     </div>
   </div>
-  </div>
-  <!-- end modal hapus kupasan -->
+  <!-- end modal hapus pegawai -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; 2019 PT. Wijaya Plywoods .</strong>
+  </footer>
    </div>
   </div>
+
+
 
   <script type="text/javascript">
     //Hapus Data
     $(document).ready(function() {
-        $('#hapuskupasan').on('show.bs.modal', function(e) {
+        $('#hapuspegawai').on('show.bs.modal', function(e) {
             $(this).find('.btn-hapus').attr('href', $(e.relatedTarget).data('href'));
         });
     });
@@ -473,34 +486,6 @@ $result = mysqli_query($koneksi, $query);
   $(document).ready(function(){
     $('#kupasan').DataTable();
   });
-</script>
-
-<!-- Javascript Filter -->
-<script type="text/javascript">
-$(document).ready(function() {
-    $('#example').DataTable( {
-        initComplete: function () {
-            this.api().columns().every( function () {
-                var column = this;
-                var select = $('<select><option value=""></option></select>')
-                    .appendTo( $(column.footer()).empty() )
-                    .on( 'change', function () {
-                        var val = $.fn.dataTable.util.escapeRegex(
-                            $(this).val()
-                        );
- 
-                        column
-                            .search( val ? '^'+val+'$' : '', true, false )
-                            .draw();
-                    } );
- 
-                column.data().unique().sort().each( function ( d, j ) {
-                    select.append( '<option value="'+d+'">'+d+'</option>' )
-                } );
-            } );
-        }
-    } );
-} );
 </script>
 
 
@@ -548,9 +533,8 @@ $(document).ready(function() {
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 
-
 <script>
-   $(".btn-edit").click(function(e){
+  $(".btn-edit").click(function(e){
     var seri = $(this).attr("data-id");
     $.ajax({
       "method"  : "get",
@@ -562,10 +546,17 @@ $(document).ready(function() {
       "dataType"  : "json",
       "success" : function(e){
         $("#editkupasan").modal();
-        $(".txttanggal").val(e.tanggal);
         $(".txtbatang").val(e.batang);
         $(".txtlahan").val(e.lahan);
         $(".txtseri").val(e.seri);
+        $(".txtket").val(e.ket);
+        $(".txtmesin").val(e.mesin);
+        $(".txtpanjang").val(e.panjang);
+        $(".txtlebar").val(e.lebar);
+        $(".txttebal").val(e.tebal);
+        $(".txtkw").val(e.kw);
+        $(".txtjenis").val(e.jenis);
+        $(".txthasil").val(e.hasil);
       }
     });
   });
@@ -574,7 +565,7 @@ $(document).ready(function() {
 <script type="text/javascript">
     //Hapus Data
     $(document).ready(function() {
-        $('#hapuskupasan').on('show.bs.modal', function(e) {
+        $('#hapuspegawai').on('show.bs.modal', function(e) {
             $(this).find('.btn-hapus').attr('href', $(e.relatedTarget).data('href'));
         });
     });

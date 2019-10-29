@@ -46,6 +46,16 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 
+  <!-- DataTables -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+  <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>  
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   </head>
@@ -196,7 +206,7 @@
 
                 <?php
                 include "conf/conn.php";
-                $query = mysqli_query($koneksi, "SELECT * FROM detailkayumasuk ORDER BY tanggal ASC");
+                $query = mysqli_query($koneksi, "SELECT * FROM detailkayumasuk ORDER BY tanggal DESC");
 
                 while ($row = mysqli_fetch_array($query)) {
                 ?>
@@ -216,7 +226,7 @@
                   <td>
                   <center>
                   <!-- <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btneditkayumasuk' data-id="<?php echo $row['kodep']?>" data-nama="<?php echo $row['kodep']?>"><i class="glyphicon glyphicon-edit"></i></button> -->
-                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapuskayumasuk' data-href="pages/hapuskayumasuk.php?no=<?php echo $row['no'];?>"><i class="glyphicon glyphicon-trash"></i>
+                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapuskayumasuk' data-href="pages/hapuskayumasuk.php?seri=<?php echo $row['seri'];?>"><i class="glyphicon glyphicon-trash"></i>
                   </center>
                   </td>
                 </tr>
@@ -435,6 +445,7 @@
     }
   </script>
   
+  
 
 <!-- Javascript Datatable -->
 <script type="text/javascript">
@@ -484,15 +495,19 @@
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 
+<!-- Data -->
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
 <script>
   $(".btn-edit").click(function(e){
-    var kodep = $(this).attr("data-id");
+    var no = $(this).attr("data-id");
     $.ajax({
       "method"  : "get",
-      "url"   : "index.php",
+      "url"   : "kayumasuk.php",
       "data"    : {
         "edit"      : true,
-        "kodep"  : kodep,
+        "no"  : no,
       },
       "dataType"  : "json",
       "success" : function(e){

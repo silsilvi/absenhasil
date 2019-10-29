@@ -155,7 +155,7 @@ $result = mysqli_query($koneksi, $query);
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><b>DATA TEMBEL</b></h1>
+      <h1><b>DEPARTEMEN TEMBEL</b></h1>
     </section>
     <!-- Main content -->
     <section class="content">
@@ -186,7 +186,7 @@ $result = mysqli_query($koneksi, $query);
         </div>
             </div>
           <div class="box-body table-responsive">
-          <table id="example" class="display table table-bordered table-hover">
+          <table id="tembel" class="display table table-bordered table-hover">
               <thead>
                 <tr>
                   <!-- <th><center>Tanggal</center></th> -->
@@ -234,7 +234,7 @@ $result = mysqli_query($koneksi, $query);
                 <?php } ?>
 
                 </tbody>
-                <tfoot>
+                <!-- <tfoot>
             <tr>
                 <th>tanggal</th>
                 <th>bahankurang</th>
@@ -244,7 +244,7 @@ $result = mysqli_query($koneksi, $query);
                 <th>kw</th>
                 <th>jenis</th>
                 <th>hasil</th>
-            </tfoot>
+            </tfoot> -->
               </table>
             </div>
             <!-- /.box-body -->
@@ -271,17 +271,11 @@ $result = mysqli_query($koneksi, $query);
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
-              <h4 class="modal-title" id="exampleModalLabel"><center><b>TAMBAH DATA tembel</b></center></h4>
+              <h4 class="modal-title" id="exampleModalLabel"><center><b>TAMBAH DATA TEMBEL</b></center></h4>
             </div>
             <div class="modal-body">
               <form action="pages/tambahtembel.php" method="POST" enctype="multipart/form-data">
               <!-- <p style="background-color:#71D0FF;" ><b><u>Pemakaian Bahan</u></b></p> -->
-                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Tanggal</label>
-                  <div class="col-sm-9">
-                    <input type="date" class="form-control" name="tanggal" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
-                  </div>
-                </div>
                 <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Bahan Kurang</label>
                   <div class="col-sm-9">
@@ -455,7 +449,7 @@ $result = mysqli_query($koneksi, $query);
 </script>
 
 <!-- Javascript Filter -->
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 $(document).ready(function() {
     $('#example').DataTable( {
         initComplete: function () {
@@ -480,7 +474,7 @@ $(document).ready(function() {
         }
     } );
 } );
-</script>
+</script> -->
 
 
 <!-- ./wrapper -->

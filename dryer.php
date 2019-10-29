@@ -6,13 +6,13 @@
     exit();
   }
   if(!isset($_GET['edit'])){
-    $query = mysqli_query($koneksi, "SELECT * FROM dryer JOIN kupasan on dryer.panjang=kupasan.panjang");
+    $query = mysqli_query($koneksi, "SELECT * FROM dryer");
 ?>
 
 <!-- <?php 
 include "conf/conn.php";
 $koneksi = mysqli_connect("localhost", "root", "", "absenhasil1");
-$query = "SELECT * FROM dryer ORDER BY tanggal ASC";
+$query = "SELECT * FROM dryer ORDER BY tanggal DESC";
 $result = mysqli_query($koneksi, $query);
 ?> -->
 
@@ -155,7 +155,7 @@ $result = mysqli_query($koneksi, $query);
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><b>DATA DRYER</b></h1>
+      <h1><b>DEPARTEMEN DRYER</b></h1>
     </section>
     <!-- Main content -->
     <section class="content">
@@ -165,7 +165,7 @@ $result = mysqli_query($koneksi, $query);
             <div class="box-header">
               <button type="button" name="btntambahdryer"<a data-toggle="modal" data-target="#tambahdryer" class=" btn btn-primary text-white";> Tambah <i class="glyphicon glyphicon-plus"></i></a></button>
               <div class="card-body">
-              <form action="exportdryer.php" method="POST">
+              <form action="exporttembel.php" method="POST">
               <div class="row">
               <div class="col-md-5"><b>Mulai</b>
               <div class="form-group">
@@ -186,7 +186,7 @@ $result = mysqli_query($koneksi, $query);
         </div>
             </div>
           <div class="box-body table-responsive">
-          <table id="example" class="display table table-bordered table-hover">
+          <table id="tembel" class="display table table-bordered table-hover">
               <thead>
                 <tr>
                   <!-- <th><center>Tanggal</center></th> -->
@@ -195,6 +195,7 @@ $result = mysqli_query($koneksi, $query);
                   <th><center>Seri</center></th>
                   <th><center>Keterangan</center></th>
                   <th><center>Mesin</center></th> -->
+                  <th><center>No</center></th>
                   <th><center>Tanggal</center></th>
                   <th><center>Dryer</center></th>
                   <th><center>Mesin</center></th>
@@ -205,6 +206,7 @@ $result = mysqli_query($koneksi, $query);
                   <th><center>Jenis</center></th>
                   <th><center>Hasil</center></th>
                   <th><center>Kurang</center></th>
+                  <th><center>Aksi</center></th>
                   <!-- <th><center>Aksi</center></th> -->
                 </tr>
               </thead>
@@ -217,6 +219,7 @@ $result = mysqli_query($koneksi, $query);
                 ?>
 
                 <tr>
+                  <td><?php echo $row['no'];?></td>
                   <td><?php echo $row['tanggal'];?></td>
                   <td><?php echo $row['dryer'];?></td>
                   <td><?php echo $row['mesin'];?></td>
@@ -227,30 +230,28 @@ $result = mysqli_query($koneksi, $query);
                   <td><?php echo $row['jenis'];?></td>
                   <td><?php echo $row['hasil'];?></td>
                   <td><?php echo $row['kurang'];?></td>
-                  <!-- <td>
+                  <td>
                   <center>
-                  <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btneditdryer' data-id="<?php echo $row['seri']?>" ><i class="glyphicon glyphicon-edit"></i></button>
-                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapusdryer' data-href="pages/hapusdryer.php?seri=<?php echo $row['seri'];?>"><i class="glyphicon glyphicon-trash"></i>
+                  <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btneditdryer' data-id="<?php echo $row['no']?>" ><i class="glyphicon glyphicon-edit"></i></button>
+                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapustembel' data-href="pages/hapustembel.php?seri=<?php echo $row['seri'];?>"><i class="glyphicon glyphicon-trash"></i>
                   </center>
-                  </td> -->
+                  </td>
                 </tr>
 
                 <?php } ?>
 
                 </tbody>
-                <tfoot>
+                <!-- <tfoot>
             <tr>
                 <th>tanggal</th>
-                <th>dryer</th>
-                <th>mesin</th>
+                <th>bahankurang</th>
                 <th>panjang</th>
                 <th>lebar</th>
                 <th>tebal</th>
                 <th>kw</th>
                 <th>jenis</th>
                 <th>hasil</th>
-                <th>kurang</th>
-            </tfoot>
+            </tfoot> -->
               </table>
             </div>
             <!-- /.box-body -->
@@ -282,32 +283,21 @@ $result = mysqli_query($koneksi, $query);
             <div class="modal-body">
               <form action="pages/tambahdryer.php" method="POST" enctype="multipart/form-data">
               <!-- <p style="background-color:#71D0FF;" ><b><u>Pemakaian Bahan</u></b></p> -->
-                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Tanggal</label>
-                  <div class="col-sm-9">
-                    <input type="date" class="form-control" name="tanggal" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
-                  </div>
-                </div>
-                <div class="form-group row">
+              <div class="form-group row">
                 <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Dryer</label>
                 <div class="col-sm-9">
                 <select class="form-control" id="exampleFormControlSelect1" name="dryer">
                   <option>Dryer Pagi</option>
                   <option>Dryer Malam</option>
-                  <option>Continous Pagi</option>
+                  <option>Continues Pagi</option>
                 </select> 
                 </div>
                 </div>
                 <div class="form-group row">
-                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Mesin</label>
-                <div class="col-sm-9">
-                <select class="form-control" id="exampleFormControlSelect1" name="mesin">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>1 & 2</option>
-                </select> 
-                </div>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Mesin</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" name="mesin" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
+                  </div>
                 </div>
                 <div class="form-group row">
                 <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Panjang</label>
@@ -341,6 +331,7 @@ $result = mysqli_query($koneksi, $query);
                   <option>2</option>
                   <option>3</option>
                   <option>af</option>
+                  <option>jelek</option>
                 </select> 
                 </div>
                 </div>
@@ -358,6 +349,12 @@ $result = mysqli_query($koneksi, $query);
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Hasil</label>
                   <div class="col-sm-9">
                     <input type="int" class="form-control" name="hasil" id="formGroupExampleInput" required="true" maxlength="12">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kurang</label>
+                  <div class="col-sm-9">
+                    <input type="int" class="form-control" name="kurang" id="formGroupExampleInput" required="true" maxlength="12">
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -379,34 +376,84 @@ $result = mysqli_query($koneksi, $query);
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
-              <h4 class="modal-title" id="exampleModalLabel"><center><b>EDIT DATA dryer</b></center></h4>
+              <h4 class="modal-title" id="exampleModalLabel"><center><b>EDIT DATA DRYER</b></center></h4>
             </div>
             <div class="modal-body">
               <form action="pages/editdryer.php" method="POST" enctype="multipart/form-data">
+              <div class="form-group row">
+                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Dryer</label>
+                <div class="col-sm-9">
+                <select class="form-control txtdryer" id="exampleFormControlSelect1" name="dryer">
+                  <option>Dryer Pagi</option>
+                  <option>Dryer Malam</option>
+                  <option>Continues Pagi</option>
+                </select> 
+                </div>
+                </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Tanggal</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Mesin</label>
                   <div class="col-sm-9">
-                    <input type="date" class="form-control txttanggal" name="tanggal" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
+                    <input type="text" class="form-control txtmesin" name="mesin" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Batang</label>
+                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Panjang</label>
+                <div class="col-sm-9">
+                <select class="form-control txtpanjang" id="exampleFormControlSelect1" name="panjang">
+                  <option>122</option>
+                  <option>244</option>
+                </select> 
+                </div>
+                </div>
+                <div class="form-group row">
+                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Lebar</label>
+                <div class="col-sm-9">
+                <select class="form-control txtlebar" id="exampleFormControlSelect1" name="lebar">
+                  <option>244</option>
+                  <option>122</option>
+                </select> 
+                </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Tebal</label>
                   <div class="col-sm-9">
-                    <input type="int" class="form-control txtbatang" name="batang" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
-                  
+                    <input type="float" class="form-control txttebal" name="tebal" id="formGroupExampleInput" required="true" maxlength="12">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Lahan</label>
+                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Kwalitas</label>
+                <div class="col-sm-9">
+                <select class="form-control txtkw" id="exampleFormControlSelect1" name="kw">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>af</option>
+                  <option>jelek</option>
+                </select> 
+                </div>
+                </div>
+                <div class="form-group row">
+                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Jenis</label>
+                <div class="col-sm-9">
+                <select class="form-control txtjenis" id="exampleFormControlSelect1" name="jenis">
+                  <option>S</option>
+                  <option>M</option>
+                  <option>J</option>
+                </select> 
+                </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Hasil</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control txtlahan" name="lahan" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+                    <input type="int" class="form-control txthasil" name="hasil" id="formGroupExampleInput" required="true" maxlength="12">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Seri</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kurang</label>
                   <div class="col-sm-9">
-                    <input type="int" class="form-control txtseri" name="seri" id="formGroupExampleInput" required="true" maxlength="12">
+                    <input type="int" class="form-control txtkurang" name="kurang" id="formGroupExampleInput" required="true" maxlength="12">
                   </div>
+                </div>
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -419,8 +466,8 @@ $result = mysqli_query($koneksi, $query);
       </div>
   <!-- end modal edit dryer -->
 
-<!--modal hapus dryer-->
-<div class="modal fade" id="hapusdryer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!--modal hapus tembel-->
+<div class="modal fade" id="hapustembel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body">Apakah Anda Yakin ingin menghapus data ini?</div>
@@ -432,14 +479,14 @@ $result = mysqli_query($koneksi, $query);
     </div>
   </div>
   </div>
-  <!-- end modal hapus dryer -->
+  <!-- end modal hapus tembel -->
    </div>
   </div>
 
   <script type="text/javascript">
     //Hapus Data
     $(document).ready(function() {
-        $('#hapusdryer').on('show.bs.modal', function(e) {
+        $('#hapustembel').on('show.bs.modal', function(e) {
             $(this).find('.btn-hapus').attr('href', $(e.relatedTarget).data('href'));
         });
     });
@@ -475,7 +522,7 @@ $result = mysqli_query($koneksi, $query);
 </script>
 
 <!-- Javascript Filter -->
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 $(document).ready(function() {
     $('#example').DataTable( {
         initComplete: function () {
@@ -500,7 +547,7 @@ $(document).ready(function() {
         }
     } );
 } );
-</script>
+</script> -->
 
 
 <!-- ./wrapper -->
@@ -550,21 +597,25 @@ $(document).ready(function() {
 
 <script>
    $(".btn-edit").click(function(e){
-    var seri = $(this).attr("data-id");
+    var no = $(this).attr("data-id");
     $.ajax({
       "method"  : "get",
       "url"   : "dryer.php",
       "data"    : {
         "edit"      : true,
-        "seri"  : seri,
+        "no"  : no,
       },
       "dataType"  : "json",
       "success" : function(e){
         $("#editdryer").modal();
-        $(".txttanggal").val(e.tanggal);
-        $(".txtbatang").val(e.batang);
-        $(".txtlahan").val(e.lahan);
-        $(".txtseri").val(e.seri);
+        $(".txtdryer").val(e.dryer);
+        $(".txtmesin").val(e.mesin);
+        $(".txtpanjang").val(e.panjang);
+        $(".txtlebar").val(e.lebar);
+        $(".txttebal").val(e.tebal);
+        $(".txtkw").val(e.kw);
+        $(".txtjenis").val(e.jenis);
+        $(".txthasil").val(e.hasil);
       }
     });
   });
@@ -573,7 +624,7 @@ $(document).ready(function() {
 <script type="text/javascript">
     //Hapus Data
     $(document).ready(function() {
-        $('#hapusdryer').on('show.bs.modal', function(e) {
+        $('#hapustembel').on('show.bs.modal', function(e) {
             $(this).find('.btn-hapus').attr('href', $(e.relatedTarget).data('href'));
         });
     });
@@ -585,8 +636,8 @@ $(document).ready(function() {
 <?php
   }
   if(isset($_GET['edit'])){
-    $seri = $_GET['seri'];
-    $sql = "SELECT * FROM dryer WHERE seri='". $seri ."'";
+    $no = $_GET['no'];
+    $sql = "SELECT * FROM dryer WHERE no='". $no ."'";
     $q = mysqli_query($koneksi, $sql);
     while($row=mysqli_fetch_assoc($q)){
       echo json_encode($row);
