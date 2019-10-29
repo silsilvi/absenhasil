@@ -47,14 +47,14 @@ $result = mysqli_query($koneksi, $query);
   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
   <!-- DataTables -->
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+  <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
   <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>  
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
   
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -203,7 +203,7 @@ $result = mysqli_query($koneksi, $query);
                   <th><center>Masuk</center></th>
                   <th><center>Pulang</center></th>
                   <th><center>Potongan</center></th>
-                  <!-- <th><center>Aksi</center></th> -->
+                  <th><center>Aksi</center></th>
                 </tr>
               </thead>
               <tbody>
@@ -223,12 +223,12 @@ $result = mysqli_query($koneksi, $query);
                   <td><?php echo $row['masuk'];?></td>
                   <td><?php echo $row['pulang'];?></td>
                   <td><?php echo $row['potongan'];?></td>
-                  <!-- <td>
+                  <td>
                   <center>
                   <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btneditlain' data-id="<?php echo $row['seri']?>" ><i class="glyphicon glyphicon-edit"></i></button>
-                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapuslain' data-href="pages/hapuslain.php?seri=<?php echo $row['seri'];?>"><i class="glyphicon glyphicon-trash"></i>
+                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapuslain' data-href="pages/hapuslain.php?no=<?php echo $row['no'];?>"><i class="glyphicon glyphicon-trash"></i>
                   </center>
-                  </td> -->
+                  </td>
                 </tr>
 
                 <?php } ?>
@@ -497,8 +497,8 @@ $(document).ready(function() {
 <script src="dist/js/demo.js"></script>
 
 <!-- Data -->
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script> -->
 
 
 <script>

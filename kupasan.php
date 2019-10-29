@@ -47,14 +47,14 @@
   <![endif]-->
 
     <!-- DataTables -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
 <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>  
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -169,6 +169,7 @@
             <table id="kupasan" class="table table-bordered table-hover">
               <thead>
               <tr>
+                  <!-- <th style="background-color:#E0FFFF"><center>No</center></th> -->
                   <th style="background-color:#E0FFFF"><center>Tanggal</center></th>
                   <th style="background-color:#E0FFFF"><center>Batang</center></th>
                   <th style="background-color:#E0FFFF"><center>Lahan</center></th>
@@ -195,6 +196,7 @@
                 ?>
 
 <tr>
+                  <!-- <td style="background-color:#E0FFFF"><?php echo $row['no'];?></td> -->
                   <td style="background-color:#E0FFFF"><?php echo $row['tanggal'];?></td>
                   <td style="background-color:#E0FFFF"><?php echo $row['batang'];?></td>
                   <td style="background-color:#E0FFFF"><?php echo $row['lahan'];?></td>
@@ -209,8 +211,8 @@
                   <td style="background-color:#FFE4E1"><?php echo $row['hasil'];?></td>
                   <td style="background-color:#FFE4E1">
                   <center>
-                  <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btneditkupasan' data-id="<?php echo $row['seri']?>" data-nama="<?php echo $row['seri']?>"><i class="glyphicon glyphicon-edit"></i></button>
-                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapuskupasan' data-href="pages/hapuskupasan.php?kodep=<?php echo $row['kodep'];?>"><i class="glyphicon glyphicon-trash"></i>
+                  <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btneditkupasan' data-id="<?php echo $row['no']?>" data-nama="<?php echo $row['no']?>"><i class="glyphicon glyphicon-edit"></i></button>
+                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapuskupasan' data-href="pages/hapuskupasan.php?no=<?php echo $row['no'];?>"><i class="glyphicon glyphicon-trash"></i>
                   </center>
                   </td>
                 </tr>
@@ -343,33 +345,41 @@
             </div>
             <div class="modal-body">
               <form action="pages/editkupasan.php" method="POST" enctype="multipart/form-data">
+              <p style="background-color:#71D0FF;" ><b><u>Pemakaian Bahan</u></b></p>
               <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">No</label>
+                  <div class="col-sm-9">
+                    <input type="int" readonly class="form-control txtno" name="no" id="formGroupExampleInput" required="true" minlength="1" maxlength="50" min="0">
+                  </div>
+                </div>
+                <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Batang</label>
                   <div class="col-sm-9">
-                    <input type="int" readonly class="form-control txtbatang" name="batang" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
+                    <input type="int" class="form-control txtbatang" name="batang" id="formGroupExampleInput" required="true" minlength="1" maxlength="50" min="0">
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Lahan</label>
                   <div class="col-sm-9">
-                    <input type="text" class="txtlahan form-control" name="lahan" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+                    <input type="text" class="form-control txtlahan" name="lahan" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Seri</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control txtseri" name="seri" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+                    <input type="int" class="form-control txtseri" name="seri" id="formGroupExampleInput" required="true" maxlength="12">
                   </div>
                 </div>
                 <div class="form-group row">
-                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Keterangan</label>
+                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Ket</label>
                 <div class="col-sm-3">
-                <select class="form-control txtket" id="exampleFormControlSelect1" name="ket" min>
+                <select class="form-control txtket" id="exampleFormControlSelect1" name="ket">
                   <option>Habis</option>
                   <option>Belum</option>
                 </select> 
                 </div>
                 </div>
+                <p style="background-color:#71D0FF;" ><b><u>Hasil</u></b></p>
                 <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Mesin</label>
                   <div class="col-sm-9">
@@ -378,44 +388,44 @@
                 </div>
                 <div class="form-group row">
                 <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Panjang</label>
-                <div class="col-sm-3">
-                <select class="form-control txtpanjang" id="exampleFormControlSelect1" name="panjang" min>
+                <div class="col-sm-9">
+                <select class="form-control txtpanjang" id="exampleFormControlSelect1" name="panjang">
+                  <option>122</option>
+                  <option>244</option>
+                </select> 
+                </div>
+                </div>
+                <div class="form-group row">
+                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Lebar</label>
+                <div class="col-sm-9">
+                <select class="form-control txtlebar" id="exampleFormControlSelect1" name="lebar">
                   <option>244</option>
                   <option>122</option>
                 </select> 
                 </div>
                 </div>
                 <div class="form-group row">
-                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">lebar</label>
-                <div class="col-sm-3">
-                <select class="form-control txtlebar" id="exampleFormControlSelect1" name="lebar" min>
-                  <option>122</option>
-                  <option>244</option>                  
-                </select> 
-                </div>
-                </div>                   
-                <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Tebal</label>
-                  <div class="col-sm-3">
-                    <input type="float" class="form-control txttebal" name="tebal" id="formGroupExampleInput" required="true" maxlength="10">
+                  <div class="col-sm-9">
+                    <input type="float" class="form-control txttebal" name="tebal" id="formGroupExampleInput" required="true" maxlength="12">
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kwalitas</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control txtkw" name="kw" id="formGroupExampleInput" required="true" maxlength="10">
+                    <input type="int" class="form-control txtkw" name="kw" id="formGroupExampleInput" required="true" maxlength="12">
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Jenis</label>
                   <div class="col-sm-9">
-                    <input type="int" class="form-control txtjenis" name="jenis" id="formGroupExampleInput" required="true" maxlength="10">
+                    <input type="int" class="form-control txtjenis" name="jenis" id="formGroupExampleInput" required="true" maxlength="12">
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Hasil</label>
                   <div class="col-sm-9">
-                    <input type="int" class="form-control txthasil" name="hasil" id="formGroupExampleInput" required="true" maxlength="10">
+                    <input type="int" class="form-control txthasil" name="hasil" id="formGroupExampleInput" required="true" maxlength="12">
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -427,10 +437,10 @@
           </div>
         </div>
      </div>    
-  <!-- end modal edit pegawai -->
+  <!-- end modal edit kupasan -->
 
-<!--modal hapus pegawai-->
-<div class="modal fade" id="hapuspegawai" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!--modal hapus kupasan-->
+<div class="modal fade" id="hapuskupasan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body">Apakah Anda Yakin ingin menghapus data ini?</div>
@@ -441,7 +451,7 @@
       </div>
     </div>
   </div>
-  <!-- end modal hapus pegawai -->
+  <!-- end modal hapus kupasan -->
   <footer class="main-footer">
     <strong>Copyright &copy; 2019 PT. Wijaya Plywoods .</strong>
   </footer>
@@ -453,7 +463,7 @@
   <script type="text/javascript">
     //Hapus Data
     $(document).ready(function() {
-        $('#hapuspegawai').on('show.bs.modal', function(e) {
+        $('#hapuskupasan').on('show.bs.modal', function(e) {
             $(this).find('.btn-hapus').attr('href', $(e.relatedTarget).data('href'));
         });
     });
@@ -530,22 +540,23 @@
 <script src="dist/js/demo.js"></script>
 
 <!-- Data -->
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script> -->
 
 <script>
   $(".btn-edit").click(function(e){
-    var seri = $(this).attr("data-id");
+    var no = $(this).attr("data-id");
     $.ajax({
       "method"  : "get",
       "url"   : "kupasan.php",
       "data"    : {
         "edit"      : true,
-        "seri"  : seri,
+        "no"  : no,
       },
       "dataType"  : "json",
       "success" : function(e){
         $("#editkupasan").modal();
+        $(".txtno").val(e.no);
         $(".txtbatang").val(e.batang);
         $(".txtlahan").val(e.lahan);
         $(".txtseri").val(e.seri);
@@ -565,7 +576,7 @@
 <script type="text/javascript">
     //Hapus Data
     $(document).ready(function() {
-        $('#hapuspegawai').on('show.bs.modal', function(e) {
+        $('#hapuskupasan').on('show.bs.modal', function(e) {
             $(this).find('.btn-hapus').attr('href', $(e.relatedTarget).data('href'));
         });
     });
@@ -577,8 +588,8 @@
 <?php
   }
   if(isset($_GET['edit'])){
-    $seri = $_GET['seri'];
-    $sql = "SELECT * FROM kupasan WHERE seri='". $seri ."'";
+    $no = $_GET['no'];
+    $sql = "SELECT * FROM kupasan WHERE no='". $no ."'";
     $q = mysqli_query($koneksi, $sql);
     while($row=mysqli_fetch_assoc($q)){
       echo json_encode($row);

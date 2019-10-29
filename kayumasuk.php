@@ -46,16 +46,6 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 
-  <!-- DataTables -->
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-  <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>  
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   </head>
@@ -189,7 +179,7 @@
             <table id="kayumasuk" class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <th><center>No</center></th>
+                  <!-- <th><center>No</center></th> -->
                   <th><center>Tanggal</center></th>
                   <th><center>Nama</center></th>
                   <th><center>Seri</center></th>
@@ -206,13 +196,13 @@
 
                 <?php
                 include "conf/conn.php";
-                $query = mysqli_query($koneksi, "SELECT * FROM detailkayumasuk ORDER BY tanggal DESC");
+                $query = mysqli_query($koneksi, "SELECT * FROM detailkayumasuk ORDER BY tanggal ASC");
 
                 while ($row = mysqli_fetch_array($query)) {
                 ?>
 
                 <tr>
-                  <td><?php echo $row['no'];?></td>
+                  <!-- <td><?php echo $row['no'];?></td> -->
                   <td><?php echo $row['tanggal'];?></td>
                   <td><?php echo $row['nama'];?></td>
                   <td><?php echo $row['seri'];?></td>
@@ -225,8 +215,8 @@
 
                   <td>
                   <center>
-                  <!-- <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btneditkayumasuk' data-id="<?php echo $row['kodep']?>" data-nama="<?php echo $row['kodep']?>"><i class="glyphicon glyphicon-edit"></i></button> -->
-                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapuskayumasuk' data-href="pages/hapuskayumasuk.php?seri=<?php echo $row['seri'];?>"><i class="glyphicon glyphicon-trash"></i>
+                  <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btneditkayumasuk' data-id="<?php echo $row['no']?>" data-nama="<?php echo $row['no']?>"><i class="glyphicon glyphicon-edit"></i></button>
+                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapuskayumasuk' data-href="pages/hapuskayumasuk.php?no=<?php echo $row['no'];?>"><i class="glyphicon glyphicon-trash"></i>
                   </center>
                   </td>
                 </tr>
@@ -334,53 +324,70 @@
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
-              <h4 class="modal-title" id="exampleModalLabel"><center><b>EDIT DATA kayumasuk</b></center></h4>
+              <h4 class="modal-title" id="exampleModalLabel"><center><b>EDIT DATA KAYUMASUK</b></center></h4>
             </div>
             <div class="modal-body">
               <form action="pages/editkayumasuk.php" method="POST" enctype="multipart/form-data">
               <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kode kayumasuk</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">No</label>
                   <div class="col-sm-9">
-                    <input type="text" readonly class="form-control txtkodep" name="kodep" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
+                    <input type="text" readonly class="form-control txtno" name="no" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Nama</label>
                   <div class="col-sm-9">
-                    <input type="text" class="Nama form-control" name="Nama" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+                    <input type="text" class="form-control txtnama" name="nama" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Alamat</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Seri</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control txtalamat" name="alamat" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+                    <input type="int" class="form-control txtseri" name="seri" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
                   </div>
                 </div>
                 <div class="form-group row">
-                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Jenis Kelamin</label>
+                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Panjang</label>
                 <div class="col-sm-3">
-                <select class="form-control seljeniskelamin" id="exampleFormControlSelect1" name="jeniskelamin" min>
-                  <option>Laki-laki</option>
-                  <option>Perempuan</option>
+                <select class="form-control txtpanjang" id="exampleFormControlSelect1" name="panjang">
+                  <option>120</option>
+                  <option>130</option>
+                  <option>260</option>
                 </select> 
                 </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">No Telp</label>
-                  <div class="col-sm-9">
-                    <input type="int" class="form-control txtnotelp" name="notelp" id="formGroupExampleInput" required="true" maxlength="12">
-                  </div>
-                </div>                
+                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Jenis</label>
+                <div class="col-sm-3">
+                <select class="form-control txtjenis" id="exampleFormControlSelect1" name="jenis">
+                  <option>Keras</option>
+                  <option>Lunak</option>
+                  <option>Sengon</option>
+                </select> 
+                </div>
+                </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kode Jabatan</label>
-                  <div class="col-sm-3">
-                    <input type="int" class="form-control txtkodej" name="kodej" id="formGroupExampleInput" required="true" maxlength="10">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Lahan</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control txtlahan" name="lahan" id="formGroupExampleInput" required="true" maxlength="12">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">ID Jadwal</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Banyak</label>
                   <div class="col-sm-9">
-                    <input type="int" class="form-control txtidjadwal" name="idjadwal" id="formGroupExampleInput" required="true" maxlength="10">
+                    <input type="int" class="form-control txtbanyak" name="banyak" id="formGroupExampleInput" required="true" maxlength="12">
+                  </div>
+                </div>                  
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">m<sup>3</sup></label>
+                  <div class="col-sm-9">
+                    <input type="float" class="form-control txtm3" name="m3" id="formGroupExampleInput" required="true" maxlength="10">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Uang</sup></label>
+                  <div class="col-sm-9">
+                    <input type="int" class="form-control txtuang" name="uang" id="formGroupExampleInput" required="true" maxlength="10">
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -445,7 +452,6 @@
     }
   </script>
   
-  
 
 <!-- Javascript Datatable -->
 <script type="text/javascript">
@@ -495,9 +501,6 @@
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 
-<!-- Data -->
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 
 <script>
   $(".btn-edit").click(function(e){
@@ -512,13 +515,15 @@
       "dataType"  : "json",
       "success" : function(e){
         $("#editkayumasuk").modal();
-        $(".txtkodep").val(kodep);
-        $(".Nama").val(e.Nama);
-        $(".txtalamat").val(e.alamat);
-        $(".seljeniskelamin").val(e.jeniskelamin);
-        $(".txtnotelp").val(e.notelp);
-        $(".txtkodej").val(e.kodej);
-        $(".txtidjadwal").val(e.idjadwal);
+        $(".txtno").val(no);
+        $(".txtnama").val(e.nama);
+        $(".txtseri").val(e.seri);
+        $(".txtpanjang").val(e.panjang);
+        $(".txtjenis").val(e.jenis);
+        $(".txtlahan").val(e.lahan);
+        $(".txtbanyak").val(e.banyak);
+        $(".txtm3").val(e.m3);
+        $(".txtuang").val(e.uang);
       }
     });
   });
@@ -539,8 +544,8 @@
 <?php
   }
   if(isset($_GET['edit'])){
-    $kodep = $_GET['kodep'];
-    $sql = "SELECT * FROM detailkayumasuk WHERE kodep='". $kodep ."'";
+    $no = $_GET['no'];
+    $sql = "SELECT * FROM detailkayumasuk WHERE no='". $no ."'";
     $q = mysqli_query($koneksi, $sql);
     while($row=mysqli_fetch_assoc($q)){
       echo json_encode($row);

@@ -47,14 +47,14 @@ $result = mysqli_query($koneksi, $query);
   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
   <!-- DataTables -->
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+  <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
   <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>  
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
   
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -203,7 +203,7 @@ $result = mysqli_query($koneksi, $query);
                   <th><center>Kwalitas</center></th>
                   <th><center>Jenis</center></th>
                   <th><center>Hasil</center></th>
-                  <!-- <th><center>Aksi</center></th> -->
+                  <th><center>Aksi</center></th>
                 </tr>
               </thead>
               <tbody>
@@ -223,12 +223,12 @@ $result = mysqli_query($koneksi, $query);
                   <td><?php echo $row['kw'];?></td>
                   <td><?php echo $row['jenis'];?></td>
                   <td><?php echo $row['hasil'];?></td>
-                  <!-- <td>
+                  <td>
                   <center>
                   <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btnedittembel' data-id="<?php echo $row['seri']?>" ><i class="glyphicon glyphicon-edit"></i></button>
-                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapustembel' data-href="pages/hapustembel.php?seri=<?php echo $row['seri'];?>"><i class="glyphicon glyphicon-trash"></i>
+                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapusdempul' data-href="pages/hapusdempul.php?no=<?php echo $row['no'];?>"><i class="glyphicon glyphicon-trash"></i>
                   </center>
-                  </td> -->
+                  </td>
                 </tr>
 
                 <?php } ?>
@@ -394,7 +394,7 @@ $result = mysqli_query($koneksi, $query);
   <!-- end modal edit tembel -->
 
 <!--modal hapus tembel-->
-<div class="modal fade" id="hapustembel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="hapusdempul" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body">Apakah Anda Yakin ingin menghapus data ini?</div>
@@ -413,7 +413,7 @@ $result = mysqli_query($koneksi, $query);
   <script type="text/javascript">
     //Hapus Data
     $(document).ready(function() {
-        $('#hapustembel').on('show.bs.modal', function(e) {
+        $('#hapusdempul').on('show.bs.modal', function(e) {
             $(this).find('.btn-hapus').attr('href', $(e.relatedTarget).data('href'));
         });
     });
@@ -518,8 +518,8 @@ $(document).ready(function() {
 <script src="dist/js/demo.js"></script>
 
 <!-- Data -->
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script> -->
 
 
 <script>
@@ -547,7 +547,7 @@ $(document).ready(function() {
 <script type="text/javascript">
     //Hapus Data
     $(document).ready(function() {
-        $('#hapustembel').on('show.bs.modal', function(e) {
+        $('#hapusdempul').on('show.bs.modal', function(e) {
             $(this).find('.btn-hapus').attr('href', $(e.relatedTarget).data('href'));
         });
     });
