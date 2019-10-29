@@ -69,6 +69,7 @@ $tgls = $_POST['tgls'];
 					echo '<td><span>Tidak</span></td>';
 				  } else {
 					if ($row['jamhadir_bulat']==$row['jamhadir1'] AND $row['jampulang_bulat']==$row['jampulang1']) {
+			  
 						  if ($row['jamhadir_bulat']>$data_jadwal['jam_masuk']) {
 							$telat  = round((strtotime($row['jamhadir_bulat']) - strtotime($data_jadwal['jam_masuk']))/3600, 1);
 							echo "<td>".$telat."</td>";

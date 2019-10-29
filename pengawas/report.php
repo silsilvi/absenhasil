@@ -1,7 +1,7 @@
 <?php
   session_start();
   include "conf/conn.php";
-  if (!isset($_SESSION['username']) AND !isset($_SESSION['level'])){
+  if (!isset($_SESSION['username']) AND ($_SESSION['level'])){
     echo "<script>location='login.php';</script>";
     exit();
   }

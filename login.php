@@ -27,13 +27,28 @@ session_start();
 				$username = $_POST['username'];
 				$password = $_POST['password'];
 				$query=mysqli_query($koneksi,"select * from tlogin where username='$username' and password='$password'");
- 
+		
 				// menghitung jumlah data yang ditemukan
 				$cek = mysqli_num_rows($query);
 				 
 				if($cek == 1){
-					$_SESSION['login'] = $query->fetch_assoc();
-					header("location:index.php");
+					$data = mysqli_fetch_assoc($query);
+					if($data['level']=="admin") {
+						$_SESSION['username'] = $username;
+						$_SESSION['level'] = "admin";
+						
+						header("location:index.php");
+					} elseif ($data['level']=="pengawas") {
+						$_SESSION['username'] = $username;
+						$_SESSION['level'] = "pengawas";
+						
+						header("location:pengawas/index.php");
+					} elseif ($data['level']=="pimpinan") {
+						$_SESSION['username'] = $username;
+						$_SESSION['level'] = "pimpinan";
+						
+						header("location:pimpinan/index.php");
+					}
 				}else{
 					echo "Login gagal! username dan password salah!";
 					echo "<meta http-equiv='refresh' content='1;url=login.php'>";

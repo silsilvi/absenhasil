@@ -1,7 +1,7 @@
 <?php
   session_start();
   include "conf/conn.php";
-  if (!isset($_SESSION['login'])){
+  if (!isset($_SESSION['username']) AND !isset($_SESSION['level'])){
     echo "<script>location='login.php';</script>";
     exit();
   }
@@ -158,7 +158,7 @@
 				<div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Ketr</label>
                   <div class="col-sm-9">
-                    <textarea class="form-control pj" name="ketr" id="formGroupExampleInput" value="<?php echo $row['ketr'];?>" required="true" maxlength="250"></textarea>
+                    <textarea class="form-control pj" name="ketr" id="formGroupExampleInput" maxlength="250"><?php echo $row['ketr'];?></textarea>
                   </div>
                 </div>
                 <div class="modal-footer">

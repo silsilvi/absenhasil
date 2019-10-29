@@ -1,12 +1,13 @@
 <?php
   session_start();
   include "conf/conn.php";
-  if (!isset($_SESSION['username']) AND !isset($_SESSION['level'])){
+  if (!isset($_SESSION['username']) AND ($_SESSION['level'])){
     echo "<script>location='login.php';</script>";
     exit();
   }
-  if(!isset($_GET['edit'])){
-     $query = mysqli_query($koneksi, "SELECT * FROM tlogin"); 
+  $kodep = $_GET['kodep'];
+  $query = mysqli_query($koneksi,"SELECT * FROM absensi WHERE kodep='$kodep'");
+  $row = mysqli_fetch_array($query);
 ?>
 
 <!DOCTYPE html>
@@ -132,7 +133,7 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><b>DATA ADMIN</b></h1>
+      <h1><b>ABSEN BANDING</b></h1>
     </section>
     <!-- Main content -->
     <section class="content">
@@ -140,43 +141,47 @@
         <div class="col-xs-12">
           <div class="box box-primary">
             <div class="box-header">
-              <button type="button" name="btntambahuser"<a data-toggle="modal" data-target="#tambahuser" class=" btn btn-primary  text-white";> Tambah <i class="glyphicon glyphicon-plus"></i></a></button>
-            </div>
-          <div class="box-body table-responsive">
-            <table id="user" class="table table-bordered table-hover">
-              <thead>
-                <tr>
-                  <th><center>ID</center></th>
-                  <th><center>Username</center></th>
-                  <!-- <th><center>Aksi</center></th> -->
-                </tr>
-              </thead>
-              <tbody>
+            <div class="card-body">
+				<form action="" method="POST" enctype="multipart/form-data">
+              <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kode Pegawai</label>
+                  <div class="col-sm-9">
+                    <input type="text" readonly class="form-control txtkodep" name="kodep" id="formGroupExampleInput" value="<?php echo $row['kodep'];?>" required="true" minlength="1" maxlength="20">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Nama</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="Nama form-control" name="nama" id="formGroupExampleInput" value="<?php echo $row['Nama'];?>" required="true" minlength="1" maxlength="50">
+                  </div>
+                </div>
+				<div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Ketr</label>
+                  <div class="col-sm-9">
+                    <textarea class="form-control pj" name="ketr" id="formGroupExampleInput" maxlength="250"><?php echo $row['ketr'];?></textarea>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary" name="btnlembur">Edit</button>
+                </div>
+              </form>
+        </div>
+       </div>
 
-                <?php
-                include "conf/conn.php";
-                $query = mysqli_query($koneksi, "SELECT * FROM tlogin ORDER BY id DESC");
-
-                while ($row = mysqli_fetch_array($query)) {
-                ?>
-
-                <tr>
-                  <td><?php echo $row['id'];?></td>
-                  <td><?php echo $row['username'];?></td>
-                  <td>
-                  <center>
-                  <!-- <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btnedituser' data-id="<?php echo $row['id']?>" data-nama="<?php echo $row['id']?>"><i class="glyphicon glyphicon-edit"></i></button> -->
-                  <!-- <button class='btn btn-danger ' data-toggle='modal' data-target='#hapususer' data-href="pages/hapususer.php?id=<?php echo $row['id'];?>"><i class="glyphicon glyphicon-trash"></i> -->
-                  </center>
-                  </td>
-                </tr>
-
-                <?php } ?>
-
-                </tbody>
-              </table>
-            </div>
-            <!-- /.box-body -->
+		<?php
+			if (isset($_POST['btnlembur'])) {
+				$update = mysqli_query($koneksi,"UPDATE absensi SET ketr='$_POST[ketr]' WHERE kodep='$_POST[kodep]'");
+				if ($update) {
+					echo "<script>alert('Berhasil diUpdate');</script>";
+					echo "<script>location='perbandingan.php';</script>";
+				} else {
+					echo "<script>alert('gagal');</script>";
+				}
+				
+			}
+		?>
+          
           </div>
           <!-- /.box -->
         </div>
@@ -187,89 +192,7 @@
     <!-- /.content -->
   </div>
 <!-- /.content-wrapper -->
-<!-- modal tambah user -->
-        <div class="modal fade" id="tambahuser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-              <h4 class="modal-title" id="exampleModalLabel"><center><b>TAMBAH DATA USER</b></center></h4>
-            </div>
-            <div class="modal-body">
-              <form action="pages/tambahuser.php" method="POST" enctype="multipart/form-data">
-                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Username</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" name="username" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Password</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" name="password" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary" name="btntambahuser">Tambah</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-  <!-- end modal tambah user -->
-
- <!-- modal edit user -->
- <div class="modal fade" id="edituser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
- <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-              <h4 class="modal-title" id="exampleModalLabel"><center><b>EDIT DATA USER</b></center></h4>
-            </div>
-            <div class="modal-body">
-              <form action="pages/edituser.php" method="POST" enctype="multipart/form-data">
-              <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Username</label>
-                  <div class="col-sm-9">
-                    <input type="text" readonly class="form-control txtid" name="username" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Password</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="Nama form-control" name="password" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary" name="btnedituser">Edit</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-     </div>    
-  <!-- end modal edit user -->
-
-<!--modal hapus user-->
-<div class="modal fade" id="hapususer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-body">Apakah Anda Yakin ingin menghapus data ini?</div>
-        <div class="modal-footer">
-          <a class="btn btn-danger btn-hapus">Hapus</a>
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- end modal hapus user -->
+ 
   <footer class="main-footer">
     <strong>Copyright &copy; 2019 PT. Wijaya Plywoods .</strong>
   </footer>
@@ -281,7 +204,7 @@
   <script type="text/javascript">
     //Hapus Data
     $(document).ready(function() {
-        $('#hapususer').on('show.bs.modal', function(e) {
+        $('#hapuspegawai').on('show.bs.modal', function(e) {
             $(this).find('.btn-hapus').attr('href', $(e.relatedTarget).data('href'));
         });
     });
@@ -312,7 +235,7 @@
 <!-- Javascript Datatable -->
 <script type="text/javascript">
   $(document).ready(function(){
-    $('#user').DataTable();
+    $('#pegawai').DataTable();
   });
 </script>
 
@@ -357,30 +280,10 @@
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 
-<script>
-  $(".btn-edit").click(function(e){
-    var id = $(this).attr("data-id");
-    $.ajax({
-      "method"  : "get",
-      "url"   : "index.php",
-      "data"    : {
-        "edit"      : true,
-        "id"  : id,
-      },
-      "dataType"  : "json",
-      "success" : function(e){
-        $("#edituser").modal();
-        $(".txtid").val(id);
-        $(".Nama").val(e.username);
-      }
-    });
-  });
-  </script>
-
 <script type="text/javascript">
     //Hapus Data
     $(document).ready(function() {
-        $('#hapususer').on('show.bs.modal', function(e) {
+        $('#hapuspegawai').on('show.bs.modal', function(e) {
             $(this).find('.btn-hapus').attr('href', $(e.relatedTarget).data('href'));
         });
     });
@@ -388,15 +291,3 @@
 
 </body>
 </html>
-
-<?php
-  }
-  if(isset($_GET['edit'])){
-    $id = $_GET['id'];
-    $sql = "SELECT * FROM tlogin WHERE id='". $id ."'";
-    $q = mysqli_query($koneksi, $sql);
-    while($row=mysqli_fetch_assoc($q)){
-      echo json_encode($row);
-    }
-  }
-?>
