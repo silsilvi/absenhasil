@@ -36,16 +36,18 @@ $tgls = $_POST['tgls'];
         <th><center>Jam Pulang (bulat)</center></th>
         <th><center>Jam Hadir(Hasil)</center></th>
         <th><center>Jam Pulang (Hasil)</center></th>
+		<th><center>Izin</center></th>
 		<th><center>Telat</center></th>
 		<th><center>Lembur</center></th>
 		<th><center>PJ / Ketr</center></th>
+		<th><center>Potongan</center></th>
 		<th><center>Status</center></th>
     </tr>
     </thead>
     <tbody>                                            
         <?php
                 include "conf/conn.php";
-                $query = mysqli_query($koneksi, "SELECT a.kodeabsen,ta.tanggal1,k.kodep,k.Nama,a.jamhadir,a.jampulang,a.jamhadir_bulat,a.jampulang_bulat,ta.jamhadir1,ta.jampulang1,k.idjadwal,a.ketr FROM pegawai k LEFT JOIN absensi a ON k.kodep = a.kodep LEFT JOIN tabsen ta ON a.kodep=ta.kodep ORDER BY kodep");
+                $query = mysqli_query($koneksi, "SELECT a.kodeabsen,ta.tanggal1,k.kodep,k.Nama,a.jamhadir,a.jampulang,a.jamhadir_bulat,a.jampulang_bulat,ta.jamhadir1,ta.jampulang1,k.idjadwal,a.ketr,ta.izin,ta.potongan FROM pegawai k LEFT JOIN absensi a ON k.kodep = a.kodep LEFT JOIN tabsen ta ON a.kodep=ta.kodep ORDER BY kodep");
                 while ($row = mysqli_fetch_array($query)) {
                 ?>
                 <tr>
@@ -58,14 +60,16 @@ $tgls = $_POST['tgls'];
                   <td><?php echo $row['jampulang_bulat'];?></td>
                   <td><?php echo $row['jamhadir1']?></td>
                   <td><?php echo $row['jampulang1'];?></td>
+				  <td><?php echo $row['izin'];?></td>
                   <?php 
 				  $cek_jadwal = mysqli_query($koneksi, "SELECT * FROM pegawai k JOIN tjadwal j ON k.idjadwal=j.id_jadwal WHERE kodep='$row[kodep]'");
 				  $data_jadwal= mysqli_fetch_assoc($cek_jadwal);
 				 
-				  if(empty($row['jamhadir_bulat']AND$row['jampulang_bulat']) OR empty($row['jamhadir1']AND$row['jampulang1'])) {
+				  if(empty($row['jamhadir_bulat'] AND $row['jampulang_bulat']) OR empty($row['jamhadir1'] AND $row['jampulang1'])) {
 					echo "<td></td>";
 					echo "<td></td>";
 					echo "<td>$row[ketr]</td>";
+					echo "<td>$row[potongan]</td>";
 					echo '<td><span>Tidak</span></td>';
 				  } else {
 					if ($row['jamhadir_bulat']==$row['jamhadir1'] AND $row['jampulang_bulat']==$row['jampulang1']) {
@@ -88,15 +92,14 @@ $tgls = $_POST['tgls'];
 							  }
 						  }
 						  echo "<td>$row[ketr]</td>";
-						echo '<td><span>Ya</span></td>';
-						
-						
-							
+						  echo "<td>$row[potongan]</td>";
+						  echo '<td><span>Ya</span></td>';
 					} else {
 						echo "<td></td>";
-					echo "<td></td>";
-					echo "<td>$row[ketr]</td>";
-					echo '<td><span>Tidak</span></td>';
+						echo "<td></td>";
+						echo "<td>$row[ketr]</td>";
+						echo "<td></td>";
+						echo '<td><span>Tidak</span></td>';
 					
 					}
 				  }

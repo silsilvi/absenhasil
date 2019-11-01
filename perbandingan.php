@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+    <!-- DataTables -->
+  <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -155,15 +157,33 @@
          </div>
 		 <br>
           <div class="col-md-2">
-              <button type="submit" class="btn btn-primary" name="print"> FORMAT EXCEL</button>
-          </div> 
+              <button type="submit" class="btn btn-primary" name="print">FORMAT EXCEL</button>
+          </div>		  
+          </div>
+          </form>
+		  <form action="exportcsv.php" method="POST">
+          <div class="row">
+           <div class="col-md-5"><b>Mulai</b>
+           <div class="form-group">
+             <input type="date" class="form-control" name="tglm">
+           </div>
+           </div>
+           <div class="col-md-5"><b>Selesai</b>
+            <div class="form-group">
+             <input type="date" class="form-control" name="tgls">
+           </div>
+         </div>
+		 <br>
+          <div class="col-md-2">
+              <button type="submit" class="btn btn-primary" name="print"> FORMAT CSV</button>
+          </div>		  
           </div>
           </form>
         </div>
             </div>
 
-          <div class="box-body table-responsive">
-            <table id="pegawai" class="table table-bordered table-hover">
+          <div class="box-body card-body">
+              <table id="example2" class="table table-bordered table-hover">
               <thead>
                 <tr>
                   <th><center>Kode Pegawai</center></th>
@@ -175,9 +195,11 @@
                   <th><center>Jam Pulang (bulat)</center></th>
                   <th><center>Jam Hadir(Hasil)</center></th>
                   <th><center>Jam Pulang (Hasil)</center></th>
+				  <th><center>Izin</center></th>
 				  <th><center>Telat</center></th>
 				  <th><center>Lembur</center></th>
 				 <th><center>PJ / Ketr</center></th>
+				 <th><center>Pot</center></th>
 				 <th><center>Status</center></th>
                 </tr>
               </thead>
@@ -185,7 +207,7 @@
 
                 <?php
                 include "conf/conn.php";
-                $query = mysqli_query($koneksi, "SELECT a.kodeabsen,ta.tanggal1,k.kodep,k.Nama,a.jamhadir,a.jampulang,a.jamhadir_bulat,a.jampulang_bulat,ta.jamhadir1,ta.jampulang1,k.idjadwal,a.ketr FROM pegawai k LEFT JOIN absensi a ON k.kodep = a.kodep LEFT JOIN tabsen ta ON a.kodep=ta.kodep ORDER BY kodep");
+                $query = mysqli_query($koneksi, "SELECT a.kodeabsen,ta.tanggal1,k.kodep,k.Nama,a.jamhadir,a.jampulang,a.jamhadir_bulat,a.jampulang_bulat,ta.jamhadir1,ta.jampulang1,k.idjadwal,a.ketr,ta.izin,ta.potongan FROM pegawai k LEFT JOIN absensi a ON k.kodep = a.kodep LEFT JOIN tabsen ta ON a.kodep=ta.kodep ORDER BY kodep");
                 while ($row = mysqli_fetch_array($query)) {
                 ?>
                 <tr>
@@ -198,6 +220,7 @@
                   <td><?php echo $row['jampulang_bulat'];?></td>
                   <td><?php echo $row['jamhadir1']?></td>
                   <td><?php echo $row['jampulang1'];?></td>
+				  <td><?php echo $row['izin'];?></td>
                   <?php 
 				  $cek_jadwal = mysqli_query($koneksi, "SELECT * FROM pegawai k JOIN tjadwal j ON k.idjadwal=j.id_jadwal WHERE kodep='$row[kodep]'");
 				  $data_jadwal= mysqli_fetch_assoc($cek_jadwal);
@@ -206,6 +229,7 @@
 					echo "<td></td>";
 					echo "<td></td>";
 					echo "<td>$row[ketr]</td>";
+					echo "<td>$row[potongan]</td>";
 					echo '<td><span style="background-color:red;color:white;padding:2px 10px 2px 10px !important;">Tidak</span></td>';
 				  } else {
 					if ($row['jamhadir_bulat']==$row['jamhadir1'] AND $row['jampulang_bulat']==$row['jampulang1']) {
@@ -228,14 +252,16 @@
 							  }
 						  }
 						  echo "<td>$row[ketr]</td>";
-						echo '<td><span style="background-color:green;color:white;padding:2px 20px 2px 20px !important;">Ya</span></td>';
-						echo "<td><a class='btn btn-warning' style='padding:2px 10px 2px 10px' href='konfirlembur.php?kodep=".$row['kodep']."'><i class='glyphicon glyphicon-check text-white'></i></a></td>";
+						  echo "<td>$row[potongan]</td>";
+						  echo '<td><span style="background-color:green;color:white;padding:2px 20px 2px 20px !important;">Ya</span></td>';
+						  echo "<td><a class='btn btn-warning' style='padding:2px 10px 2px 10px' href='konfirlembur.php?kodep=".$row['kodep']."'><i class='glyphicon glyphicon-check text-white'></i></a></td>";
 					} else {
 						echo "<td></td>";
-					echo "<td></td>";
-					echo "<td>$row[ketr]</td>";
-					echo '<td><span style="background-color:red;color:white;padding:2px 10px 2px 10px !important;">Tidak</span></td>';
-					echo "<td><button class='btn btn-primary btn-edit' style='padding:2px 10px 2px 10px' name='btneditabsen' data-id='$row[kodep]'><i class='glyphicon glyphicon-check text-white'></i></button>";
+						echo "<td></td>";
+						echo "<td>$row[ketr]</td>";
+						echo "<td></td>";
+						echo '<td><span style="background-color:red;color:white;padding:2px 10px 2px 10px !important;">Tidak</span></td>';
+						echo "<td><button class='btn btn-primary btn-edit' style='padding:2px 10px 2px 10px' name='btneditabsen' data-id='$row[kodep]'><i class='glyphicon glyphicon-check text-white'></i></button>";
 					}
 				  }
                   ?>
@@ -307,6 +333,12 @@
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Pertanggung Jawaban</label>
                   <div class="col-sm-9">
                     <textarea class="form-control pj" name="pj" id="formGroupExampleInput" required="true" maxlength="250"></textarea>
+                  </div>
+                </div>
+				<div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Potongan</label>
+                  <div class="col-sm-9">
+                    <input type="number" class="form-control txtpot" name="pot" id="formGroupExampleInput" minlength="1" maxlength="50">
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -419,7 +451,21 @@
 <script src="dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+<script src="plugins/datatables/jquery.dataTables.js"></script>
+<script src="plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
 
+<script>
+  $(function () {
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": true,
+    });
+  });
+</script>
 <script>
   $(".btn-edit").click(function(e){
     var kodep = $(this).attr("data-id");

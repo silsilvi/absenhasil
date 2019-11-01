@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -160,8 +162,8 @@
              <button type="button" name="import"<a data-toggle="modal" data-target="#import" class=" btn btn-primary  text-white" style="display: inline-block; float:right;";> Import <i class="glyphicon glyphicon-import"></i></a></button>  
               </div>
           </form>       
-            <div class="box-body table-responsive">
-            <table id="absen" class="table table-bordered table-hover">
+           <div class="box-body card-body">
+              <table id="example2" class="table table-bordered table-hover">
               <thead>
                 <tr>
                 <th><center>Kode Absen</center></th>
@@ -179,7 +181,7 @@
 
                 <?php
                 include "conf/conn.php";
-                $query = mysqli_query($koneksi, "SELECT * FROM absensi ORDER BY kodep ASC");
+                $query = mysqli_query($koneksi, "SELECT * FROM absensi a JOIN tjadwal tj WHERE a.shift=tj.id_jadwal ORDER BY kodep ASC");
 
                 while ($row = mysqli_fetch_array($query)) {
                 ?>
@@ -315,7 +317,21 @@
 <script src="dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+<script src="plugins/datatables/jquery.dataTables.js"></script>
+<script src="plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
 
+<script>
+  $(function () {
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+    });
+  });
+</script>
 </body>
 </html>
 

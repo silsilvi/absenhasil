@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -145,8 +147,8 @@
               <i class="glyphicon glyphicon-print text-white"></i>
               </a>
             </div>
-          <div class="box-body table-responsive">
-            <table id="absen" class="table table-bordered table-hover">
+          <div class="box-body card-body">
+              <table id="example2" class="table table-bordered table-hover">
               <thead>
                 <tr>
                   <th><center>kode Absen</center></th>
@@ -155,14 +157,16 @@
                   <th><center>Tanggal</center></th>
                   <th><center>Jam Hadir</center></th>
                   <th><center>Jam Pulang</center></th>
-                  
+                  <th><center>Izin</center></th>
+				  <th><center>Hasil Kerja</center></th>
+				  <th><center>Opsi</center></th>
                 </tr>
               </thead>
               <tbody>
 
                 <?php
                 include "conf/conn.php";
-                $query = mysqli_query($koneksi, "SELECT * FROM pegawai join tabsen on pegawai.kodep = tabsen.kodep ORDER BY kodeabsen DESC");
+                $query = mysqli_query($koneksi, "SELECT * FROM pegawai join tabsen on pegawai.kodep = tabsen.kodep ORDER BY tabsen.kodep ASC");
 
                 while ($row = mysqli_fetch_array($query)) {
                 ?>
@@ -174,7 +178,8 @@
                   <td><?php echo $row['tanggal1'];?></td>
                   <td><?php echo $row['jamhadir1'];?></td>
                   <td><?php echo $row['jampulang1'];?></td>
-                  
+				  <td><?php echo $row['izin'];?></td>
+                  <td><?php echo $row['hasilkerja'];?></td>
                   <td>
                   <center>
                   <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btneditabsen' data-id="<?php echo $row['kodeabsen']?>" data-nama="<?php echo $row['kodeabsen']?>"><i class="glyphicon glyphicon-edit"></i></button>
@@ -211,24 +216,35 @@
             </div>
             <div class="modal-body">
               <form action="pages/tambahabsen.php" method="POST" enctype="multipart/form-data">
-              <div class="form-group row">
+				<div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kode Pegawai</label>
-                  <div class="col-sm-7">
+                  <div class="col-sm-9">
                   <input type="text" class="form-control" name="kodep" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Jam Hadir</label>
-                  <div class="col-sm-7">
-                    <input type="time" class="form-control" name="jamhadir" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+                  <div class="col-sm-9">
+                    <input type="time" class="form-control" name="jamhadir" id="formGroupExampleInput" minlength="1" maxlength="50">
                   </div>
                 </div>
                 <div class="form-group row">
-                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Jam Pulang</label>
-                <div class="col-sm-7">
-                <input type="time" class="form-control" name="jampulang" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+					<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Jam Pulang</label>
+					<div class="col-sm-9">
+					<input type="time" class="form-control" name="jampulang" id="formGroupExampleInput" minlength="1" maxlength="50">
+					</div>
                 </div>
-                </div>               
+				<div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Izin</label>
+                  <div class="col-sm-9">
+                  <input type="text" class="form-control" name="izin" id="formGroupExampleInput" minlength="1" maxlength="50">
+                  </div>
+                </div>
+				<div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Hasil Kerja</label>
+                  <div class="col-sm-9">
+					<textarea class="form-control hasilkerja" name="hasilkerja" id="formGroupExampleInput" maxlength="250"></textarea>
+                  </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -271,7 +287,20 @@
                 <div class="col-sm-9">
                 <input type="time" class="form-control txtjampulang" name="jampulang" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
                 </div>
-                </div>           
+                </div>
+				<div class="form-group row">
+                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Izin</label>
+                <div class="col-sm-9">
+                <input type="text" class="form-control txtizin" name="izin" id="formGroupExampleInput" minlength="1" maxlength="50">
+                </div>
+                </div>
+				<div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Hasil Kerja</label>
+                  <div class="col-sm-7">
+					<textarea class="form-control txthasilkerja" name="hasilkerja" id="formGroupExampleInput" maxlength="250"></textarea>
+                  </div>
+                </div>
+                </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                   <button type="submit" class="btn btn-primary" name="btneditabsen">Edit</button>
@@ -348,6 +377,8 @@
 <!-- jQuery UI 1.11.4 -->
 <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script src="plugins/datatables/jquery.dataTables.js"></script>
+<script src="plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
 <script>
   $.widget.bridge('uibutton', $.ui.button);
 </script>
@@ -382,6 +413,18 @@
 <script src="dist/js/demo.js"></script>
 
 <script>
+  $(function () {
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+    });
+  });
+</script>
+<script>
   $(".btn-edit").click(function(e){
     var kodeabsen = $(this).attr("data-id");
     $.ajax({
@@ -398,7 +441,8 @@
         $(".txtkodep").val(e.kodep);
         $(".txtjamhadir").val(e.jamhadir1);
         $(".txtjampulang").val(e.jampulang1);
-
+		$(".txtizin").val(e.izin);
+		$(".txthasilkerja").val(e.hasilkerja);
       }
     });
   });
