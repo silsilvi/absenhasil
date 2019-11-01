@@ -2,16 +2,13 @@
   session_start();
   include "../conf/conn.php";
   if (isset($_POST['btneditabsen'])) {
-  $kodep = $_POST['kodep'];
   $kodeabsen = $_POST['kodeabsen'];
-  $jamhadir = $_POST['jamhadir'];
-  $jampulang = $_POST['jampulang'];
-  $izin = $_POST['izin'];
-  $tgl1 = date("Y-m-d");
-  $tanggal = date('Y-m-d', strtotime('-1 days', strtotime($tgl1)));
-  $hasilkerja = $_POST['hasilkerja'];
+  $kodep = $_POST['kodep'];
+  $jamhadir1 = $_POST['jamhadir1'];
+  $jampulang1 = $_POST['jampulang1'];
 
-  $query = mysqli_query($koneksi, "UPDATE tabsen SET kodep='$kodep',tanggal1='$tanggal',jamhadir1='$jamhadir',jampulang1='$jampulang',izin='$izin',hasilkerja='$hasilkerja' WHERE kodeabsen='$kodeabsen'");
+
+  $query = mysqli_query($koneksi, "UPDATE tabsen SET kodep='$kodep',tanggal1= now(),jamhadir1='$jamhadir1',jampulang1='$jampulang1' WHERE kodeabsen='$kodeabsen'");
   if ($query) {
     header("location:../absen.php");
 

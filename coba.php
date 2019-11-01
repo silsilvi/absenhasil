@@ -6,12 +6,13 @@
     exit();
   }
   if(!isset($_GET['edit'])){
-     $query = mysqli_query($koneksi, "SELECT * FROM tlogin"); 
+     $query = mysqli_query($koneksi, "SELECT * FROM coba"); 
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
+
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Absen Hasil</title>
@@ -39,6 +40,9 @@
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -48,7 +52,9 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  </head>
+  <!-- Custom styles for this page -->
+  <link href="asset/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+</head>
   <body class="hold-transition skin-blue sidebar-mini">
   <div class="wrapper">
 
@@ -74,8 +80,8 @@
     <section class="sidebar">
       <!-- Sidebar user panel -->
 
-      <!-- sidebar menu: : style can be found in sidebar.less -->
-      <ul class="sidebar-menu">
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu">
       <li class="header">MENU</li>
       <li><a href="index.php"><i class="glyphicon glyphicon-home"></i> <span>Pegawai</span></a></li>
       </li>
@@ -83,7 +89,7 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-file"></i> <span>Absen</span>
+            <i class="glyphicon glyphicon-briefcase"></i> <span>Absen</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -95,9 +101,10 @@
         </li>
       <li><a href="perbandingan.php"><i class="glyphicon glyphicon-check"></i> <span>Perbandingan</span></a></li>
       </li>
+      <li>
       <li class="treeview">
-         <li><a href="stok.php"><i class="glyphicon glyphicon-list"></i> <span>Stok</span></a></li>
-      </li>
+         <li><a href="kayumasuk.php"><i class="glyphicon glyphicon-book"></i> <span>Stok Kayu Masuk</span></a></li>
+      </li>  
       <li>
         <li class="treeview">
           <a href="#">
@@ -107,7 +114,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="kupasan.php"><i class="fa fa-circle-o"></i>Kupasan</a></li>
+          <li class="active"><a href="kupasan.php"><i class="fa fa-circle-o"></i> Kupasan</a></li>
             <li><a href="dryer.php"><i class="fa fa-circle-o"></i> Dryer</a></li>
             <li><a href="tembel.php"><i class="fa fa-circle-o"></i> Tembel</a></li>
             <li><a href="hotpress.php"><i class="fa fa-circle-o"></i> Hotpress</a></li>
@@ -121,7 +128,7 @@
           </a>
           <ul class="treeview-menu">
             <li class="active"><a href="dempul.php"><i class="fa fa-circle-o"></i> Dempul</a></li>
-            <li><a href="pilihtriplek.php"><i class="fa fa-circle-o"></i> Pilih Triplek</a></li>
+            <li><a href="lain.php"><i class="fa fa-circle-o"></i> Pilih Triplek</a></li>
           </ul>
           </li>
             <li><a href="lain.php"><i class="fa fa-circle-o"></i> Lain-lain</a></li>
@@ -144,7 +151,7 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><b>DATA ADMIN</b></h1>
+      <h1><b>DATA coba</b></h1>
     </section>
     <!-- Main content -->
     <section class="content">
@@ -152,125 +159,158 @@
         <div class="col-xs-12">
           <div class="box box-primary">
             <div class="box-header">
-              <button type="button" name="btntambahuser"<a data-toggle="modal" data-target="#tambahuser" class=" btn btn-primary  text-white";> Tambah <i class="glyphicon glyphicon-plus"></i></a></button>
+              <button type="button" name="btntambahcoba"<a data-toggle="modal" data-target="#tambahcoba" class=" btn btn-primary  text-white";> Tambah <i class="glyphicon glyphicon-plus"></i></a></button>
             </div>
-          <div class="box-body table-responsive">
-            <table id="user" class="table table-bordered table-hover">
+            <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>
                 <tr>
-                  <th><center>ID</center></th>
-                  <th><center>Username</center></th>
-                  <!-- <th><center>Aksi</center></th> -->
+                  <th>ID</th>
+                  <th>Nama</th>
+                  <th>Alamat</th>
+                  <th>Opsi</th>
                 </tr>
               </thead>
               <tbody>
-
                 <?php
-                include "conf/conn.php";
-                $query = mysqli_query($koneksi, "SELECT * FROM tlogin ORDER BY id DESC");
-
+               
                 while ($row = mysqli_fetch_array($query)) {
+                  echo "<tr>";
+                  echo "<td>" . $row['id'] . "</td>";
+                  echo "<td>" . $row['nama'] . "</td>";
+                  echo "<td>" . $row['alamat'] . "</td>";
+                  echo "<td><button class='btn btn-success btn-edit' style='margin-right:5px;' name='btneditcoba' data-id='$row[id]'data-gbr=".$row['id']."><i class='fas fa-fw fa-edit'></i></button><button<a class='btn btn-danger ' data-toggle='modal' data-target='#konfirmasi_hapus' data-href='hapuscoba.php?id=".$row['id']."'><i class='fas fa-fw fa-trash text-white'></i></a></td>";
+                  echo "</tr>";
+
+                }
                 ?>
-
-                <tr>
-                  <td><?php echo $row['id'];?></td>
-                  <td><?php echo $row['username'];?></td>
-                  <td>
-                  <center>
-                  <!-- <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btnedituser' data-id="<?php echo $row['id']?>" data-nama="<?php echo $row['id']?>"><i class="glyphicon glyphicon-edit"></i></button> -->
-                  <!-- <button class='btn btn-danger ' data-toggle='modal' data-target='#hapususer' data-href="pages/hapususer.php?id=<?php echo $row['id'];?>"><i class="glyphicon glyphicon-trash"></i> -->
-                  </center>
-                  </td>
-                </tr>
-
-                <?php } ?>
-
-                </tbody>
-              </table>
-            </div>
-            <!-- /.box-body -->
+              </tbody>
+            </table>
           </div>
-          <!-- /.box -->
         </div>
-        <!-- /.col -->
       </div>
-      <!-- /.row -->
-    </section>
-    <!-- /.content -->
-  </div>
-<!-- /.content-wrapper -->
-<!-- modal tambah user -->
-        <div class="modal fade" id="tambahuser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    </div>
+    <!-- /.container-fluid -->
+
+  <!-- modal tambah coba -->
+        <div class="modal fade" id="tambahcoba" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Tambah Data coba</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
-              <h4 class="modal-title" id="exampleModalLabel"><center><b>TAMBAH DATA USER</b></center></h4>
             </div>
             <div class="modal-body">
-              <form action="pages/tambahuser.php" method="POST" enctype="multipart/form-data">
+              <form action="tambahcoba.php" method="POST" enctype="multipart/form-data">
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Username</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">ID</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" name="username" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
+                    <input type="text" class="form-control" name="id" id="formGroupExampleInput" required="true" minlength="1" maxlength="5">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Password</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Nama</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" name="password" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+                    <div id="imagePreview"></div>
+                    <input type="file" class="form-control-file" name="nama" id="file" onchange="return fileValidation()" required="true" style="margin-top: 5px;">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Alamat</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" name="alamat" id="formGroupExampleInput" required="true" minlength="1" maxlength="25">
                   </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary" name="btntambahuser">Tambah</button>
+                  <button type="submit" class="btn btn-primary" name="btntambahcoba">Tambah</button>
                 </div>
               </form>
             </div>
           </div>
         </div>
       </div>
-  <!-- end modal tambah user -->
+  <!-- end modal tambah coba -->
 
- <!-- modal edit user -->
- <div class="modal fade" id="edituser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
- <div class="modal-dialog" role="document">
+     <!-- modal tambah coba -->
+     <div class="modal fade" id="editcoba" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Edit Data coba</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
-              <h4 class="modal-title" id="exampleModalLabel"><center><b>EDIT DATA USER</b></center></h4>
             </div>
             <div class="modal-body">
-              <form action="pages/edituser.php" method="POST" enctype="multipart/form-data">
-              <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Username</label>
+              <form action="editcoba.php" method="POST" enctype="multipart/form-data">
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Kode coba</label>
                   <div class="col-sm-9">
-                    <input type="text" readonly class="form-control txtid" name="username" id="formGroupExampleInput" required="true" minlength="1" maxlength="20">
+                    <input type="text" class="form-control txtKodecoba" name="kodecoba" id="formGroupExampleInput" required="true" minlength="1" maxlength="5">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Password</label>
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Gambar</label>
                   <div class="col-sm-9">
-                    <input type="text" class="Nama form-control" name="password" id="formGroupExampleInput" required="true" minlength="1" maxlength="50">
+                    <!-- <div style="padding-bottom: 5px;"><img style="width:50px;height:50px;" src="" id="gambarfoto"></div> -->
+                    <input type="file" class="form-control-file fotoku" name="foto" id="formGroupExampleInput" required="true">
+                  </div>
+                </div>                
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Nama coba</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control txtNamacoba" name="namacoba" id="formGroupExampleInput" required="true" minlength="1" max="25">
+                  </div>
+                </div>
+                <!-- <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Deskripsi</label>
+                  <div class="col-sm-9">
+                    <textarea type="textarea" class="form-control" name="deskripsi" id="formGroupExampleInput" required="true" maxlength="100" minlength="10"></textarea>
+                  </div>
+                </div> -->
+                <div class="form-group row">
+                <label for="exampleFormControlSelect1" class="col-sm-3 col-form-label">Jenis coba</label>
+                <div class="col-sm-9">
+                <select class="form-control selJeniscoba" id="exampleFormControlSelect1" name="jeniscoba" required="true">
+                  <option>HANDY CRAFT</option>
+                  <option>HATS</option>
+                  <option>TUMBLR</option>
+                  <option>T-SHIRT</option>
+                  <option>ZEROWASTE KIT</option>
+                </select> 
+                </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Harga coba</label>
+                  <div class="col-sm-9">
+                    <input type="number" class="form-control txtHargacoba" name="hargacoba" id="formGroupExampleInput" required="true">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Stok</label>
+                  <div class="col-sm-9">
+                    <input type="number" class="form-control txtStokcoba" name="stok" id="formGroupExampleInput" required="true"> 
                   </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary" name="btnedituser">Edit</button>
+                  <button type="submit" class="btn btn-primary" name="btneditbrg">Edit</button>
                 </div>
               </form>
             </div>
           </div>
         </div>
-     </div>    
-  <!-- end modal edit user -->
-
-<!--modal hapus user-->
-<div class="modal fade" id="hapususer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     </div>
+        
+  <!-- end modal edit coba -->
+  
+  <!--modal hapus coba-->
+  <div class="modal fade" id="konfirmasi_hapus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body">Apakah Anda Yakin ingin menghapus data ini?</div>
@@ -281,19 +321,55 @@
       </div>
     </div>
   </div>
-  <!-- end modal hapus user -->
-  <footer class="main-footer">
-    <strong>Copyright &copy; 2019 PT. Wijaya Plywoods .</strong>
-  </footer>
-   </div>
-  </div>
 
 
+  <!-- Bootstrap core JavaScript-->
+  <script src="asset/jquery/jquery.min.js"></script> 
+  <script src="asset/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="asset/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="js/sb-admin-2.min.js"></script>
+
+  <!-- Page level plugins -->
+  <script src="asset/datatables/jquery.dataTables.min.js"></script>
+  <script src="asset/datatables/dataTables.bootstrap4.min.js"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="js/demo/datatables-demo.js"></script>
+  
+  <script>
+  $(".btn-edit").click(function(e){
+    var Kodecoba = $(this).attr("data-id");
+    var Gambarcoba = $(this).data("gbr");
+    $.ajax({
+      "method"  : "get",
+      "url"   : "produk.php",
+      "data"    : {
+        "edit"      : true,
+        "Kodecoba"  : Kodecoba,
+      },
+      "dataType"  : "json",
+      "success" : function(e){
+        $("#editcoba").modal();
+        $(".txtKodecoba").val(Kodecoba);
+        $(".txtNamacoba").val(e.Namacoba);
+        $(".txtHargacoba").val(e.Hargacoba);
+        $(".txtStokcoba").val(e.Stok);
+        $(".selJeniscoba").val(e.Jeniscoba);
+        $(".fotoku").attr('file',Gambarcoba);
+        $("#gambarfoto").attr('src','Asset/img/produk/'+Gambarcoba); 
+      }
+    });
+  });
+  </script>
 
   <script type="text/javascript">
     //Hapus Data
     $(document).ready(function() {
-        $('#hapususer').on('show.bs.modal', function(e) {
+        $('#konfirmasi_hapus').on('show.bs.modal', function(e) {
             $(this).find('.btn-hapus').attr('href', $(e.relatedTarget).data('href'));
         });
     });
@@ -320,92 +396,17 @@
     }
   </script>
   
-
-<!-- Javascript Datatable -->
-<script type="text/javascript">
-  $(document).ready(function(){
-    $('#user').DataTable();
-  });
-</script>
-
-
-<!-- ./wrapper -->
-
-<!-- jQuery 3 -->
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button);
-</script>
-<!-- Bootstrap 3.3.7 -->
-<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- Morris.js charts -->
-<script src="bower_components/raphael/raphael.min.js"></script>
-<script src="bower_components/morris.js/morris.min.js"></script>
-<!-- Sparkline -->
-<script src="bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
-<!-- jvectormap -->
-<script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-<!-- jQuery Knob Chart -->
-<script src="bower_components/jquery-knob/dist/jquery.knob.min.js"></script>
-<!-- daterangepicker -->
-<script src="bower_components/moment/min/moment.min.js"></script>
-<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-<!-- datepicker -->
-<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<!-- Bootstrap WYSIHTML5 -->
-<script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
-<!-- Slimscroll -->
-<script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="bower_components/fastclick/lib/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="dist/js/adminlte.min.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="dist/js/pages/dashboard.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="dist/js/demo.js"></script>
-
-<script>
-  $(".btn-edit").click(function(e){
-    var id = $(this).attr("data-id");
-    $.ajax({
-      "method"  : "get",
-      "url"   : "index.php",
-      "data"    : {
-        "edit"      : true,
-        "id"  : id,
-      },
-      "dataType"  : "json",
-      "success" : function(e){
-        $("#edituser").modal();
-        $(".txtid").val(id);
-        $(".Nama").val(e.username);
-      }
-    });
-  });
-  </script>
-
-<script type="text/javascript">
-    //Hapus Data
-    $(document).ready(function() {
-        $('#hapususer').on('show.bs.modal', function(e) {
-            $(this).find('.btn-hapus').attr('href', $(e.relatedTarget).data('href'));
-        });
-    });
-  </script>
+  
 
 </body>
+
 </html>
 
 <?php
   }
   if(isset($_GET['edit'])){
-    $id = $_GET['id'];
-    $sql = "SELECT * FROM tlogin WHERE id='". $id ."'";
+    $Kodecoba = $_GET['Kodecoba'];
+    $sql = "SELECT * FROM tb_coba WHERE Kodecoba='". $Kodecoba ."'";
     $q = mysqli_query($koneksi, $sql);
     while($row=mysqli_fetch_assoc($q)){
       echo json_encode($row);

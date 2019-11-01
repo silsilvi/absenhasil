@@ -5,12 +5,12 @@
   $jamhadir = $_POST['jamhadir'];
   $jampulang = $_POST['jampulang'];
   $kodep = $_POST['kodep'];
-  $izin = $_POST['izin'];
-  $tgl1 = date("Y-m-d");
-  $tanggal = date('Y-m-d', strtotime('-1 days', strtotime($tgl1)));
-  $hasilkerja = $_POST['hasilkerja'];
 
-  $query = mysqli_query($koneksi, "INSERT into tabsen (tanggal1,jamhadir1,jampulang1,kodep,izin,hasilkerja) VALUES ('$tanggal','$jamhadir','$jampulang',$kodep,'$izin','$hasilkerja')");
+  $query = mysqli_query($koneksi, "INSERT into tabsen (tanggal,jamhadir,jampulang,kodep) VALUES (now(),'$jamhadir','$jampulang',$kodep)");
+  $query = mysqli_query($koneksi, "UPDATE detailkayumasuk t1 
+INNER JOIN kupasan t2 ON (t2.seri=t1.seri AND t2.seri='seri'
+SET t1.banyak = t1.banyak - t2.batang");
+
   if ($query) {
     echo '<script>alert("Data Telah Ditambahkan!");</script>';
     echo "<script>location='../absen.php';</script>";

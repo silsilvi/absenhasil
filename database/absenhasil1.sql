@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 14, 2019 at 08:32 AM
+-- Generation Time: Oct 29, 2019 at 10:52 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -51,9 +51,6 @@ INSERT INTO `absensi` (`kodeabsen`, `tanggal`, `kodep`, `Nama`, `jamhadir`, `jam
 (139, '2019-09-30', 1111, '', '16:26:18', '16:26:49', '00:00:00', '00:00:00', 'Telat', 10.4, 0, 0),
 (140, '2019-09-30', 1205, '', '16:46:36', '16:27:07', '00:00:00', '00:00:00', 'Telat', 10.8, 0, 0),
 (141, '2019-09-30', 6101, '', '16:27:22', '00:00:00', '00:00:00', '00:00:00', 'Telat', 8.5, 0, 0),
-(275, '2019-10-04', 1111, 'Silvi', '13:19:15', '13:19:24', '00:00:00', '00:00:00', 'Telat', 7.3, 0, 0),
-(276, '2019-10-04', 3333, 'tr', '13:19:55', '13:19:59', '00:00:00', '13:00:00', 'Telat', 7.3, 0, 0),
-(277, '2019-10-04', 2222, 'Unc', '16:33:59', '16:34:13', '00:00:00', '16:30:00', 'Telat', 10.6, 0, 0),
 (1119, '2019-10-09', 1111, '', '10:30:29', '13:06:00', '11:00:00', '13:00:00', 'Telat', 5, 0, 2.6),
 (1128, '2019-10-09', 1205, '', '13:48:42', '13:45:14', '14:00:00', '13:30:00', 'Telat', -436257, 0, 0),
 (1129, '2019-10-09', 2222, 'Unc', '14:17:27', '00:00:00', '14:30:00', '00:00:00', 'Telat', 8.5, 0, 0);
@@ -61,20 +58,78 @@ INSERT INTO `absensi` (`kodeabsen`, `tanggal`, `kodep`, `Nama`, `jamhadir`, `jam
 -- --------------------------------------------------------
 
 --
--- Table structure for table `dryyer`
+-- Table structure for table `dempul`
 --
 
-CREATE TABLE `dryyer` (
+CREATE TABLE `dempul` (
+  `no` int(11) NOT NULL,
   `tanggal` date DEFAULT NULL,
-  `kodedept` int(10) NOT NULL,
-  `kodep` int(10) DEFAULT NULL,
+  `bahankurang` varchar(100) NOT NULL,
+  `panjang` int(100) NOT NULL,
+  `lebar` int(100) NOT NULL,
+  `tebal` double NOT NULL,
+  `kw` varchar(100) NOT NULL,
+  `jenis` varchar(100) NOT NULL,
+  `hasil` int(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `detailkayumasuk`
+--
+
+CREATE TABLE `detailkayumasuk` (
+  `no` int(11) NOT NULL,
+  `tanggal` date DEFAULT NULL,
+  `nama` varchar(50) DEFAULT NULL,
+  `seri` int(50) DEFAULT NULL,
+  `panjang` int(50) DEFAULT NULL,
+  `jenis` varchar(50) DEFAULT NULL,
+  `lahan` varchar(50) DEFAULT NULL,
+  `banyak` int(50) DEFAULT NULL,
+  `m3` double DEFAULT NULL,
+  `uang` int(50) DEFAULT NULL,
+  `totalbanyak` int(50) DEFAULT NULL,
+  `totalm3` float DEFAULT NULL,
+  `totaluang` int(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `detailkayumasuk`
+--
+
+INSERT INTO `detailkayumasuk` (`no`, `tanggal`, `nama`, `seri`, `panjang`, `jenis`, `lahan`, `banyak`, `m3`, `uang`, `totalbanyak`, `totalm3`, `totaluang`) VALUES
+(29, '2019-10-29', 'BBBB', 4444, 120, 'Keras', '1A', 100, 1.89, 2450000, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dryer`
+--
+
+CREATE TABLE `dryer` (
+  `no` int(11) NOT NULL,
+  `tanggal` date DEFAULT NULL,
+  `dryer` varchar(100) DEFAULT NULL,
+  `mesin` varchar(100) DEFAULT NULL,
   `panjang` int(50) DEFAULT NULL,
   `lebar` int(50) DEFAULT NULL,
-  `tebal` int(50) DEFAULT NULL,
-  `kw` int(50) DEFAULT NULL,
+  `tebal` float DEFAULT NULL,
+  `kw` varchar(50) DEFAULT NULL,
   `jenis` varchar(100) DEFAULT NULL,
-  `hasil` int(50) DEFAULT NULL
+  `hasil` int(50) DEFAULT NULL,
+  `kurang` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `dryer`
+--
+
+INSERT INTO `dryer` (`no`, `tanggal`, `dryer`, `mesin`, `panjang`, `lebar`, `tebal`, `kw`, `jenis`, `hasil`, `kurang`) VALUES
+(8, '2019-10-28', 'Dryer Pagi', '1', 122, 244, 1, '1', 'S', 123, 0),
+(9, '2019-10-28', 'Dryer Pagi', '1', 122, 244, 1.004, '1', 'S', 123, 22),
+(11, '2019-10-29', 'Dryer Pagi', '1', 122, 244, 2, '1', 'S', 3, 10);
 
 -- --------------------------------------------------------
 
@@ -101,15 +156,34 @@ CREATE TABLE `finishing` (
 --
 
 CREATE TABLE `hotpress` (
-  `tanggal` int(11) DEFAULT NULL,
-  `kodedept` int(10) NOT NULL,
+  `no` int(11) NOT NULL,
+  `tanggal` date DEFAULT NULL,
   `kodep` int(10) DEFAULT NULL,
   `panjang` int(50) DEFAULT NULL,
-  `lebar` int(50) DEFAULT NULL,
-  `tebal` int(50) DEFAULT NULL,
-  `kw` int(50) DEFAULT NULL,
+  `lebar` int(11) DEFAULT NULL,
+  `tebal` float DEFAULT NULL,
+  `kw` varchar(50) DEFAULT NULL,
   `jenis` varchar(100) DEFAULT NULL,
-  `hasil` int(50) DEFAULT NULL
+  `banyak` int(50) DEFAULT NULL,
+  `panjangh` int(100) DEFAULT NULL,
+  `lebarh` int(100) DEFAULT NULL,
+  `tebalh` float DEFAULT NULL,
+  `kwh` varchar(100) DEFAULT NULL,
+  `jenish` varchar(100) DEFAULT NULL,
+  `hasil` int(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kayumasuk`
+--
+
+CREATE TABLE `kayumasuk` (
+  `no` int(11) NOT NULL,
+  `tgl` date DEFAULT NULL,
+  `nama` varchar(100) DEFAULT NULL,
+  `uang` int(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -119,16 +193,29 @@ CREATE TABLE `hotpress` (
 --
 
 CREATE TABLE `kupasan` (
+  `no` int(11) NOT NULL,
   `tanggal` date DEFAULT NULL,
-  `kodedept` int(10) NOT NULL,
-  `kodep` int(10) DEFAULT NULL,
-  `panjang` int(50) DEFAULT NULL,
-  `lebar` int(50) DEFAULT NULL,
-  `tebal` int(50) DEFAULT NULL,
-  `kw` int(50) DEFAULT NULL,
-  `jenis` varchar(100) DEFAULT NULL,
-  `hasil` int(100) DEFAULT NULL
+  `batang` int(100) DEFAULT NULL,
+  `lahan` varchar(100) DEFAULT NULL,
+  `seri` int(100) DEFAULT NULL,
+  `ket` varchar(11) DEFAULT 'NULL',
+  `mesin` int(11) DEFAULT NULL,
+  `panjang` int(11) DEFAULT NULL,
+  `lebar` int(11) DEFAULT NULL,
+  `tebal` float DEFAULT NULL,
+  `kw` int(11) DEFAULT NULL,
+  `jenis` varchar(11) DEFAULT NULL,
+  `hasil` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `kupasan`
+--
+
+INSERT INTO `kupasan` (`no`, `tanggal`, `batang`, `lahan`, `seri`, `ket`, `mesin`, `panjang`, `lebar`, `tebal`, `kw`, `jenis`, `hasil`) VALUES
+(50, '2019-10-26', 22222222, '2A', 111, 'Habis', 1, 122, 244, 1, 3, 's', -124),
+(51, '2019-10-28', 28, '2A', 1234, 'Habis', 1, 122, 244, 1, 1, 'S', 124),
+(52, '2019-10-28', 1, '2', 1234, 'Habis', 1, 122, 244, 1, 1, '1', 12);
 
 -- --------------------------------------------------------
 
@@ -137,16 +224,22 @@ CREATE TABLE `kupasan` (
 --
 
 CREATE TABLE `lain` (
+  `no` int(100) NOT NULL,
   `tanggal` date DEFAULT NULL,
-  `kodedept` int(10) NOT NULL,
-  `kodep` int(10) DEFAULT NULL,
-  `panjang` int(50) DEFAULT NULL,
-  `lebar` int(50) DEFAULT NULL,
-  `tebal` int(50) DEFAULT NULL,
-  `kw` int(50) DEFAULT NULL,
-  `jenis` varchar(100) DEFAULT NULL,
-  `hasil` int(50) DEFAULT NULL
+  `kegiatan` varchar(100) NOT NULL,
+  `keterangan` varchar(100) NOT NULL,
+  `kodep` int(50) DEFAULT NULL,
+  `masuk` time DEFAULT NULL,
+  `pulang` time DEFAULT NULL,
+  `potongan` int(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `lain`
+--
+
+INSERT INTO `lain` (`no`, `tanggal`, `kegiatan`, `keterangan`, `kodep`, `masuk`, `pulang`, `potongan`) VALUES
+(1, '2019-10-28', 'teknisi', 'ke hanero', 1231, '08:00:00', '17:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -169,10 +262,26 @@ CREATE TABLE `pegawai` (
 --
 
 INSERT INTO `pegawai` (`kodep`, `Nama`, `alamat`, `jeniskelamin`, `notelp`, `kodej`, `idjadwal`) VALUES
-(1, 'an', 'Malang', 'Laki-laki', 2147483647, 1, 1),
-(1111, 'Silvi', 'fbhgg', 'Perempuan', 2147483647, 1, 78),
-(2222, 'Lina', 'Blitar', 'Perempuan', 2147483647, 2, 4),
-(4444, 'sfgggg', 'hhhhhhh', 'Laki-laki', 2147483647, 4, 5);
+(2222, 'Lina', 'Blitar', 'Laki-laki', 2147483647, 2, 4),
+(4444, 'anda', 'hhhhhhh', 'Perempuan', 2147483647, 4, 8);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pilihtriplek`
+--
+
+CREATE TABLE `pilihtriplek` (
+  `no` int(11) NOT NULL,
+  `tanggal` date DEFAULT NULL,
+  `kerja` varchar(100) NOT NULL,
+  `panjang` int(100) NOT NULL,
+  `lebar` int(100) NOT NULL,
+  `tebal` float DEFAULT NULL,
+  `kw` varchar(100) NOT NULL,
+  `jenis` int(100) NOT NULL,
+  `hasil` int(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -186,13 +295,6 @@ CREATE TABLE `stok` (
   `jumlah` int(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `stok`
---
-
-INSERT INTO `stok` (`tanggal`, `jeniskayu`, `jumlah`) VALUES
-('2019-10-14', 'Meranti', 10);
-
 -- --------------------------------------------------------
 
 --
@@ -201,9 +303,9 @@ INSERT INTO `stok` (`tanggal`, `jeniskayu`, `jumlah`) VALUES
 
 CREATE TABLE `tabsen` (
   `kodeabsen` int(10) NOT NULL,
-  `tanggal` date DEFAULT NULL,
-  `jamhadir` time DEFAULT NULL,
-  `jampulang` time DEFAULT NULL,
+  `tanggal1` date DEFAULT NULL,
+  `jamhadir1` time DEFAULT NULL,
+  `jampulang1` time DEFAULT NULL,
   `kodep` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -211,10 +313,10 @@ CREATE TABLE `tabsen` (
 -- Dumping data for table `tabsen`
 --
 
-INSERT INTO `tabsen` (`kodeabsen`, `tanggal`, `jamhadir`, `jampulang`, `kodep`) VALUES
+INSERT INTO `tabsen` (`kodeabsen`, `tanggal1`, `jamhadir1`, `jampulang1`, `kodep`) VALUES
 (1250, '2019-10-08', '08:00:00', '17:00:00', 2),
-(1252, '2019-10-09', '09:00:00', '21:00:00', 1111),
-(1254, '2019-10-14', '08:00:00', '17:00:00', 2222);
+(1252, '2019-10-23', '09:00:00', '21:40:00', 1111),
+(1254, '2019-10-23', '00:50:00', '01:30:00', 2222);
 
 -- --------------------------------------------------------
 
@@ -223,16 +325,24 @@ INSERT INTO `tabsen` (`kodeabsen`, `tanggal`, `jamhadir`, `jampulang`, `kodep`) 
 --
 
 CREATE TABLE `tembel` (
+  `no` int(11) NOT NULL,
   `tanggal` date DEFAULT NULL,
-  `kodedept` int(10) NOT NULL,
   `kodep` int(10) DEFAULT NULL,
+  `bahankurang` varchar(100) DEFAULT NULL,
   `panjang` int(50) DEFAULT NULL,
   `lebar` int(50) DEFAULT NULL,
-  `tebal` int(50) DEFAULT NULL,
+  `tebal` float DEFAULT NULL,
   `kw` int(50) DEFAULT NULL,
   `jenis` varchar(100) DEFAULT NULL,
   `hasil` int(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tembel`
+--
+
+INSERT INTO `tembel` (`no`, `tanggal`, `kodep`, `bahankurang`, `panjang`, `lebar`, `tebal`, `kw`, `jenis`, `hasil`) VALUES
+(2, '2019-10-29', NULL, '123', 123, 244, 1.004, 5, 'S', 200);
 
 -- --------------------------------------------------------
 
@@ -302,10 +412,22 @@ ALTER TABLE `absensi`
   ADD PRIMARY KEY (`kodeabsen`);
 
 --
--- Indexes for table `dryyer`
+-- Indexes for table `dempul`
 --
-ALTER TABLE `dryyer`
-  ADD PRIMARY KEY (`kodedept`);
+ALTER TABLE `dempul`
+  ADD PRIMARY KEY (`no`);
+
+--
+-- Indexes for table `detailkayumasuk`
+--
+ALTER TABLE `detailkayumasuk`
+  ADD PRIMARY KEY (`no`);
+
+--
+-- Indexes for table `dryer`
+--
+ALTER TABLE `dryer`
+  ADD PRIMARY KEY (`no`);
 
 --
 -- Indexes for table `finishing`
@@ -317,25 +439,37 @@ ALTER TABLE `finishing`
 -- Indexes for table `hotpress`
 --
 ALTER TABLE `hotpress`
-  ADD PRIMARY KEY (`kodedept`);
+  ADD PRIMARY KEY (`no`);
+
+--
+-- Indexes for table `kayumasuk`
+--
+ALTER TABLE `kayumasuk`
+  ADD PRIMARY KEY (`no`);
 
 --
 -- Indexes for table `kupasan`
 --
 ALTER TABLE `kupasan`
-  ADD PRIMARY KEY (`kodedept`);
+  ADD PRIMARY KEY (`no`);
 
 --
 -- Indexes for table `lain`
 --
 ALTER TABLE `lain`
-  ADD PRIMARY KEY (`kodedept`);
+  ADD PRIMARY KEY (`no`);
 
 --
 -- Indexes for table `pegawai`
 --
 ALTER TABLE `pegawai`
   ADD PRIMARY KEY (`kodep`);
+
+--
+-- Indexes for table `pilihtriplek`
+--
+ALTER TABLE `pilihtriplek`
+  ADD PRIMARY KEY (`no`);
 
 --
 -- Indexes for table `stok`
@@ -353,7 +487,7 @@ ALTER TABLE `tabsen`
 -- Indexes for table `tembel`
 --
 ALTER TABLE `tembel`
-  ADD PRIMARY KEY (`kodedept`);
+  ADD PRIMARY KEY (`no`);
 
 --
 -- Indexes for table `tjabatan`
@@ -378,10 +512,22 @@ ALTER TABLE `tlogin`
 --
 
 --
--- AUTO_INCREMENT for table `dryyer`
+-- AUTO_INCREMENT for table `dempul`
 --
-ALTER TABLE `dryyer`
-  MODIFY `kodedept` int(10) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `dempul`
+  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `detailkayumasuk`
+--
+ALTER TABLE `detailkayumasuk`
+  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
+--
+-- AUTO_INCREMENT for table `dryer`
+--
+ALTER TABLE `dryer`
+  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `finishing`
@@ -393,25 +539,37 @@ ALTER TABLE `finishing`
 -- AUTO_INCREMENT for table `hotpress`
 --
 ALTER TABLE `hotpress`
-  MODIFY `kodedept` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `kayumasuk`
+--
+ALTER TABLE `kayumasuk`
+  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `kupasan`
 --
 ALTER TABLE `kupasan`
-  MODIFY `kodedept` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `lain`
 --
 ALTER TABLE `lain`
-  MODIFY `kodedept` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `no` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `pegawai`
 --
 ALTER TABLE `pegawai`
   MODIFY `kodep` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2147483648;
+
+--
+-- AUTO_INCREMENT for table `pilihtriplek`
+--
+ALTER TABLE `pilihtriplek`
+  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tabsen`
@@ -423,7 +581,7 @@ ALTER TABLE `tabsen`
 -- AUTO_INCREMENT for table `tembel`
 --
 ALTER TABLE `tembel`
-  MODIFY `kodedept` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tjabatan`

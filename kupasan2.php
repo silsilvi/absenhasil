@@ -39,20 +39,19 @@
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
+  <!-- DataTables -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+  <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>  
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  
-  <!-- DataTables -->
-  <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.css">
-
-</head>
+  </head>
   <body class="hold-transition skin-blue sidebar-mini">
   <div class="wrapper">
 
@@ -149,7 +148,7 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><b>DEPARTEMEN KUPASAN</b></h1>
+      <h1><b>DATA KUPASAN</b></h1>
     </section>
     <!-- Main content -->
     <section class="content">
@@ -157,42 +156,59 @@
         <div class="col-xs-12">
           <div class="box box-primary">
             <div class="box-header">
-              <button type="button" name="btntambahkupasan"<a data-toggle="modal" data-target="#tambahkupasan" class=" btn btn-primary  text-white";> Tambah <i class="glyphicon glyphicon-plus"></i></a></button>
+              <button type="button" name="btntambahkupasan"<a data-toggle="modal" data-target="#tambahkupasan" class=" btn btn-primary text-white";> Tambah <i class="glyphicon glyphicon-plus"></i></a></button>
+              <div class="card-body">
+              <form action="exportkupasan.php" method="POST">
+              <div class="row">
+              <div class="col-md-5"><b>Mulai</b>
+              <div class="form-group">
+              <input type="date" class="form-control" name="tglm">
+              </div>
+              </div>
+              <div class="col-md-5"><b>Selesai</b>
+              <div class="form-group">
+             <input type="date" class="form-control" name="tgls">
+           </div>
+         </div>
+		 <br>
+          <div class="col-md-2">
+              <button type="submit" class="btn btn-primary" name="print"> Export <i class="glyphicon glyphicon-print text-white"></i></button>
+          </div> 
+          </div>
+          </form>
+        </div>
             </div>
           <div class="box-body table-responsive">
-            <table id="kupasan" class="table table-bordered table-hover">
+          <table id="example" class="display table table-bordered table-hover">
               <thead>
-              <td colspan="5"><b>Pemakaian Bahan</b></td>
-              <td colspan="8"><b>Hasil</b></td>
-              <tr>
-                  <!-- <th style="background-color:#E0FFFF"><center>No</center></th> -->
+              <!-- <td style="background-color:#71D0FF;" colspan="5"><b>Pemakaian Bahan</b></td>
+              <td style="background-color:#FFB6C1;" colspan="8"><b>Hasil<b></td> -->
+                <tr>
                   <th style="background-color:#E0FFFF"><center>Tanggal</center></th>
                   <th style="background-color:#E0FFFF"><center>Batang</center></th>
                   <th style="background-color:#E0FFFF"><center>Lahan</center></th>
                   <th style="background-color:#E0FFFF"><center>Seri</center></th>
-                  <th style="background-color:#E0FFFF"><center>Ket</center></th>
+                  <th style="background-color:#E0FFFF"><center>Keterangan</center></th>
                   <th style="background-color:#FFE4E1"><center >Mesin</center></th>
-                  <th style="background-color:#FFE4E1"><center>P</center></th>
-                  <th style="background-color:#FFE4E1"><center>L</center></th>
-                  <th style="background-color:#FFE4E1"><center>T</center></th>
-                  <th style="background-color:#FFE4E1"><center>Kw</center></th>
+                  <th style="background-color:#FFE4E1"><center>Panjang</center></th>
+                  <th style="background-color:#FFE4E1"><center>Lebar</center></th>
+                  <th style="background-color:#FFE4E1"><center>Tebal</center></th>
+                  <th style="background-color:#FFE4E1"><center>Kwalitas</center></th>
                   <th style="background-color:#FFE4E1"><center>Jenis</center></th>
-                  <th style="background-color:#FFE4E1"><center>Hasil</center></th>
+                  <th style="background-color:#FFE4E1"><center>Veneer Basah</center></th>
                   <th style="background-color:#FFE4E1"><center>Aksi</center></th>
                   <!-- <th><center>Aksi</center></th> -->
                 </tr>
               </thead>
               <tbody>
 
-                <?php
+                 <?php
                 include "conf/conn.php";
-                $query = mysqli_query($koneksi, "SELECT * FROM kupasan ORDER BY seri DESC");
-
+                $query = mysqli_query($koneksi, "SELECT * FROM kupasan ORDER BY tanggal DESC");
                 while ($row = mysqli_fetch_array($query)) {
                 ?>
 
-<tr>
-                  <!-- <td style="background-color:#E0FFFF"><?php echo $row['no'];?></td> -->
+                <tr>
                   <td style="background-color:#E0FFFF"><?php echo $row['tanggal'];?></td>
                   <td style="background-color:#E0FFFF"><?php echo $row['batang'];?></td>
                   <td style="background-color:#E0FFFF"><?php echo $row['lahan'];?></td>
@@ -207,8 +223,8 @@
                   <td style="background-color:#FFE4E1"><?php echo $row['hasil'];?></td>
                   <td style="background-color:#FFE4E1">
                   <center>
-                  <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btneditkupasan' data-id="<?php echo $row['no']?>" data-nama="<?php echo $row['no']?>"><i class="glyphicon glyphicon-edit"></i></button>
-                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapuskupasan' data-href="pages/hapuskupasan.php?no=<?php echo $row['no'];?>"><i class="glyphicon glyphicon-trash"></i>
+                  <button class='btn btn-success btn-edit' style='margin-right:5px;' name='btneditkupasan' data-id="<?php echo $row['seri']?>" data-nama="<?php echo $row['seri']?>"><i class="glyphicon glyphicon-edit"></i></button>
+                  <button class='btn btn-danger ' data-toggle='modal' data-target='#hapuskupasan' data-href="pages/hapuskupasan.php?seri=<?php echo $row['seri'];?>"><i class="glyphicon glyphicon-trash"></i>
                   </center>
                   </td>
                 </tr>
@@ -216,21 +232,42 @@
                 <?php } ?>
 
                 </tbody>
+                <!-- <tfoot>
+            <tr>
+                <th>tanggal</th>
+                <th>batang</th>
+                <th>lahan</th>
+                <th>seri</th>
+                <th>ket</th>
+                <th>mesin</th>
+                <th>panjang</th>
+                <th>lebar</th>
+                <th>tebal</th>
+                <th>kw</th>
+                <th>jenis</th>
+                <th>hasil</th>
+            </tr>
+            </tfoot> -->
               </table>
             </div>
             <!-- /.box-body -->
-          </div>
+            </div>
           <!-- /.box -->
         </div>
-        <!-- /.col -->
+       <!-- /.col -->
       </div>
+      
       <!-- /.row -->
     </section>
     <!-- /.content -->
   </div>
 <!-- /.content-wrapper -->
+<footer class="main-footer">
+    <strong>Copyright &copy; 2019 PT. Wijaya Plywoods .</strong>
+  </footer>
+  
 <!-- modal tambah kupasan -->
-<div class="modal fade" id="tambahkupasan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="tambahkupasan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -329,7 +366,7 @@
       </div>
   <!-- end modal tambah kupasan -->
 
- <!-- modal edit pegawai -->
+ <!-- modal edit kupasan -->
  <div class="modal fade" id="editkupasan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
  <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -342,12 +379,6 @@
             <div class="modal-body">
               <form action="pages/editkupasan.php" method="POST" enctype="multipart/form-data">
               <p style="background-color:#71D0FF;" ><b><u>Pemakaian Bahan</u></b></p>
-              <div class="form-group row">
-                  <label for="formGroupExampleInput" class="col-sm-3 col-form-label">No</label>
-                  <div class="col-sm-9">
-                    <input type="int" readonly class="form-control txtno" name="no" id="formGroupExampleInput" required="true" minlength="1" maxlength="50" min="0">
-                  </div>
-                </div>
                 <div class="form-group row">
                   <label for="formGroupExampleInput" class="col-sm-3 col-form-label">Batang</label>
                   <div class="col-sm-9">
@@ -426,13 +457,13 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary" name="btneditkupasan">Edit</button>
+                  <button type="submit" class="btn btn-primary" name="btneditkupasan">Tambah</button>
                 </div>
               </form>
             </div>
           </div>
         </div>
-     </div>    
+      </div>
   <!-- end modal edit kupasan -->
 
 <!--modal hapus kupasan-->
@@ -448,13 +479,8 @@
     </div>
   </div>
   <!-- end modal hapus kupasan -->
-  <footer class="main-footer">
-    <strong>Copyright &copy; 2019 PT. Wijaya Plywoods .</strong>
-  </footer>
    </div>
   </div>
-
-
 
   <script type="text/javascript">
     //Hapus Data
@@ -485,7 +511,6 @@
       }
     }
   </script>
-  
 
 <!-- Javascript Datatable -->
 <script type="text/javascript">
@@ -493,6 +518,34 @@
     $('#kupasan').DataTable();
   });
 </script>
+
+<!-- Javascript Filter
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example').DataTable( {
+        initComplete: function () {
+            this.api().columns().every( function () {
+                var column = this;
+                var select = $('<select><option value=""></option></select>')
+                    .appendTo( $(column.footer()).empty() )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+ 
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
+ 
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+            } );
+        }
+    } );
+} );
+</script> -->
 
 
 <!-- ./wrapper -->
@@ -535,48 +588,35 @@
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 
-<!-- DataTables -->
-<script src="plugins/datatables/jquery.dataTables.js"></script>
-<script src="plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+<!-- Data -->
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
 
 <script>
-  $(function () {
-    $('#kupasan').DataTable({
-      "paging": true,
-      "lengthChange": true,
-      "searching": true,
-      "ordering": true,
-      "info": true,
-      "autoWidth": true,
-    });
-  });
-</script>
-
-<script>
-  $(".btn-edit").click(function(e){
-    var no = $(this).attr("data-id");
+   $(".btn-edit").click(function(e){
+    var seri = $(this).attr("data-id");
     $.ajax({
       "method"  : "get",
       "url"   : "kupasan.php",
       "data"    : {
         "edit"      : true,
-        "no"  : no,
+        "seri"  : seri,
       },
       "dataType"  : "json",
       "success" : function(e){
         $("#editkupasan").modal();
-        $(".txtno").val(e.no);
         $(".txtbatang").val(e.batang);
         $(".txtlahan").val(e.lahan);
         $(".txtseri").val(e.seri);
-        $(".txtket").val(e.ket);
-        $(".txtmesin").val(e.mesin);
+        $(".txtmesin").val(e.mesin;
         $(".txtpanjang").val(e.panjang);
         $(".txtlebar").val(e.lebar);
         $(".txttebal").val(e.tebal);
         $(".txtkw").val(e.kw);
         $(".txtjenis").val(e.jenis);
         $(".txthasil").val(e.hasil);
+        $(".txtket").val(e.ket);
       }
     });
   });
@@ -597,8 +637,8 @@
 <?php
   }
   if(isset($_GET['edit'])){
-    $no = $_GET['no'];
-    $sql = "SELECT * FROM kupasan WHERE no='". $no ."'";
+    $seri = $_GET['seri'];
+    $sql = "SELECT * FROM kupasan WHERE seri='". $seri ."'";
     $q = mysqli_query($koneksi, $sql);
     while($row=mysqli_fetch_assoc($q)){
       echo json_encode($row);
